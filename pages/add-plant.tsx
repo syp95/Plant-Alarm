@@ -1,17 +1,17 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-const Home: NextPage = () => {
+const AddPlant: NextPage = () => {
     const router = useRouter();
     const addPlantClick = () => {
-        router.push('/add-plant');
+        router.push('/');
     };
     return (
         <>
-            <div>main</div>
+            <div>AddPlant</div>
             <button onClick={addPlantClick}>ADD</button>
         </>
     );
 };
 
-export default Home;
+export default AddPlant;
