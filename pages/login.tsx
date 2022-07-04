@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import LoginBtn from '../components/LoginBtn';
 
 interface IRegisterForm {
     regId: String;
