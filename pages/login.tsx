@@ -111,6 +111,7 @@ const LogIn: NextPage = () => {
                         />
                         <button>로그인</button>
                     </form>
+                    <LoginBtn />
                     <button onClick={toggleRegisterPage}>회원 가입</button>
                 </>
             )}
