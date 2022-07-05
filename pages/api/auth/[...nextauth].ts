@@ -1,15 +1,8 @@
+import { GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-
-// const firebaseConfig = {
-//     apiKey: 'AIzaSyCIFW3pTnW8turZvnWH_nuOU8jDMXlk5aQ',
-//     authDomain: 'plant-alarm.firebaseapp.com',
-//     projectId: 'plant-alarm',
-//     storageBucket: 'plant-alarm.appspot.com',
-//     messagingSenderId: '789061072199',
-//     appId: '1:789061072199:web:ee3a6f66ae77e4c9310862',
-//     measurementId: 'G-MVFFCELZP0',
-// };
+import { fbAuth } from '../../../firebase/firebaseConfig';
 
 export default NextAuth({
     // Configure one or more authentication providers
@@ -17,8 +10,28 @@ export default NextAuth({
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-        }),
-
-        // ...add more providers here
+        }), // ...add more providers here
     ],
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            try {
+                const googleCredential = GoogleAuthProvider.credential(
+                    account?.id_token,
+                );
+                const userCredential = await signInWithCredential(
+                    fbAuth,
+                    googleCredential,
+                ).catch((e) => {
+                    console.log(e);
+                    return false;
+                });
+                console.log('login', account);
+                return userCredential ? true : false;
+            } catch (e) {
+                console.log(e);
+                return false;
+            }
+        },
+    },
+    secret: process.env.NEXTAUTH_SECRET,
 });
