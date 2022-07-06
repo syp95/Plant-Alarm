@@ -1,14 +1,18 @@
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+} from 'firebase/auth';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Seo from '../components/Seo';
 import { fbAuth } from '../firebaseConfig';
 
 interface IRegisterForm {
-    regId: String;
-    regPassword: String;
-    regPasswordConfirm: String;
+    regId: string;
+    regPassword: string;
+    regPasswordConfirm: string;
 }
 
 interface ILoginForm {
@@ -38,30 +42,44 @@ const LogIn: NextPage = () => {
         signInWithEmailAndPassword(fbAuth, logindata.id, logindata.password)
             .then((res) => {
                 console.log(res.user.accessToken);
-                sessionStorage.setItem('Token', res.user.accessToken);
-                router.push('/user');
+                sessionStorage.setItem('PlantAlarmToken', res.user.accessToken);
+                router.push('/');
             })
             .catch((err) => console.log('not login'));
     };
 
     const onRegisterValid = (data: IRegisterForm) => {
-        console.log(data);
-        //DB로 아이디 푸쉬하기
-        setRegisterPage(false);
+        createUserWithEmailAndPassword(
+            fbAuth,
+            data.regId,
+            data.regPassword,
+        ).then((res) => {
+            console.log(res.user);
+            sessionStorage.setItem('PlantAlarmToken', res.user.accessToken);
+            router.push('/');
+        });
     };
 
     return (
         <>
             {registerPage ? (
                 <>
+                    <Seo title='Register' />
                     <h4>Register</h4>
-                    <form onSubmit={handleSubmit(onRegisterValid)}>
+                    <form
+                        onSubmit={handleSubmit((data) =>
+                            onRegisterValid(data),
+                        )}>
                         <input
                             {...register('regId', {
                                 required: '아이디를 입력해주세요.',
                                 minLength: {
                                     value: 5,
                                     message: '아이디는 5자 이상 입니다.',
+                                },
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: '이메일을 입력해주세요.',
                                 },
                             })}
                             placeholder='아이디를 입력하세요.'
@@ -109,6 +127,7 @@ const LogIn: NextPage = () => {
                 </>
             ) : (
                 <>
+                    <Seo title='Login' />
                     <h4>LogIn</h4>
                     <form onSubmit={loginHandleSubmit((data) => login(data))}>
                         <input

@@ -9,7 +9,7 @@ const Home: NextPage = () => {
         router.push('/add-plant');
     };
     useEffect(() => {
-        let token = sessionStorage.getItem('Token');
+        let token = sessionStorage.getItem('PlantAlarmToken');
         if (!token) {
             router.push('/login');
         }
