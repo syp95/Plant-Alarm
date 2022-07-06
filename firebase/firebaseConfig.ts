@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import { connectAuthEmulator, getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -12,4 +12,5 @@ const firebaseConfig = {
 };
 
 export const fbApp = initializeApp(firebaseConfig);
-export const fbAuth = getAuth();
+export const fbAuth = getAuth(fbApp);
+connectAuthEmulator(fbAuth, 'http://localhost:9099');
