@@ -1,7 +1,9 @@
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import LoginBtn from '../components/LoginBtn';
+import { fbAuth } from '../firebaseConfig';
 
 interface IRegisterForm {
     regId: String;
@@ -10,8 +12,8 @@ interface IRegisterForm {
 }
 
 interface ILoginForm {
-    id: String;
-    password: String;
+    id: string;
+    password: string;
 }
 
 const LogIn: NextPage = () => {
@@ -30,7 +32,19 @@ const LogIn: NextPage = () => {
     const passwordRef = useRef<String | null>(null);
     passwordRef.current = watch('regPassword');
 
-    const onRegisterValid = (data: any) => {
+    const router = useRouter();
+
+    const login = (logindata: ILoginForm) => {
+        signInWithEmailAndPassword(fbAuth, logindata.id, logindata.password)
+            .then((res) => {
+                console.log(res.user.accessToken);
+                sessionStorage.setItem('Token', res.user.accessToken);
+                router.push('/user');
+            })
+            .catch((err) => console.log('not login'));
+    };
+
+    const onRegisterValid = (data: IRegisterForm) => {
         console.log(data);
         //DB로 아이디 푸쉬하기
         setRegisterPage(false);
@@ -96,7 +110,7 @@ const LogIn: NextPage = () => {
             ) : (
                 <>
                     <h4>LogIn</h4>
-                    <form>
+                    <form onSubmit={loginHandleSubmit((data) => login(data))}>
                         <input
                             {...loginRegister('id', {
                                 required: '아이디를 입력하세요.',
@@ -111,7 +125,7 @@ const LogIn: NextPage = () => {
                         />
                         <button>로그인</button>
                     </form>
-                    <LoginBtn />
+
                     <button onClick={toggleRegisterPage}>회원 가입</button>
                 </>
             )}

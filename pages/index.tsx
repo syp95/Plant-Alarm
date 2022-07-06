@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import Seo from '../components/Seo';
 
 const Home: NextPage = () => {
@@ -7,6 +8,12 @@ const Home: NextPage = () => {
     const addPlantClick = () => {
         router.push('/add-plant');
     };
+    useEffect(() => {
+        let token = sessionStorage.getItem('Token');
+        if (!token) {
+            router.push('/login');
+        }
+    }, []);
     return (
         <>
             <Seo title='Home' />
