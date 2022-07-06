@@ -5,11 +5,19 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }: AppProps) {
+    const router = useRouter();
+    const showNav = router.pathname === '/login' ? false : true;
+    useEffect(() => {
+        let token = sessionStorage.getItem('PlantAlarmToken');
+        if (!token) {
+            router.push('/login');
+        }
+    }, []);
     return (
         <>
             <Component {...pageProps} />
             <br></br>
-            <NavBar />
+            {showNav && <NavBar />}
         </>
     );
 }

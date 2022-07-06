@@ -4,7 +4,7 @@ import {
 } from 'firebase/auth';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Seo from '../components/Seo';
 import { fbAuth } from '../firebaseConfig';
@@ -60,6 +60,12 @@ const LogIn: NextPage = () => {
         });
     };
 
+    useEffect(() => {
+        let token = sessionStorage.getItem('PlantAlarmToken');
+        if (token) {
+            router.push('/');
+        }
+    }, []);
     return (
         <>
             {registerPage ? (
@@ -72,7 +78,7 @@ const LogIn: NextPage = () => {
                         )}>
                         <input
                             {...register('regId', {
-                                required: '아이디를 입력해주세요.',
+                                required: '이메일을 입력해주세요.',
                                 minLength: {
                                     value: 5,
                                     message: '아이디는 5자 이상 입니다.',
@@ -132,7 +138,7 @@ const LogIn: NextPage = () => {
                     <form onSubmit={loginHandleSubmit((data) => login(data))}>
                         <input
                             {...loginRegister('id', {
-                                required: '아이디를 입력하세요.',
+                                required: '이메일을 입력하세요.',
                             })}
                             placeholder='아이디를 입력하세요.'
                         />
