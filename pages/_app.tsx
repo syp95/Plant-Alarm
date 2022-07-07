@@ -15,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             router.push('/login');
         }
     }, []);
+
     return (
         <>
             <RecoilRoot>

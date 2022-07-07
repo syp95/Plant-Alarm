@@ -78,9 +78,8 @@ const LogIn: NextPage = () => {
                 setUserObj({
                     email: user?.email,
                     uid: user?.uid,
+                    displayName: user.displayName ? user.displayName : '',
                 });
-            } else {
-                setUserObj({});
             }
         });
     }, []);
@@ -105,16 +104,12 @@ const LogIn: NextPage = () => {
                         <input
                             {...register('regId', {
                                 required: '이메일을 입력해주세요.',
-                                minLength: {
-                                    value: 5,
-                                    message: '아이디는 5자 이상 입니다.',
-                                },
                                 pattern: {
                                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                                     message: '이메일을 입력해주세요.',
                                 },
                             })}
-                            placeholder='아이디를 입력하세요.'
+                            placeholder='이메일을 입력하세요.'
                         />
 
                         <input
@@ -166,7 +161,7 @@ const LogIn: NextPage = () => {
                             {...loginRegister('id', {
                                 required: '이메일을 입력하세요.',
                             })}
-                            placeholder='아이디를 입력하세요.'
+                            placeholder='이메일을 입력하세요.'
                         />
                         <input
                             {...loginRegister('password', {
