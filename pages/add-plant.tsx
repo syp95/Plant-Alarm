@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { fbAuth } from '../firebaseConfig';
-import { userObjState } from './api/atoms';
+import { userObjState } from '../atoms/atoms';
+import getUserObj from '../utils/getUserObj';
 
 const AddPlant: NextPage = () => {
     const router = useRouter();
@@ -12,15 +13,7 @@ const AddPlant: NextPage = () => {
     };
     const [userObj, setUserObj] = useRecoilState(userObjState);
     useEffect(() => {
-        fbAuth.onAuthStateChanged((user) => {
-            if (user) {
-                setUserObj({
-                    email: user?.email,
-                    uid: user?.uid,
-                    displayName: user.displayName ? user.displayName : '',
-                });
-            }
-        });
+        getUserObj(setUserObj);
     }, []);
     return (
         <>

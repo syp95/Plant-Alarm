@@ -1,6 +1,6 @@
 import { fbAuth } from '../firebaseConfig';
 
-export default function getUserObj(setUserObj: any) {
+export default function getUserObj(setUserObj: Function) {
     fbAuth.onAuthStateChanged((user) => {
         if (user) {
             setUserObj({

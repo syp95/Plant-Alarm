@@ -8,7 +8,8 @@ import { RecoilRoot } from 'recoil';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
-    const showNav = router.pathname === '/login' ? false : true;
+    const { pathname } = router;
+    const noNav = ['/login', '/register'];
     useEffect(() => {
         let token = sessionStorage.getItem('PlantAlarmToken');
         if (!token) {
@@ -22,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <Component {...pageProps} />
             </RecoilRoot>
             <br></br>
-            {showNav && <NavBar />}
+            {noNav.includes(pathname) ? '' : <NavBar />}
         </>
     );
 }
