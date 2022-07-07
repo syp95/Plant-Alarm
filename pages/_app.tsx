@@ -3,6 +3,8 @@ import type { AppProps } from 'next/app';
 import NavBar from '../components/NavBar';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { fbAuth } from '../firebaseConfig';
+import { RecoilRoot } from 'recoil';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -15,7 +17,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     }, []);
     return (
         <>
-            <Component {...pageProps} />
+            <RecoilRoot>
+                <Component {...pageProps} />
+            </RecoilRoot>
             <br></br>
             {showNav && <NavBar />}
         </>

@@ -1,13 +1,17 @@
 import {
     createUserWithEmailAndPassword,
+    GoogleAuthProvider,
     signInWithEmailAndPassword,
+    signInWithPopup,
 } from 'firebase/auth';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import Seo from '../components/Seo';
 import { fbAuth } from '../firebaseConfig';
+import { userObjState } from './api/atoms';
 
 interface IRegisterForm {
     regId: string;
@@ -41,8 +45,8 @@ const LogIn: NextPage = () => {
     const login = (logindata: ILoginForm) => {
         signInWithEmailAndPassword(fbAuth, logindata.id, logindata.password)
             .then((res) => {
-                console.log(res.user.accessToken);
                 sessionStorage.setItem('PlantAlarmToken', res.user.accessToken);
+
                 router.push('/');
             })
             .catch((err) => console.log('not login'));
@@ -54,11 +58,32 @@ const LogIn: NextPage = () => {
             data.regId,
             data.regPassword,
         ).then((res) => {
-            console.log(res.user);
             sessionStorage.setItem('PlantAlarmToken', res.user.accessToken);
             router.push('/');
         });
     };
+
+    const googleProvider = new GoogleAuthProvider();
+    const signUpWithGoogle = () => {
+        signInWithPopup(fbAuth, googleProvider).then((res) => {
+            sessionStorage.setItem('PlantAlarmToken', res.user.accessToken);
+            router.push('/');
+        });
+    };
+
+    const [userObj, setUserObj] = useRecoilState(userObjState);
+    useEffect(() => {
+        fbAuth.onAuthStateChanged((user) => {
+            if (user) {
+                setUserObj({
+                    email: user?.email,
+                    uid: user?.uid,
+                });
+            } else {
+                setUserObj({});
+            }
+        });
+    }, []);
 
     useEffect(() => {
         let token = sessionStorage.getItem('PlantAlarmToken');
@@ -66,6 +91,7 @@ const LogIn: NextPage = () => {
             router.push('/');
         }
     }, []);
+
     return (
         <>
             {registerPage ? (
@@ -150,6 +176,7 @@ const LogIn: NextPage = () => {
                         />
                         <button>로그인</button>
                     </form>
+                    <button onClick={signUpWithGoogle}>구글 로그인</button>
 
                     <button onClick={toggleRegisterPage}>회원 가입</button>
                 </>
