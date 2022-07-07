@@ -8,10 +8,11 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import Seo from '../components/Seo';
 import { fbAuth } from '../firebaseConfig';
-import { userObjState } from './api/atoms';
+import { userObjState } from '../atoms/atoms';
+import getUserObj from '../utils/getUserObj';
 
 interface IRegisterForm {
     regId: string;
@@ -73,15 +74,7 @@ const LogIn: NextPage = () => {
 
     const [userObj, setUserObj] = useRecoilState(userObjState);
     useEffect(() => {
-        fbAuth.onAuthStateChanged((user) => {
-            if (user) {
-                setUserObj({
-                    email: user?.email,
-                    uid: user?.uid,
-                    displayName: user.displayName ? user.displayName : '',
-                });
-            }
-        });
+        getUserObj(setUserObj);
     }, []);
 
     useEffect(() => {
