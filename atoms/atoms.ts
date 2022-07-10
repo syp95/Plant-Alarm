@@ -11,4 +11,9 @@ const userObjState = atom<IUserObj>({
     default: { uid: '', email: '', displayName: null },
 });
 
-export { userObjState };
+const numberPickerState = atom({
+    key: 'numberPcikerState',
+    default: false,
+});
+
+export { userObjState, numberPickerState };
