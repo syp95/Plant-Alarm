@@ -11,10 +11,10 @@ import NumberPicker from '../components/NumberPicker';
 import Seo from '../components/Seo';
 import { fbDb } from '../firebaseConfig';
 import getUserObj from '../utils/getUserObj';
-import { motion, transform } from 'framer-motion';
+import { AnimatePresence, motion, transform } from 'framer-motion';
 
 const OpenPicker = styled(motion.div)`
-    width: 100%;
+    width: 520px;
     position: absolute;
     bottom: 0;
 `;
@@ -88,15 +88,17 @@ const AddPlant: NextPage = () => {
                 <button>ADD</button>
             </form>
 
-            {numberPicker && (
-                <OpenPicker
-                    initial={{ transform: 'translateY(300px)' }}
-                    animate={{ transform: 'translateY(000px)' }}
-                    exit={{ transform: 'translateY(300px)' }}
-                    transition={{ type: 'tween', duration: 1 }}>
-                    <NumberPicker />
-                </OpenPicker>
-            )}
+            <AnimatePresence>
+                {numberPicker && (
+                    <OpenPicker
+                        initial={{ transform: 'translateY(300px)' }}
+                        animate={{ transform: 'translateY(000px)' }}
+                        exit={{ transform: 'translateY(300px)' }}
+                        transition={{ type: 'tween', duration: 0.7 }}>
+                        <NumberPicker />
+                    </OpenPicker>
+                )}
+            </AnimatePresence>
         </>
     );
 };
