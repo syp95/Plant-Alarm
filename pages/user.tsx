@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
 import { fbAuth } from '../firebaseConfig';
 import { userObjState } from '../atoms/atoms';

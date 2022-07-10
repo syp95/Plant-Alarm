@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { fbAuth } from '../firebaseConfig';
 
 export default function getUserObj(setUserObj: Function) {

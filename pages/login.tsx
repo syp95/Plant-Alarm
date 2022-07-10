@@ -6,7 +6,7 @@ import {
 } from 'firebase/auth';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import Seo from '../components/Seo';
@@ -47,6 +47,7 @@ const LogIn: NextPage = () => {
     };
 
     const [userObj, setUserObj] = useRecoilState(userObjState);
+
     useEffect(() => {
         getUserObj(setUserObj);
     }, []);
