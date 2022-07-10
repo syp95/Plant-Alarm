@@ -14,7 +14,7 @@ const theme = {
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { pathname } = router;
-    const noNav = ['/login', '/register'];
+    const noNav = ['/login', '/register', '/add-plant'];
     useEffect(() => {
         let token = sessionStorage.getItem('PlantAlarmToken');
         if (!token) {

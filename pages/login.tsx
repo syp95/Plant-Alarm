@@ -32,7 +32,6 @@ const LogIn: NextPage = () => {
         signInWithEmailAndPassword(fbAuth, logindata.id, logindata.password)
             .then((res) => {
                 sessionStorage.setItem('PlantAlarmToken', res.user.accessToken);
-
                 router.push('/');
             })
             .catch((err) => console.log('not login'));
