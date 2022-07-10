@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil';
 
 import { numberPickerState, userObjState } from '../atoms/atoms';
 import NumberPicker from '../components/NumberPicker';
+import Seo from '../components/Seo';
 import { fbDb } from '../firebaseConfig';
 import getUserObj from '../utils/getUserObj';
 
@@ -41,6 +42,7 @@ const AddPlant: NextPage = () => {
     };
     return (
         <>
+            <Seo title='ADD' />
             <form>
                 <input
                     {...register('plantName', {
