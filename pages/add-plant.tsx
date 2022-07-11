@@ -47,7 +47,7 @@ const AddPlant: NextPage = () => {
 
         const newPlantObj = {
             plantName: submitData.plantName,
-            wateringDate: submitData.wateringDate,
+            wateringDate: pickNumber,
             lastWateringDate: submitData.lastWateringDate,
             createAt: Date.now(),
             creatorId: userObj.uid,
@@ -56,12 +56,14 @@ const AddPlant: NextPage = () => {
         await addDoc(collection(fbDb, 'plant'), newPlantObj)
             .then((res) => {
                 console.log('data gone');
+                setPickNumber(0);
                 router.push('/');
             })
             .catch((err) => console.log(err));
     };
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
-    const pickNumber = useRecoilValue(pickNumberState);
+    const [pickNumber, setPickNumber] = useRecoilState(pickNumberState);
+
     const onNumberPicker = () => {
         setNumberPicker(true);
     };
@@ -78,13 +80,11 @@ const AddPlant: NextPage = () => {
                     })}
                     placeholder='이름이 무엇인가요?'></input>
                 <input
-                    {...register('wateringDate', {
-                        required: '',
-                    })}
                     placeholder='몇 일에 한번씩 물을 주나요?'
                     autoComplete='off'
                     onClick={onNumberPicker}
-                    value={pickNumber ? pickNumber : ''}></input>
+                    onChange={() => pickNumber}
+                    value={pickNumber ? String(pickNumber) : ''}></input>
 
                 <input
                     {...register('lastWateringDate', {
@@ -94,6 +94,7 @@ const AddPlant: NextPage = () => {
                     placeholder='마지막으로 물을 준 날이 언젠가요?'></input>
                 <button>ADD</button>
             </form>
+            <button onClick={() => router.push('/')}>Cancel</button>
 
             <AnimatePresence>
                 {numberPicker && (

@@ -88,12 +88,7 @@ const NumLi = styled.li`
 
 export default function NumberPicker() {
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
-    const setPickNumber = useSetRecoilState(pickNumberState);
-    const onNumberSubmit = () => {
-        let pickNumber = 18 - transNumber;
-        setPickNumber(pickNumber);
-        setNumberPicker(false);
-    };
+    const [pnum, setPickNumber] = useRecoilState(pickNumberState);
 
     const [transNumber, setTransNumber] = useState(0);
     const numbers = [
@@ -112,8 +107,18 @@ export default function NumberPicker() {
         setTransNumber((prev) => prev - 1);
     };
 
+    const onNumberSubmit = () => {
+        const pickNumber = 18 - transNumber;
+        console.log(pickNumber);
+
+        setPickNumber(pickNumber);
+
+        console.log(pnum);
+
+        setNumberPicker(false);
+    };
+
     useEffect(() => {
-        console.log(transNumber);
         if (numberRef.current) {
             numberRef.current.style.transition = 'all 0.2s ease-in-out';
             numberRef.current.style.transform = `translateY(${

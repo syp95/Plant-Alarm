@@ -7,10 +7,6 @@ import { fbAuth } from '../firebaseConfig';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 
-const theme = {
-    bg: 'white',
-};
-
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { pathname } = router;
@@ -24,11 +20,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     return (
         <>
-            <ThemeProvider theme={theme}>
-                <RecoilRoot>
-                    <Component {...pageProps} />
-                </RecoilRoot>
-            </ThemeProvider>
+            <RecoilRoot>
+                <Component {...pageProps} />
+            </RecoilRoot>
+
             <br></br>
             {noNav.includes(pathname) ? '' : <NavBar />}
         </>
