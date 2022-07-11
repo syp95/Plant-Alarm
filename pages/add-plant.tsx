@@ -3,10 +3,14 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { numberPickerState, userObjState } from '../atoms/atoms';
+import {
+    numberPickerState,
+    pickNumberState,
+    userObjState,
+} from '../atoms/atoms';
 import NumberPicker from '../components/NumberPicker';
 import Seo from '../components/Seo';
 import { fbDb } from '../firebaseConfig';
@@ -57,6 +61,7 @@ const AddPlant: NextPage = () => {
             .catch((err) => console.log(err));
     };
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
+    const pickNumber = useRecoilValue(pickNumberState);
     const onNumberPicker = () => {
         setNumberPicker(true);
     };
@@ -77,7 +82,9 @@ const AddPlant: NextPage = () => {
                         required: '',
                     })}
                     placeholder='몇 일에 한번씩 물을 주나요?'
-                    onClick={onNumberPicker}></input>
+                    autoComplete='off'
+                    onClick={onNumberPicker}
+                    value={pickNumber ? pickNumber : ''}></input>
 
                 <input
                     {...register('lastWateringDate', {

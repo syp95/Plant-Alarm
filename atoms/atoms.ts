@@ -16,4 +16,9 @@ const numberPickerState = atom({
     default: false,
 });
 
-export { userObjState, numberPickerState };
+const pickNumberState = atom({
+    key: 'pickNumberState',
+    default: 0,
+});
+
+export { userObjState, numberPickerState, pickNumberState };

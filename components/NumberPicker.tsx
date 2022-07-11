@@ -1,26 +1,28 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValue } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { numberPickerState } from '../atoms/atoms';
+import { numberPickerState, pickNumberState } from '../atoms/atoms';
 
 const Submit = styled.button`
-    font-size: 20px;
+    font-size: 16px;
     position: absolute;
     background-color: transparent;
     border: none;
     color: darkblue;
     right: 2px;
     top: 2px;
+    user-select: none;
 `;
 const Cancel = styled.button`
-    font-size: 20px;
+    font-size: 16px;
     position: absolute;
     background-color: transparent;
     border: none;
     color: red;
     left: 2px;
     top: 2px;
+    user-select: none;
 `;
 
 const ButtonWrapper = styled.div`
@@ -31,7 +33,7 @@ const ButtonWrapper = styled.div`
     background-color: #000;
     z-index: 3;
 `;
-const PickerContainer = styled.div`
+const PickerContainer = styled(motion.div)`
     width: 100%;
     height: 300px;
     overflow: hidden;
@@ -54,14 +56,14 @@ const Up = styled.button`
     height: 40%;
     width: 100%;
     opacity: 0.1;
-    z-index: 2;
+    z-index: 1;
 `;
 const Down = styled.button`
     position: relative;
     height: 40%;
     width: 100%;
     opacity: 0.1;
-    z-index: 2;
+    z-index: 1;
 `;
 
 const Select = styled.div`
@@ -71,9 +73,12 @@ const Select = styled.div`
     opacity: 0.1;
 `;
 
-const NumUl = styled.ul`
+const NumUl = styled(motion.ul)`
     padding: 0;
     overflow: hidden;
+    user-select: none;
+
+    z-index: 19;
 `;
 const NumLi = styled.li`
     font-size: 20px;
@@ -83,8 +88,10 @@ const NumLi = styled.li`
 
 export default function NumberPicker() {
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
+    const setPickNumber = useSetRecoilState(pickNumberState);
     const onNumberSubmit = () => {
-        //값 전달
+        let pickNumber = 18 - transNumber;
+        setPickNumber(pickNumber);
         setNumberPicker(false);
     };
 
@@ -97,22 +104,44 @@ export default function NumberPicker() {
     const slideRange = transNumber * NUMBER_HEIGHT;
     const numberRef = useRef<HTMLUListElement>(null);
     const increaseNumber = () => {
-        if (transNumber === 2) return;
+        if (transNumber === 17) return;
         setTransNumber((prev) => prev + 1);
     };
     const decreaseNumber = () => {
-        if (transNumber === -27) return;
+        if (transNumber === -12) return;
         setTransNumber((prev) => prev - 1);
     };
 
     useEffect(() => {
+        console.log(transNumber);
         if (numberRef.current) {
             numberRef.current.style.transition = 'all 0.2s ease-in-out';
             numberRef.current.style.transform = `translateY(${
-                -5 + slideRange
+                -5 - (NUMBER_HEIGHT * numbers.length) / 2 + slideRange
             }px)`;
         }
     }, [transNumber]);
+
+    useEffect(() => {
+        if (numberRef.current) {
+            numberRef.current.style.transform = `translateY(${
+                -5 - (NUMBER_HEIGHT * numbers.length) / 2
+            }px)`;
+        }
+    }, []);
+
+    // const y = useMotionValue(0);
+    // const [dragY, setDragY] = useState(0);
+
+    // useEffect(() => {
+    //     let drag = dragY / NUMBER_HEIGHT;
+    //     console.log(dragY);
+
+    //     console.log(drag);
+    //     let dragYNum = drag < 0 ? Math.floor(drag) : Math.ceil(drag);
+
+    //     setTransNumber((prev) => prev + dragYNum);
+    // }, [dragY]);
 
     return (
         <PickerContainer>
@@ -131,7 +160,13 @@ export default function NumberPicker() {
                 <Down onClick={decreaseNumber} />
             </PickerMask>
 
-            <NumUl ref={numberRef}>
+            <NumUl
+                // style={{ y }}
+                // drag='y'
+                // dragTransition={{ bounceStiffness: 10, bounceDamping: 10 }}
+                //onDragEnd={(event, info) => {
+                // setDragY(info.offset.y);}}
+                ref={numberRef}>
                 {numbers.map((num) => (
                     <NumLi key={num}>{num}</NumLi>
                 ))}
