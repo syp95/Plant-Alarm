@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { numberPickerState } from '../atoms/atoms';
@@ -28,6 +28,8 @@ const ButtonWrapper = styled.div`
     height: 10%;
     width: 100%;
     opacity: 1;
+    background-color: #000;
+    z-index: 3;
 `;
 const PickerContainer = styled.div`
     width: 100%;
@@ -69,22 +71,48 @@ const Select = styled.div`
     opacity: 0.1;
 `;
 
+const NumUl = styled.ul`
+    padding: 0;
+    overflow: hidden;
+`;
+const NumLi = styled.li`
+    font-size: 20px;
+    line-height: 50px;
+    user-select: none;
+`;
+
 export default function NumberPicker() {
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
     const onNumberSubmit = () => {
         //값 전달
         setNumberPicker(false);
     };
-    const [transYNumber, setTransYNumber] = useState(0);
 
+    const [transNumber, setTransNumber] = useState(0);
+    const numbers = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+        21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+    ];
+    const NUMBER_HEIGHT = 50;
+    const slideRange = transNumber * NUMBER_HEIGHT;
+    const numberRef = useRef<HTMLUListElement>(null);
     const increaseNumber = () => {
-        setTransYNumber((prev) => prev + 50);
+        if (transNumber === 2) return;
+        setTransNumber((prev) => prev + 1);
     };
     const decreaseNumber = () => {
-        setTransYNumber((prev) => prev - 50);
+        if (transNumber === -27) return;
+        setTransNumber((prev) => prev - 1);
     };
 
-    const numberInfo = useRef();
+    useEffect(() => {
+        if (numberRef.current) {
+            numberRef.current.style.transition = 'all 0.2s ease-in-out';
+            numberRef.current.style.transform = `translateY(${
+                -5 + slideRange
+            }px)`;
+        }
+    }, [transNumber]);
 
     return (
         <PickerContainer>
@@ -102,40 +130,12 @@ export default function NumberPicker() {
                 <Select />
                 <Down onClick={decreaseNumber} />
             </PickerMask>
-            <AnimatePresence>
-                <ul ref={numberInfo}>
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
-                    <li>6</li>
-                    <li>7</li>
-                    <li>8</li>
-                    <li>9</li>
-                    <li>10</li>
-                    <li>11</li>
-                    <li>12</li>
-                    <li>13</li>
-                    <li>14</li>
-                    <li>15</li>
-                    <li>16</li>
-                    <li>17</li>
-                    <li>18</li>
-                    <li>19</li>
-                    <li>20</li>
-                    <li>21</li>
-                    <li>22</li>
-                    <li>23</li>
-                    <li>24</li>
-                    <li>25</li>
-                    <li>26</li>
-                    <li>27</li>
-                    <li>28</li>
-                    <li>29</li>
-                    <li>30</li>
-                </ul>
-            </AnimatePresence>
+
+            <NumUl ref={numberRef}>
+                {numbers.map((num) => (
+                    <NumLi key={num}>{num}</NumLi>
+                ))}
+            </NumUl>
         </PickerContainer>
     );
 }
