@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
 import { useEffect, useRef } from 'react';
 import { fbAuth } from '../firebaseConfig';
@@ -10,6 +10,7 @@ interface IRegisterForm {
     regId: string;
     regPassword: string;
     regPasswordConfirm: string;
+    regDisPlayName: string;
 }
 
 const Register: NextPage = () => {
@@ -27,6 +28,10 @@ const Register: NextPage = () => {
             data.regId,
             data.regPassword,
         ).then((res) => {
+            console.log(res.user);
+            updateProfile(res.user, {
+                displayName: data.regDisPlayName,
+            });
             sessionStorage.setItem('PlantAlarmToken', res.user.accessToken);
             router.push('/');
         });
@@ -52,6 +57,16 @@ const Register: NextPage = () => {
                         },
                     })}
                     placeholder='이메일을 입력하세요.'
+                />
+                <input
+                    {...register('regDisPlayName', {
+                        required: '이름을 입력해주세요.',
+                        minLength: {
+                            value: 2,
+                            message: '이름은 2자 이상입니다.',
+                        },
+                    })}
+                    placeholder='이름을 입력하세요.'
                 />
 
                 <input

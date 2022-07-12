@@ -1,9 +1,9 @@
 import { addDoc, collection } from 'firebase/firestore';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import {
@@ -32,9 +32,7 @@ interface ISubmitData {
 
 const AddPlant: NextPage = () => {
     const router = useRouter();
-    const addPlantClick = () => {
-        router.push('/');
-    };
+
     const [userObj, setUserObj] = useRecoilState(userObjState);
     useEffect(() => {
         getUserObj(setUserObj);
