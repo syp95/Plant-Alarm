@@ -17,14 +17,14 @@ const Home: NextPage = () => {
         getUserObj(setUserObj);
     }, []);
 
-    const disPlayNameConverter = () => {
+    const disPlayNameConvert = () => {
         let userName = userObj.displayName;
         if (userName === null || userName === undefined) {
             return '';
         }
         if (userName.length === 3) {
             return userName.slice(1, 3);
-        } else if (userName.length > 3) {
+        } else if (userName.length === 4) {
             return userName.slice(2, 4);
         } else {
             return userName;
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
     return (
         <>
             <Seo title='Home' />
-            <div>{disPlayNameConverter()}님의 식물 알람</div>
+            <div>{disPlayNameConvert()}님의 식물 알람</div>
             <article className='plant-main'>
                 <button className='plant-listbtn'>LIST</button>
 
