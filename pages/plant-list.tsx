@@ -16,12 +16,14 @@ import { userObjState } from '../atoms/atoms';
 import { fbDb } from '../firebaseConfig';
 import getUserObj from '../utils/getUserObj';
 
+interface IPlantData {
+    data?: DocumentData;
+    id: string;
+}
+
 const PlantList: NextPage = () => {
     const [userObj, setUserObj] = useRecoilState(userObjState);
-    const [plantList, setPlantList] = useState<
-        QueryDocumentSnapshot<DocumentData>[]
-    >([]);
-    const [isLoading, setisLoading] = useState(true);
+    const [plantList, setPlantList] = useState<IPlantData[]>([]);
 
     const getMyPlant = async () => {
         const q = query(
@@ -31,35 +33,37 @@ const PlantList: NextPage = () => {
         );
         const plants = await getDocs(q);
 
-        const result: QueryDocumentSnapshot<DocumentData>[] = [];
         plants.forEach((plant) => {
-            result.push(plant);
-        });
+            const plantObject: IPlantData = {
+                ...plant.data(),
+                id: plant.id,
+            };
+            console.log(plant.id, '>', plant.data());
 
-        setPlantList(result);
+            setPlantList((prev: IPlantData[]) => [plantObject, ...prev]);
+        });
     };
+
     console.log(plantList);
 
     useEffect(() => {
         getUserObj(setUserObj);
         getMyPlant();
-        setTimeout(() => {
-            setisLoading(false);
-        }, 1500);
     }, []);
 
     return (
         <>
-            {isLoading ? (
-                <div>loading</div>
-            ) : (
-                <>
-                    <div>PlantList</div>
-                    {plantList.map((plant) => {
-                        return <div>{plant.data.arguments['plantName']}</div>;
-                    })}
-                </>
-            )}
+            <div>List</div>
+            {plantList.map((plant, idx) => {
+                return (
+                    <>
+                        <div key={idx}>
+                            <div>{plant.plantName}</div>
+                            <div>{plant.wateringDate}</div>
+                        </div>
+                    </>
+                );
+            })}
         </>
     );
 };

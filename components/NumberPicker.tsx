@@ -1,6 +1,6 @@
 import { AnimatePresence, motion, useMotionValue } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { numberPickerState, pickNumberState } from '../atoms/atoms';
 
@@ -155,7 +155,8 @@ export default function NumberPicker() {
                 <Cancel
                     onClick={() => {
                         setNumberPicker(false);
-                    }}>
+                    }}
+                >
                     Cancel
                 </Cancel>
             </ButtonWrapper>
@@ -171,7 +172,8 @@ export default function NumberPicker() {
                 // dragTransition={{ bounceStiffness: 10, bounceDamping: 10 }}
                 //onDragEnd={(event, info) => {
                 // setDragY(info.offset.y);}}
-                ref={numberRef}>
+                ref={numberRef}
+            >
                 {numbers.map((num) => (
                     <NumLi key={num}>{num}</NumLi>
                 ))}
