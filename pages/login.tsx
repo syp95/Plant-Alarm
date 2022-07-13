@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
+
 import Seo from '../components/Seo';
 import AuthService, { ILoginForm } from '../firebase/auth_service';
 

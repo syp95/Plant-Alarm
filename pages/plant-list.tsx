@@ -1,7 +1,9 @@
 import {
     collection,
+    deleteDoc,
     DocumentData,
     getDocs,
+    onSnapshot,
     orderBy,
     query,
     where,
@@ -12,10 +14,11 @@ import { useEffect, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
 import { userObjState } from '../atoms/atoms';
+import Plant from '../components/Plant';
 import { getLoginUserObj } from '../firebase/auth_service';
 import { fbDb } from '../firebase/firebase';
 
-interface IPlantData {
+export interface IPlantData {
     data?: DocumentData;
     id: string;
     plantName?: string;
@@ -40,33 +43,29 @@ const PlantList: NextPage = () => {
             where('creatorId', '==', userObj.uid),
             orderBy('createAt', 'desc'),
         );
-        const plants = await getDocs(q);
-
-        plants.forEach((plant) => {
-            const plantObject: IPlantData = {
-                ...plant.data(),
-                id: plant.id,
-            };
-
-            setPlantList((prev: IPlantData[]) => [plantObject, ...prev]);
+        await onSnapshot(q, (snapshot) => {
+            const plantArr = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            setPlantList(plantArr);
         });
+
+        // plants.forEach((plant) => {
+        //     const plantObject: IPlantData = {
+        //         ...plant.data(),
+        //         id: plant.id,
+        //     };
+
+        //     setPlantList((prev: IPlantData[]) => [plantObject, ...prev]);
+        // });
     };
 
     return (
         <>
             <div>List</div>
             {plantList.map((plant, idx) => {
-                return (
-                    <>
-                        <div key={idx}>
-                            <div>{plant.plantName}</div>
-                            <div>{plant.wateringDate}일 마다 한번씩</div>
-                            <div>{plant.lastWateringDate}</div>
-                            <button>delete</button>
-                            <button>update</button>
-                        </div>
-                    </>
-                );
+                return <Plant key={plant.id} plantData={plant} />;
             })}
         </>
     );

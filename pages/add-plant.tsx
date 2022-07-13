@@ -77,29 +77,25 @@ const AddPlant: NextPage = () => {
             <form
                 onSubmit={handleSubmit((data: any) => {
                     onPlantSubmit(data);
-                })}
-            >
+                })}>
                 <input
                     {...register('plantName', {
                         required: '식물 이름을 입력하세요.',
                     })}
-                    placeholder='이름이 무엇인가요?'
-                ></input>
+                    placeholder='이름이 무엇인가요?'></input>
                 <input
                     placeholder='몇 일에 한번씩 물을 주나요?'
                     autoComplete='off'
                     onClick={onNumberPicker}
                     onChange={() => pick}
-                    value={pick ? String(pick) : ''}
-                ></input>
+                    value={pick ? String(pick) : ''}></input>
 
                 <input
                     {...register('lastWateringDate', {
                         required: '',
                     })}
                     type='date'
-                    placeholder='마지막으로 물을 준 날이 언젠가요?'
-                ></input>
+                    placeholder='마지막으로 물을 준 날이 언젠가요?'></input>
                 <button>ADD</button>
             </form>
             <button onClick={() => goToApp()}>Cancel</button>
@@ -110,8 +106,7 @@ const AddPlant: NextPage = () => {
                         initial={{ transform: 'translateY(300px)' }}
                         animate={{ transform: 'translateY(000px)' }}
                         exit={{ transform: 'translateY(300px)' }}
-                        transition={{ type: 'tween', duration: 0.7 }}
-                    >
+                        transition={{ type: 'tween', duration: 0.7 }}>
                         <NumberPicker />
                     </OpenPicker>
                 )}

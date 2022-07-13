@@ -6,6 +6,7 @@ import { userObjState } from '../atoms/atoms';
 
 import Seo from '../components/Seo';
 import { getLoginUserObj } from '../firebase/auth_service';
+import { NameConverter } from '../utils/nameConverter';
 
 const Home: NextPage = () => {
     const router = useRouter();
@@ -17,23 +18,11 @@ const Home: NextPage = () => {
         getLoginUserObj(setUserObj, router);
     }, []);
 
-    const disPlayNameConvert = () => {
-        let userName = userObj.displayName;
-        if (userName === null || userName === undefined) {
-            return '';
-        }
-        if (userName.length === 3) {
-            return userName.slice(1, 3);
-        } else if (userName.length === 4) {
-            return userName.slice(2, 4);
-        } else {
-            return userName;
-        }
-    };
+    const disPlayName = NameConverter(userObj.displayName);
     return (
         <>
             <Seo title='Home' />
-            <div>{disPlayNameConvert()}님의 식물 알람</div>
+            <div>{disPlayName}님의 식물 알람</div>
             <article className='plant-main'>
                 <button className='plant-listbtn'>LIST</button>
 
