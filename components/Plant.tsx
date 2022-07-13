@@ -39,8 +39,13 @@ const Plant = ({ plantData }: any) => {
         setNewPlantName(value);
     };
     const onSubmit = async (data: any) => {
+        let wateringNumber = pick;
+        if (pick === 0) {
+            wateringNumber = newPlantWater;
+        }
+
         await updateDoc(PlantRef, {
-            wateringDate: pick,
+            wateringDate: wateringNumber,
             plantName: data.name,
         });
 
@@ -74,7 +79,7 @@ const Plant = ({ plantData }: any) => {
                             autoComplete='off'
                             onClick={onNumberPicker}
                             onChange={() => pick}
-                            value={pick ? String(pick) : newPlantWater}
+                            value={pick ? pick : newPlantWater}
                             type='text'
                             required
                         />
