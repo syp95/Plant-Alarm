@@ -24,8 +24,6 @@ const Home: NextPage = () => {
             <Seo title='Home' />
             <div>{disPlayName}님의 식물 알람</div>
             <article className='plant-main'>
-                <button className='plant-listbtn'>LIST</button>
-
                 <div className='plant-profile'>
                     <div className='plant-img'></div>
                 </div>

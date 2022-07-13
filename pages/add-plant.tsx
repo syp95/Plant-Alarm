@@ -1,7 +1,7 @@
 import { addDoc, collection } from 'firebase/firestore';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -13,10 +13,11 @@ import {
 } from '../atoms/atoms';
 import NumberPicker from '../components/NumberPicker';
 import Seo from '../components/Seo';
-import { fbDb } from '../firebase/firebase';
-
+import { fbDb, fbStorage } from '../firebase/firebase';
+import { v4 as uuidv4 } from 'uuid';
 import { AnimatePresence, motion, transform } from 'framer-motion';
 import { getLoginUserObj } from '../firebase/auth_service';
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 
 const OpenPicker = styled(motion.div)`
     width: 520px;
@@ -39,9 +40,16 @@ const AddPlant: NextPage = () => {
     }, []);
 
     const { register, handleSubmit, formState } = useForm();
+    const [image, setImage] = useState('');
 
     const onPlantSubmit = async (submitData: ISubmitData) => {
         let imageUrl = '';
+
+        if (image !== '') {
+            const fileRef = ref(fbStorage, `${userObj.uid}/${uuidv4()}`);
+            const response = await uploadString(fileRef, image, 'data_url');
+            imageUrl = await getDownloadURL(response.ref);
+        }
 
         const newPlantObj = {
             plantName: submitData.plantName,
@@ -58,6 +66,21 @@ const AddPlant: NextPage = () => {
                 router.push('/');
             })
             .catch((err) => console.log(err));
+    };
+
+    const onFileChange = (e: any) => {
+        const {
+            target: { files },
+        } = e;
+        const theFile = files[0];
+        const render = new FileReader();
+        render.onloadend = (finish: any) => {
+            setImage(finish.currentTarget.result);
+        };
+        render.readAsDataURL(theFile);
+    };
+    const onImageClear = () => {
+        setImage('');
     };
 
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
@@ -78,6 +101,13 @@ const AddPlant: NextPage = () => {
                 onSubmit={handleSubmit((data: any) => {
                     onPlantSubmit(data);
                 })}>
+                {image && (
+                    <div>
+                        <img style={{ width: '100px' }} src={image} />
+                        <button onClick={onImageClear}>Clear</button>
+                    </div>
+                )}
+                <input type='file' accept='image/*' onChange={onFileChange} />
                 <input
                     {...register('plantName', {
                         required: '식물 이름을 입력하세요.',
