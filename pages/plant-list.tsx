@@ -1,28 +1,37 @@
 import {
     collection,
     DocumentData,
-    getDoc,
     getDocs,
     orderBy,
     query,
-    QueryDocumentSnapshot,
     where,
 } from 'firebase/firestore';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
 import { userObjState } from '../atoms/atoms';
-import { fbDb } from '../firebaseConfig';
-import getUserObj from '../utils/getUserObj';
+import { getLoginUserObj } from '../firebase/auth_service';
+import { fbDb } from '../firebase/firebase';
 
 interface IPlantData {
     data?: DocumentData;
     id: string;
+    plantName?: string;
+    wateringDate?: number;
+    lastWateringDate?: string;
 }
 
 const PlantList: NextPage = () => {
+    const router = useRouter();
     const [userObj, setUserObj] = useRecoilState(userObjState);
+
+    useEffect(() => {
+        getLoginUserObj(setUserObj, router);
+        getMyPlant();
+    }, []);
+
     const [plantList, setPlantList] = useState<IPlantData[]>([]);
 
     const getMyPlant = async () => {
@@ -38,18 +47,10 @@ const PlantList: NextPage = () => {
                 ...plant.data(),
                 id: plant.id,
             };
-            console.log(plant.id, '>', plant.data());
 
             setPlantList((prev: IPlantData[]) => [plantObject, ...prev]);
         });
     };
-
-    console.log(plantList);
-
-    useEffect(() => {
-        getUserObj(setUserObj);
-        getMyPlant();
-    }, []);
 
     return (
         <>
@@ -59,7 +60,10 @@ const PlantList: NextPage = () => {
                     <>
                         <div key={idx}>
                             <div>{plant.plantName}</div>
-                            <div>{plant.wateringDate}</div>
+                            <div>{plant.wateringDate}일 마다 한번씩</div>
+                            <div>{plant.lastWateringDate}</div>
+                            <button>delete</button>
+                            <button>update</button>
                         </div>
                     </>
                 );

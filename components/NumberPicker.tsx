@@ -81,6 +81,7 @@ const NumUl = styled(motion.ul)`
     z-index: 19;
 `;
 const NumLi = styled.li`
+    color: white;
     font-size: 20px;
     line-height: 50px;
     user-select: none;

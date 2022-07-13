@@ -1,17 +1,11 @@
 import { NextPage } from 'next';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { updateProfile } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
-import { useEffect, useRef } from 'react';
-import { fbAuth } from '../firebaseConfig';
+import { useRef } from 'react';
+
 import { useRouter } from 'next/router';
 import Seo from '../components/Seo';
-
-interface IRegisterForm {
-    regId: string;
-    regPassword: string;
-    regPasswordConfirm: string;
-    regDisPlayName: string;
-}
+import AuthService, { IRegisterForm } from '../firebase/auth_service';
 
 const Register: NextPage = () => {
     const { register, handleSubmit, watch, formState } =
@@ -21,28 +15,23 @@ const Register: NextPage = () => {
     passwordRef.current = watch('regPassword');
 
     const router = useRouter();
+    const authService = new AuthService();
 
-    const onRegisterValid = (data: IRegisterForm) => {
-        createUserWithEmailAndPassword(
-            fbAuth,
-            data.regId,
-            data.regPassword,
-        ).then((res) => {
-            console.log(res.user);
-            updateProfile(res.user, {
-                displayName: data.regDisPlayName,
-            });
-            sessionStorage.setItem('PlantAlarmToken', res.user.accessToken);
-            router.push('/');
-        });
+    const goToApp = () => {
+        router.push('/');
     };
 
-    useEffect(() => {
-        let token = sessionStorage.getItem('PlantAlarmToken');
-        if (token) {
-            router.push('/');
-        }
-    }, []);
+    const onRegisterValid = (data: IRegisterForm) => {
+        authService
+            .emailRegister(data) //
+            .then((res) => {
+                updateProfile(res.user, {
+                    displayName: data.regDisPlayName,
+                });
+                goToApp();
+            });
+    };
+
     return (
         <>
             <Seo title='Register' />

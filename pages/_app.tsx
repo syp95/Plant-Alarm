@@ -13,12 +13,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { pathname } = router;
     const noNav = ['/login', '/register', '/add-plant'];
-    useEffect(() => {
-        let token = sessionStorage.getItem('PlantAlarmToken');
-        if (!token) {
-            router.push('/login');
-        }
-    }, []);
 
     const [queryClient] = useState(() => new QueryClient());
     return (

@@ -13,9 +13,10 @@ import {
 } from '../atoms/atoms';
 import NumberPicker from '../components/NumberPicker';
 import Seo from '../components/Seo';
-import { fbDb } from '../firebaseConfig';
-import getUserObj from '../utils/getUserObj';
+import { fbDb } from '../firebase/firebase';
+
 import { AnimatePresence, motion, transform } from 'framer-motion';
+import { getLoginUserObj } from '../firebase/auth_service';
 
 const OpenPicker = styled(motion.div)`
     width: 520px;
@@ -32,10 +33,9 @@ interface ISubmitData {
 
 const AddPlant: NextPage = () => {
     const router = useRouter();
-
     const [userObj, setUserObj] = useRecoilState(userObjState);
     useEffect(() => {
-        getUserObj(setUserObj);
+        getLoginUserObj(setUserObj, router);
     }, []);
 
     const { register, handleSubmit, formState } = useForm();
@@ -45,7 +45,7 @@ const AddPlant: NextPage = () => {
 
         const newPlantObj = {
             plantName: submitData.plantName,
-            wateringDate: pickNumber,
+            wateringDate: pick,
             lastWateringDate: submitData.lastWateringDate,
             createAt: Date.now(),
             creatorId: userObj.uid,
@@ -54,45 +54,55 @@ const AddPlant: NextPage = () => {
         await addDoc(collection(fbDb, 'plant'), newPlantObj)
             .then((res) => {
                 console.log('data gone');
-                setPickNumber(0);
+                setPick(0);
                 router.push('/');
             })
             .catch((err) => console.log(err));
     };
+
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
-    const [pickNumber, setPickNumber] = useRecoilState(pickNumberState);
+    const [pick, setPick] = useRecoilState(pickNumberState);
 
     const onNumberPicker = () => {
         setNumberPicker(true);
     };
+
+    const goToApp = () => {
+        router.push('/');
+    };
+
     return (
         <>
             <Seo title='ADD' />
             <form
                 onSubmit={handleSubmit((data: any) => {
                     onPlantSubmit(data);
-                })}>
+                })}
+            >
                 <input
                     {...register('plantName', {
                         required: '식물 이름을 입력하세요.',
                     })}
-                    placeholder='이름이 무엇인가요?'></input>
+                    placeholder='이름이 무엇인가요?'
+                ></input>
                 <input
                     placeholder='몇 일에 한번씩 물을 주나요?'
                     autoComplete='off'
                     onClick={onNumberPicker}
-                    onChange={() => pickNumber}
-                    value={pickNumber ? String(pickNumber) : ''}></input>
+                    onChange={() => pick}
+                    value={pick ? String(pick) : ''}
+                ></input>
 
                 <input
                     {...register('lastWateringDate', {
                         required: '',
                     })}
                     type='date'
-                    placeholder='마지막으로 물을 준 날이 언젠가요?'></input>
+                    placeholder='마지막으로 물을 준 날이 언젠가요?'
+                ></input>
                 <button>ADD</button>
             </form>
-            <button onClick={() => router.push('/')}>Cancel</button>
+            <button onClick={() => goToApp()}>Cancel</button>
 
             <AnimatePresence>
                 {numberPicker && (
@@ -100,7 +110,8 @@ const AddPlant: NextPage = () => {
                         initial={{ transform: 'translateY(300px)' }}
                         animate={{ transform: 'translateY(000px)' }}
                         exit={{ transform: 'translateY(300px)' }}
-                        transition={{ type: 'tween', duration: 0.7 }}>
+                        transition={{ type: 'tween', duration: 0.7 }}
+                    >
                         <NumberPicker />
                     </OpenPicker>
                 )}

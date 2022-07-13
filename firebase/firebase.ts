@@ -1,5 +1,9 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import {
+    FacebookAuthProvider,
+    getAuth,
+    GoogleAuthProvider,
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
@@ -13,7 +17,11 @@ const firebaseConfig = {
     measurementId: 'G-MVFFCELZP0',
 };
 
-export const fbApp = initializeApp(firebaseConfig);
-export const fbAuth = getAuth();
-export const fbStorage = getStorage();
-export const fbDb = getFirestore();
+const fbApp = initializeApp(firebaseConfig);
+const fbAuth = getAuth();
+const fbStorage = getStorage();
+const fbDb = getFirestore();
+const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
+
+export { fbApp, fbAuth, fbStorage, fbDb, googleProvider, facebookProvider };

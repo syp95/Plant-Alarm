@@ -2,20 +2,19 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 import { useRecoilState } from 'recoil';
-import { fbAuth } from '../firebaseConfig';
+import { fbAuth } from '../firebase/firebase';
 import { userObjState } from '../atoms/atoms';
-import getUserObj from '../utils/getUserObj';
+import { getLoginUserObj } from '../firebase/auth_service';
 
 const User: NextPage = () => {
     const router = useRouter();
     const onLogOutClick = () => {
-        sessionStorage.removeItem('PlantAlarmToken');
         fbAuth.signOut();
         router.push('/login');
     };
     const [userObj, setUserObj] = useRecoilState(userObjState);
     useEffect(() => {
-        getUserObj(setUserObj);
+        getLoginUserObj(setUserObj, router);
     }, []);
     return (
         <>

@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { userObjState } from '../atoms/atoms';
 
 import Seo from '../components/Seo';
-import getUserObj from '../utils/getUserObj';
+import { getLoginUserObj } from '../firebase/auth_service';
 
 const Home: NextPage = () => {
     const router = useRouter();
@@ -14,7 +14,7 @@ const Home: NextPage = () => {
         router.push('/add-plant');
     };
     useEffect(() => {
-        getUserObj(setUserObj);
+        getLoginUserObj(setUserObj, router);
     }, []);
 
     const disPlayNameConvert = () => {
