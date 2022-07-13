@@ -1,11 +1,13 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import NavBar from '../components/NavBar';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { fbAuth } from '../firebaseConfig';
+
 import { RecoilRoot } from 'recoil';
-import { ThemeProvider } from 'styled-components';
+
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -18,10 +20,19 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
     }, []);
 
+    const [queryClient] = useState(() => new QueryClient());
     return (
         <>
             <RecoilRoot>
-                <Component {...pageProps} />
+                <QueryClientProvider client={queryClient}>
+                    <Hydrate state={pageProps.dehydratedState}>
+                        <Component {...pageProps} />
+                    </Hydrate>
+                    <ReactQueryDevtools
+                        initialIsOpen={false}
+                        position='bottom-right'
+                    />
+                </QueryClientProvider>
             </RecoilRoot>
 
             <br></br>
