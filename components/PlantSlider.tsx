@@ -1,4 +1,26 @@
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import plantDefault from '../public/plant-default-image.jpg';
+import styled from 'styled-components';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
+const Img = styled.div`
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+`;
+
+const PlantSliderContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    background-color: white;
+    border-radius: 15px;
+`;
 
 const PlantSlider = ({ plantData }: any) => {
     const [waterRestDay, setWaterRestDay] = useState(0);
@@ -32,10 +54,28 @@ const PlantSlider = ({ plantData }: any) => {
 
     return (
         <>
-            <div>{plantData.plantName}</div>
-            <div>물 주기 : {plantData.wateringDate}</div>
-            <div>{waterRestDay} 일 남았습니다.</div>
-            <div>물이 {Math.round(waterRestPer)}% 정도 남아있어요.</div>
+            <PlantSliderContainer>
+                {plantData.imageUrl ? (
+                    <Img>
+                        <Image
+                            src={plantData.imageUrl}
+                            width={75}
+                            height={75}
+                        />
+                    </Img>
+                ) : (
+                    <Img>
+                        <Image src={plantDefault} width={75} height={75} />
+                    </Img>
+                )}
+                <div style={{ width: 50, height: 50 }}>
+                    <CircularProgressbar value={waterRestPer} />
+                </div>
+                <div>물이 {Math.round(waterRestPer)}% 정도 남아있어요.</div>
+                <div>{waterRestDay} 일 남았습니다.</div>
+                <div>{plantData.plantName}</div>
+                <div>물 주기 : {plantData.wateringDate}</div>
+            </PlantSliderContainer>
         </>
     );
 };

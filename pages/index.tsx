@@ -9,6 +9,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
+import styled from 'styled-components';
 import { userObjState } from '../atoms/atoms';
 import PlantSlider from '../components/PlantSlider';
 
@@ -17,6 +18,13 @@ import { getLoginUserObj } from '../firebase/auth_service';
 import { fbDb } from '../firebase/firebase';
 import { NameConverter } from '../utils/nameConverter';
 import { IPlantData } from './plant-list';
+
+const PlantList = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
 
 const Home: NextPage = () => {
     const router = useRouter();
@@ -52,10 +60,11 @@ const Home: NextPage = () => {
         <>
             <Seo title='Home' />
             <h2>{disPlayName}님의 식물 알람</h2>
-
-            {plantList.map((plant) => {
-                return <PlantSlider key={plant.id} plantData={plant} />;
-            })}
+            <PlantList>
+                {plantList.map((plant) => {
+                    return <PlantSlider key={plant.id} plantData={plant} />;
+                })}
+            </PlantList>
 
             <button onClick={addPlantClick}>ADD</button>
         </>
