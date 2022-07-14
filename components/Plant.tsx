@@ -7,11 +7,20 @@ import styled from 'styled-components';
 import { numberPickerState, pickNumberState } from '../atoms/atoms';
 import { fbDb } from '../firebase/firebase';
 import NumberPicker from './NumberPicker';
+import Image from 'next/image';
+import plantDefault from '../static/plant-default-image.jpg';
 
 const OpenPicker = styled(motion.div)`
     width: 520px;
     position: absolute;
     bottom: 0;
+`;
+
+const Img = styled.div`
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
 `;
 
 const Plant = ({ plantData }: any) => {
@@ -89,6 +98,24 @@ const Plant = ({ plantData }: any) => {
                 </>
             ) : (
                 <>
+                    {plantData.imageUrl ? (
+                        <Img>
+                            {/* <img
+                                src={plantData.imageUrl}
+                                style={{ width: '75px', height: '75px' }}
+                            /> */}
+                            <Image
+                                src={plantData.imageUrl}
+                                width={75}
+                                height={75}
+                            />
+                        </Img>
+                    ) : (
+                        <Img>
+                            <Image src={plantDefault} width={75} height={75} />
+                        </Img>
+                    )}
+
                     <div>{plantData.plantName}</div>
                     <div>{plantData.wateringDate}일 마다 한번씩</div>
                     <div>{plantData.lastWateringDate}</div>

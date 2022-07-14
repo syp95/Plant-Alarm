@@ -44,13 +44,11 @@ const AddPlant: NextPage = () => {
 
     const onPlantSubmit = async (submitData: ISubmitData) => {
         let imageUrl = '';
-
         if (image !== '') {
             const fileRef = ref(fbStorage, `${userObj.uid}/${uuidv4()}`);
             const response = await uploadString(fileRef, image, 'data_url');
             imageUrl = await getDownloadURL(response.ref);
         }
-
         const newPlantObj = {
             plantName: submitData.plantName,
             wateringDate: pick,
@@ -85,7 +83,6 @@ const AddPlant: NextPage = () => {
 
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
     const [pick, setPick] = useRecoilState(pickNumberState);
-
     const onNumberPicker = () => {
         setNumberPicker(true);
     };
