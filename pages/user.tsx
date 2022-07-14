@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import { fbAuth } from '../firebase/firebase';
 import { userObjState } from '../atoms/atoms';
 import { getLoginUserObj } from '../firebase/auth_service';
+import { NameConverter } from '../utils/nameConverter';
 
 const User: NextPage = () => {
     const router = useRouter();
@@ -18,9 +19,13 @@ const User: NextPage = () => {
     }, []);
     return (
         <>
-            <div>{userObj.email}</div>
+            <h2>{NameConverter(userObj.displayName)}님. 반갑습니다!</h2>
+            <div>
+                <span>이메일 : </span>
+                {userObj.email}
+            </div>
             <div>{userObj.displayName}</div>
-            <div>User</div>
+
             <button onClick={onLogOutClick}>LogOut</button>
         </>
     );

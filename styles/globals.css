@@ -5,6 +5,19 @@ body {
     margin: 0 auto;
 }
 
+html {
+    background-color: #292b37;
+}
+
+body {
+    margin-top: 20px;
+    background-color: #fec200;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 a {
     color: inherit;
     text-decoration: none;

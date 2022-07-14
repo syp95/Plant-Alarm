@@ -8,7 +8,7 @@ import { numberPickerState, pickNumberState } from '../atoms/atoms';
 import { fbDb } from '../firebase/firebase';
 import NumberPicker from './NumberPicker';
 import Image from 'next/image';
-import plantDefault from '../static/plant-default-image.jpg';
+import plantDefault from '../public/plant-default-image.jpg';
 
 const OpenPicker = styled(motion.div)`
     width: 520px;
@@ -100,10 +100,6 @@ const Plant = ({ plantData }: any) => {
                 <>
                     {plantData.imageUrl ? (
                         <Img>
-                            {/* <img
-                                src={plantData.imageUrl}
-                                style={{ width: '75px', height: '75px' }}
-                            /> */}
                             <Image
                                 src={plantData.imageUrl}
                                 width={75}

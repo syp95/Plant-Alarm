@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-interface IUserObj {
+export interface IUserObj {
     uid?: string | null;
     email?: string | null;
     displayName?: string | null;

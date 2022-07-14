@@ -50,21 +50,12 @@ const PlantList: NextPage = () => {
             }));
             setPlantList(plantArr);
         });
-
-        // plants.forEach((plant) => {
-        //     const plantObject: IPlantData = {
-        //         ...plant.data(),
-        //         id: plant.id,
-        //     };
-
-        //     setPlantList((prev: IPlantData[]) => [plantObject, ...prev]);
-        // });
     };
 
     return (
         <>
-            <div>List</div>
-            {plantList.map((plant, idx) => {
+            <h2>식물 리스트</h2>
+            {plantList.map((plant) => {
                 return <Plant key={plant.id} plantData={plant} />;
             })}
         </>

@@ -1,10 +1,11 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import NavBar from '../components/NavBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-
 import { RecoilRoot } from 'recoil';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -15,6 +16,24 @@ function MyApp({ Component, pageProps }: AppProps) {
     const noNav = ['/login', '/register', '/add-plant'];
 
     const [queryClient] = useState(() => new QueryClient());
+
+    useEffect(() => {
+        const start = () => {
+            NProgress.start();
+        };
+        const end = () => {
+            NProgress.done();
+        };
+        router.events.on('routeChangeStart', start);
+        router.events.on('routeChangeComplete', end);
+        router.events.on('routeChangeError', end);
+
+        return () => {
+            router.events.off('routeChangeStart', start);
+            router.events.off('routeChangeComplete', end);
+            router.events.off('routeChangeError', end);
+        };
+    }, []);
     return (
         <>
             <RecoilRoot>
