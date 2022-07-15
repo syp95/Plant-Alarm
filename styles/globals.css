@@ -1,8 +1,13 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.4/dist/web/static/pretendard.css');
+
 html,
 body {
     max-width: 520px;
     width: 100%;
+    height: 90%;
     margin: 0 auto;
+    padding: 20px;
+    overflow: scroll;
 }
 
 html {
@@ -13,9 +18,11 @@ body {
     margin-top: 20px;
     background-color: #fec200;
     border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+    font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
+        Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
+        'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', sans-serif;
 }
 
 a {
