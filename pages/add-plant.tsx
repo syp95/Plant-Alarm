@@ -20,9 +20,13 @@ import { getLoginUserObj } from '../firebase/auth_service';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 
 const OpenPicker = styled(motion.div)`
-    width: 300px;
+    width: 440px;
     position: absolute;
     bottom: 0;
+
+    @media (max-width: 400px) {
+        width: 300px;
+    }
 `;
 
 interface ISubmitData {
@@ -123,6 +127,8 @@ const AddPlant: NextPage = () => {
                 <input
                     {...register('lastWateringDate', {
                         required: '',
+                        validate: (value) =>
+                            new Date(value).getTime() < new Date().getTime(),
                     })}
                     type='date'
                     placeholder='마지막으로 물을 준 날이 언젠가요?'

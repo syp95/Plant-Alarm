@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { v1 } from 'uuid';
 
 export interface IUserObj {
     uid?: string | null;
@@ -7,17 +8,17 @@ export interface IUserObj {
 }
 
 const userObjState = atom<IUserObj>({
-    key: 'userObjState',
+    key: `userObjState/${v1()}`,
     default: { uid: '', email: '', displayName: null },
 });
 
 const numberPickerState = atom({
-    key: 'numberPcikerState',
+    key: `numberPcikerState/${v1()}`,
     default: false,
 });
 
 const pickNumberState = atom({
-    key: 'pickNumberState',
+    key: `pickNumberState/${v1()}`,
     default: 0,
 });
 

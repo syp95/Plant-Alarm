@@ -93,8 +93,14 @@ const PlantSlider = ({ plantData }: any) => {
                 <div style={{ width: 50, height: 50 }}>
                     <CircularProgressbar value={waterRestPer} />
                 </div>
-                <div>물이 {Math.round(waterRestPer)}% 정도 남아있어요.</div>
-                <div>{waterRestDay} 일 남았습니다.</div>
+                <div>
+                    {waterRestPer < 0
+                        ? '목 말라요'
+                        : `물이 ${Math.round(waterRestPer)}% 정도 남아있어요.`}
+                </div>
+                <div>
+                    {waterRestDay < 0 ? '' : `${waterRestDay} 일 남았습니다.`}
+                </div>
                 <div>{plantData.plantName}</div>
                 <div>{newLastWater}</div>
 
