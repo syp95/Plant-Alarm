@@ -27,7 +27,9 @@ const PlantSliderContainer = styled.div`
 const PlantSlider = ({ plantData }: any) => {
     const [waterRestDay, setWaterRestDay] = useState(0);
     const [waterRestPer, setWaterRestPer] = useState(0);
-    const [render, setRender] = useState(false);
+    const [newLastWater, setNewLastWater] = useState(
+        plantData.lastWateringDate,
+    );
     const PlantRef = doc(fbDb, 'plant', plantData.id);
 
     const getDateNow = () => {
@@ -46,6 +48,8 @@ const PlantSlider = ({ plantData }: any) => {
         await updateDoc(PlantRef, {
             lastWateringDate: dateNow,
         });
+
+        setNewLastWater(dateNow);
     };
 
     const getDateDiffNow = (lastDate: string, Water: string) => {
@@ -67,8 +71,8 @@ const PlantSlider = ({ plantData }: any) => {
     };
 
     useEffect(() => {
-        getDateDiffNow(plantData.lastWateringDate, plantData.wateringDate);
-    }, []);
+        getDateDiffNow(newLastWater, plantData.wateringDate);
+    }, [newLastWater]);
 
     return (
         <>
@@ -92,6 +96,7 @@ const PlantSlider = ({ plantData }: any) => {
                 <div>물이 {Math.round(waterRestPer)}% 정도 남아있어요.</div>
                 <div>{waterRestDay} 일 남았습니다.</div>
                 <div>{plantData.plantName}</div>
+                <div>{newLastWater}</div>
 
                 <button onClick={onWaterClick}>물 주기</button>
             </PlantSliderContainer>
