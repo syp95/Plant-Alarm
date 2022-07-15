@@ -20,7 +20,7 @@ import { getLoginUserObj } from '../firebase/auth_service';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 
 const OpenPicker = styled(motion.div)`
-    width: 520px;
+    width: 300px;
     position: absolute;
     bottom: 0;
 `;
@@ -97,7 +97,8 @@ const AddPlant: NextPage = () => {
             <form
                 onSubmit={handleSubmit((data: any) => {
                     onPlantSubmit(data);
-                })}>
+                })}
+            >
                 {image && (
                     <div>
                         <img style={{ width: '100px' }} src={image} />
@@ -109,20 +110,23 @@ const AddPlant: NextPage = () => {
                     {...register('plantName', {
                         required: '식물 이름을 입력하세요.',
                     })}
-                    placeholder='이름이 무엇인가요?'></input>
+                    placeholder='이름이 무엇인가요?'
+                ></input>
                 <input
                     placeholder='몇 일에 한번씩 물을 주나요?'
                     autoComplete='off'
                     onClick={onNumberPicker}
                     onChange={() => pick}
-                    value={pick ? String(pick) : ''}></input>
+                    value={pick ? String(pick) : ''}
+                ></input>
 
                 <input
                     {...register('lastWateringDate', {
                         required: '',
                     })}
                     type='date'
-                    placeholder='마지막으로 물을 준 날이 언젠가요?'></input>
+                    placeholder='마지막으로 물을 준 날이 언젠가요?'
+                ></input>
                 <button>ADD</button>
             </form>
             <button onClick={() => goToApp()}>Cancel</button>
@@ -133,7 +137,8 @@ const AddPlant: NextPage = () => {
                         initial={{ transform: 'translateY(300px)' }}
                         animate={{ transform: 'translateY(000px)' }}
                         exit={{ transform: 'translateY(300px)' }}
-                        transition={{ type: 'tween', duration: 0.7 }}>
+                        transition={{ type: 'tween', duration: 0.7 }}
+                    >
                         <NumberPicker />
                     </OpenPicker>
                 )}

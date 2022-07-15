@@ -114,7 +114,7 @@ const Plant = ({ plantData }: any) => {
 
                     <div>{plantData.plantName}</div>
                     <div>{plantData.wateringDate}일 마다 한번씩</div>
-                    <div>{plantData.lastWateringDate}</div>
+                    <div>{plantData.lastWateringDate}에 물을 줬어요</div>
                     <button onClick={onDelete}>delete</button>
                     <button onClick={toggleEditing}>update</button>
                 </>
@@ -125,7 +125,8 @@ const Plant = ({ plantData }: any) => {
                         initial={{ transform: 'translateY(300px)' }}
                         animate={{ transform: 'translateY(000px)' }}
                         exit={{ transform: 'translateY(300px)' }}
-                        transition={{ type: 'tween', duration: 0.7 }}>
+                        transition={{ type: 'tween', duration: 0.7 }}
+                    >
                         <NumberPicker />
                     </OpenPicker>
                 )}

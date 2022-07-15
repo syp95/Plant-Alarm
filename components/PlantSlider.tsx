@@ -4,6 +4,8 @@ import plantDefault from '../public/plant-default-image.jpg';
 import styled from 'styled-components';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { doc, updateDoc } from 'firebase/firestore';
+import { fbDb } from '../firebase/firebase';
 
 const Img = styled.div`
     width: 75px;
@@ -25,14 +27,30 @@ const PlantSliderContainer = styled.div`
 const PlantSlider = ({ plantData }: any) => {
     const [waterRestDay, setWaterRestDay] = useState(0);
     const [waterRestPer, setWaterRestPer] = useState(0);
+    const [render, setRender] = useState(false);
+    const PlantRef = doc(fbDb, 'plant', plantData.id);
 
-    const getDateDiffNow = (lastDate: string, Water: string) => {
+    const getDateNow = () => {
         let today = new Date();
         let year = today.getFullYear();
         let month = String(today.getMonth() + 1).padStart(2, '0');
         let day = String(today.getDate()).padStart(2, '0');
 
         let dateNow = `${year}-${month}-${day}`;
+        return dateNow;
+    };
+
+    const onWaterClick = async () => {
+        let dateNow = getDateNow();
+
+        await updateDoc(PlantRef, {
+            lastWateringDate: dateNow,
+        });
+    };
+
+    const getDateDiffNow = (lastDate: string, Water: string) => {
+        let dateNow = getDateNow();
+
         const currentDate = new Date(dateNow);
         const lastWateringDate = new Date(lastDate);
         const wateringDate = Number(Water) * (1000 * 60 * 60 * 24);
@@ -74,7 +92,8 @@ const PlantSlider = ({ plantData }: any) => {
                 <div>물이 {Math.round(waterRestPer)}% 정도 남아있어요.</div>
                 <div>{waterRestDay} 일 남았습니다.</div>
                 <div>{plantData.plantName}</div>
-                <div>물 주기 : {plantData.wateringDate}</div>
+
+                <button onClick={onWaterClick}>물 주기</button>
             </PlantSliderContainer>
         </>
     );
