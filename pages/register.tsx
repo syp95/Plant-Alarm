@@ -50,6 +50,7 @@ const Register: NextPage = () => {
                     })}
                     placeholder='이메일을 입력하세요.'
                 />
+                <div>{formState.errors?.regId?.message}</div>
                 <input
                     {...register('regDisPlayName', {
                         required: '이름을 입력해주세요.',
@@ -60,7 +61,7 @@ const Register: NextPage = () => {
                     })}
                     placeholder='이름을 입력하세요.'
                 />
-
+                <div>{formState.errors?.regDisPlayName?.message}</div>
                 <input
                     {...register('regPassword', {
                         required: '비밀번호를 입력해주세요.',
@@ -72,6 +73,7 @@ const Register: NextPage = () => {
                     type='password'
                     placeholder='비밀번호를 입력하세요.'
                 />
+                <div>{formState.errors?.regPassword?.message}</div>
                 <input
                     {...register('regPasswordConfirm', {
                         required: '비밀번호 확인을 입력해주세요.',
@@ -84,11 +86,10 @@ const Register: NextPage = () => {
                     type='password'
                     placeholder='비밀번호 확인'
                 />
+                <div>{formState.errors?.regPasswordConfirm?.message}</div>
                 <button>가입하기</button>
             </form>
-            <div>{formState.errors?.regId?.message}</div>
-            <div>{formState.errors?.regPassword?.message}</div>
-            <div>{formState.errors?.regPasswordConfirm?.message}</div>
+
             {formState.errors?.regPasswordConfirm?.type === 'validate' ? (
                 <div>비밀번호가 일치하지 않습니다.</div>
             ) : (

@@ -48,7 +48,7 @@ const LogIn: NextPage = () => {
             case 'FirebaseError: Firebase: Error (auth/wrong-password).':
                 return '이메일 혹은 비밀번호가 틀렸습니다.';
             default:
-                return '알 수 없는 오류 : 관리자에게 문의하세요.';
+                return '';
         }
     };
 
@@ -62,7 +62,9 @@ const LogIn: NextPage = () => {
     return (
         <>
             <Seo title='Login' />
-            <h4>LogIn</h4>
+
+            <h2>로그인</h2>
+            <h4>로그인하셔서 식물 알람을 이용해보세요</h4>
             <form onSubmit={loginHandleSubmit((data) => onEmailLogin(data))}>
                 <input
                     {...loginRegister('id', {

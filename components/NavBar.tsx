@@ -8,7 +8,7 @@ const NavContainer = styled.div`
     bottom: 8%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #fec200;
+    background-color: #292b37;
     padding: 10px;
     border-radius: 30px;
 `;
@@ -20,14 +20,14 @@ interface IRoute {
 const LinkA = styled.a<IRoute>`
     padding: 10px;
     cursor: pointer;
-    color: ${(props) => (props.routing ? 'white' : 'black')};
+    color: ${(props) => (props.routing ? '#fec200' : '#9d9d9d')};
 
     &:hover {
         color: white;
     }
 
     &:active {
-        color: red;
+        color: white;
     }
 `;
 

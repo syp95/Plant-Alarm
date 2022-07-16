@@ -4,8 +4,8 @@ html,
 body {
     max-width: 520px;
     width: 100%;
-    height: 90%;
-    margin: 0 auto;
+    height: 98%;
+    margin: auto;
     padding: 20px;
     overflow: scroll;
 }
@@ -15,8 +15,8 @@ html {
 }
 
 body {
-    margin-top: 20px;
-    background-color: #fec200;
+    margin: 20px 0;
+    background-color: #fdfdfd;
     border-radius: 15px;
 
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
@@ -32,4 +32,17 @@ a {
 
 * {
     box-sizing: border-box;
+}
+
+input {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-bottom: solid 1px #555555;
+    font-family: Pretendard;
+    margin-bottom: 10px;
+}
+
+input:focus {
+    outline: none;
 }
