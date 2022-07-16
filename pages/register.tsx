@@ -8,10 +8,9 @@ import Seo from '../components/Seo';
 import AuthService, { IRegisterForm } from '../firebase/auth_service';
 
 const Register: NextPage = () => {
-    const { register, handleSubmit, watch, formState } =
+    const { register, handleSubmit, watch, formState, setFocus } =
         useForm<IRegisterForm>();
 
-    const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<String | null>(null);
     passwordRef.current = watch('regPassword');
 
@@ -33,7 +32,7 @@ const Register: NextPage = () => {
             });
     };
     useEffect(() => {
-        emailRef.current?.focus();
+        setFocus('regId');
     }, []);
 
     return (
@@ -50,7 +49,6 @@ const Register: NextPage = () => {
                         },
                     })}
                     placeholder='이메일을 입력하세요.'
-                    ref={emailRef}
                 />
                 <input
                     {...register('regDisPlayName', {
