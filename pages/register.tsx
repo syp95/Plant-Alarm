@@ -39,7 +39,7 @@ const Register: NextPage = () => {
     return (
         <>
             <Seo title='Register' />
-            <h4>Register</h4>
+            <h2>회원가입</h2>
             <form onSubmit={handleSubmit((data) => onRegisterValid(data))}>
                 <input
                     {...register('regId', {
