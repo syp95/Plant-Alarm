@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Button from '../components/Button';
 
 import Seo from '../components/Seo';
 import AuthService, { ILoginForm } from '../firebase/auth_service';
@@ -82,9 +83,11 @@ const LogIn: NextPage = () => {
                         required: '비밀번호를 입력하세요.',
                     })}
                     placeholder='비밀번호를 입력하세요.'
+                    type='password'
                 />
                 <div>{loginFormState.errors.password?.message}</div>
-                <button>로그인</button>
+                <Button name='로그인' width='100%' />
+
                 <div>{firebaseErrorConvert()}</div>
             </form>
             <button onClick={onSocialLogin} name='Google'>
@@ -94,7 +97,11 @@ const LogIn: NextPage = () => {
                 페이스북 로그인
             </button>
 
-            <button onClick={() => router.push('/register')}>회원 가입</button>
+            <Button
+                onClick={() => router.push('/register')}
+                name='회원가입'
+                width='100%'
+            />
         </>
     );
 };

@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Seo from '../components/Seo';
 import AuthService, { IRegisterForm } from '../firebase/auth_service';
+import Button from '../components/Button';
 
 const Register: NextPage = () => {
     const { register, handleSubmit, watch, formState, setFocus } =
@@ -48,6 +49,7 @@ const Register: NextPage = () => {
                             message: '이메일을 입력해주세요.',
                         },
                     })}
+                    autoComplete='off'
                     placeholder='이메일을 입력하세요.'
                 />
                 <div>{formState.errors?.regId?.message}</div>
@@ -59,6 +61,7 @@ const Register: NextPage = () => {
                             message: '이름은 2자 이상입니다.',
                         },
                     })}
+                    autoComplete='off'
                     placeholder='이름을 입력하세요.'
                 />
                 <div>{formState.errors?.regDisPlayName?.message}</div>
@@ -71,6 +74,7 @@ const Register: NextPage = () => {
                         },
                     })}
                     type='password'
+                    autoComplete='off'
                     placeholder='비밀번호를 입력하세요.'
                 />
                 <div>{formState.errors?.regPassword?.message}</div>
@@ -84,10 +88,11 @@ const Register: NextPage = () => {
                         validate: (value) => value === passwordRef.current,
                     })}
                     type='password'
+                    autoComplete='off'
                     placeholder='비밀번호 확인'
                 />
                 <div>{formState.errors?.regPasswordConfirm?.message}</div>
-                <button>가입하기</button>
+                <Button name='가입하기' width='100%' />
             </form>
 
             {formState.errors?.regPasswordConfirm?.type === 'validate' ? (
@@ -96,9 +101,11 @@ const Register: NextPage = () => {
                 ''
             )}
             <div>이미 아이디가 있으신가요?</div>
-            <button onClick={() => router.push('/login')}>
-                로그인 페이지로
-            </button>
+            <Button
+                onClick={() => router.push('/login')}
+                name='로그인 페이지로'
+                width='100%'
+            />
         </>
     );
 };

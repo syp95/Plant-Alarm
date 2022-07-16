@@ -122,21 +122,27 @@ const AddPlant: NextPage = () => {
                         <button onClick={onImageClear}>Clear</button>
                     </div>
                 )}
-                <input type='file' accept='image/*' onChange={onFileChange} />
+                <input
+                    type='file'
+                    accept='image/*'
+                    autoComplete='off'
+                    onChange={onFileChange}
+                />
                 <input
                     {...register('plantName', {
                         required: '식물 이름을 입력하세요.',
                     })}
+                    autoComplete='off'
                     placeholder='이름이 무엇인가요?'
                     ref={plantNameRef}
-                ></input>
+                />
                 <input
-                    placeholder='몇 일에 한번씩 물을 주나요?'
                     autoComplete='off'
+                    placeholder='몇 일에 한번씩 물을 주나요?'
                     onClick={onNumberPicker}
                     onChange={() => pick}
                     value={pick ? String(pick) : ''}
-                ></input>
+                />
 
                 <input
                     {...register('lastWateringDate', {
@@ -145,8 +151,9 @@ const AddPlant: NextPage = () => {
                             new Date(value).getTime() < new Date().getTime(),
                     })}
                     type='date'
+                    autoComplete='off'
                     placeholder='마지막으로 물을 준 날이 언젠가요?'
-                ></input>
+                />
                 <button>ADD</button>
             </form>
             <button onClick={() => goToApp()}>Cancel</button>

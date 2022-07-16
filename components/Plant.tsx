@@ -83,6 +83,7 @@ const Plant = ({ plantData }: any) => {
                             value={newPlantName}
                             onChange={onChange}
                             type='text'
+                            autoComplete='off'
                             required
                         />
                         <input
@@ -93,7 +94,7 @@ const Plant = ({ plantData }: any) => {
                             type='text'
                             required
                         />
-                        <input type='submit' value='확인' />
+                        <button>확인</button>
                     </form>
                     <button onClick={toggleEditing}>취소</button>
                 </>
