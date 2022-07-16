@@ -1,17 +1,54 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
+
+const NavContainer = styled.div`
+    position: absolute;
+
+    bottom: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fec200;
+    padding: 10px;
+    border-radius: 30px;
+`;
+
+interface IRoute {
+    routing: boolean;
+}
+
+const LinkA = styled.a<IRoute>`
+    padding: 10px;
+    cursor: pointer;
+    color: ${(props) => (props.routing ? 'white' : 'black')};
+
+    &:hover {
+        color: white;
+    }
+
+    &:active {
+        color: red;
+    }
+`;
 
 export default function NavBar() {
+    const router = useRouter();
+
     return (
         <>
-            <Link href='/'>
-                <a>Home </a>
-            </Link>
-            <Link href='/plant-list'>
-                <a>List </a>
-            </Link>
-            <Link href='/user'>
-                <a>User </a>
-            </Link>
+            <NavContainer>
+                <Link href='/'>
+                    <LinkA routing={router.pathname === '/'}>Home</LinkA>
+                </Link>
+                <Link href='/plant-list'>
+                    <LinkA routing={router.pathname === '/plant-list'}>
+                        List
+                    </LinkA>
+                </Link>
+                <Link href='/user'>
+                    <LinkA routing={router.pathname === '/user'}>User</LinkA>
+                </Link>
+            </NavContainer>
         </>
     );
 }

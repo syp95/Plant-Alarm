@@ -5,19 +5,19 @@ import {
     query,
     where,
 } from 'firebase/firestore';
+import { getLoginUserObj } from '../firebase/auth_service';
+import { fbDb } from '../firebase/firebase';
+
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { userObjState } from '../atoms/atoms';
-import PlantSlider from '../components/PlantSlider';
+import { useRecoilState } from 'recoil';
+import { IPlantData, userObjState } from '../atoms/atoms';
 
+import PlantSlider from '../components/PlantSlider';
 import Seo from '../components/Seo';
-import { getLoginUserObj } from '../firebase/auth_service';
-import { fbDb } from '../firebase/firebase';
 import { NameConverter } from '../utils/nameConverter';
-import { IPlantData } from './plant-list';
 
 const PlantList = styled.div`
     display: flex;

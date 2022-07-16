@@ -1,6 +1,6 @@
-import { AnimatePresence, motion, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { numberPickerState, pickNumberState } from '../atoms/atoms';
 
@@ -88,7 +88,7 @@ const NumLi = styled.li`
 `;
 
 export default function NumberPicker() {
-    const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
+    const setNumberPicker = useSetRecoilState(numberPickerState);
     const [pnum, setPickNumber] = useRecoilState(pickNumberState);
 
     const [transNumber, setTransNumber] = useState(0);
@@ -99,10 +99,12 @@ export default function NumberPicker() {
     const NUMBER_HEIGHT = 50;
     const slideRange = transNumber * NUMBER_HEIGHT;
     const numberRef = useRef<HTMLUListElement>(null);
+
     const increaseNumber = () => {
         if (transNumber === 17) return;
         setTransNumber((prev) => prev + 1);
     };
+
     const decreaseNumber = () => {
         if (transNumber === -12) return;
         setTransNumber((prev) => prev - 1);
@@ -136,19 +138,6 @@ export default function NumberPicker() {
         }
     }, []);
 
-    // const y = useMotionValue(0);
-    // const [dragY, setDragY] = useState(0);
-
-    // useEffect(() => {
-    //     let drag = dragY / NUMBER_HEIGHT;
-    //     console.log(dragY);
-
-    //     console.log(drag);
-    //     let dragYNum = drag < 0 ? Math.floor(drag) : Math.ceil(drag);
-
-    //     setTransNumber((prev) => prev + dragYNum);
-    // }, [dragY]);
-
     return (
         <PickerContainer>
             <ButtonWrapper>
@@ -167,14 +156,7 @@ export default function NumberPicker() {
                 <Down onClick={decreaseNumber} />
             </PickerMask>
 
-            <NumUl
-                // style={{ y }}
-                // drag='y'
-                // dragTransition={{ bounceStiffness: 10, bounceDamping: 10 }}
-                //onDragEnd={(event, info) => {
-                // setDragY(info.offset.y);}}
-                ref={numberRef}
-            >
+            <NumUl ref={numberRef}>
                 {numbers.map((num) => (
                     <NumLi key={num}>{num}</NumLi>
                 ))}

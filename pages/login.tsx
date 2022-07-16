@@ -1,7 +1,7 @@
 import { User } from 'firebase/auth';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Seo from '../components/Seo';
@@ -10,11 +10,7 @@ import AuthService, { ILoginForm } from '../firebase/auth_service';
 const LogIn: NextPage = () => {
     const router = useRouter();
 
-    useEffect(() => {
-        authService.onAuthChange((user: User) => {
-            user && goToApp();
-        });
-    }, []);
+    const emailRef = useRef<HTMLInputElement>(null);
 
     const authService = new AuthService();
     const {
@@ -42,6 +38,13 @@ const LogIn: NextPage = () => {
             .catch((err) => console.log(`not login: ${err}`));
     };
 
+    useEffect(() => {
+        authService.onAuthChange((user: User) => {
+            user && goToApp();
+        });
+        emailRef.current?.focus();
+    }, []);
+
     return (
         <>
             <Seo title='Login' />
@@ -52,6 +55,7 @@ const LogIn: NextPage = () => {
                         required: '이메일을 입력하세요.',
                     })}
                     placeholder='이메일을 입력하세요.'
+                    ref={emailRef}
                 />
                 <input
                     {...loginRegister('password', {

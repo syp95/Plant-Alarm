@@ -27,6 +27,9 @@ const Plant = ({ plantData }: any) => {
     const [editing, setEditing] = useState(false);
     const [newPlantWater, setNewPlantWater] = useState(plantData.wateringDate);
     const [newPlantName, setNewPlantName] = useState(plantData.plantName);
+    const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
+    const [pick, setPick] = useRecoilState(pickNumberState);
+    const { register, handleSubmit, formState } = useForm();
     const PlantRef = doc(fbDb, 'plant', plantData.id);
 
     const onDelete = async () => {
@@ -41,12 +44,14 @@ const Plant = ({ plantData }: any) => {
         setEditing((prev) => !prev);
         setPick(0);
     };
+
     const onChange = (e: any) => {
         const {
             target: { value },
         } = e;
         setNewPlantName(value);
     };
+
     const onSubmit = async (data: any) => {
         let wateringNumber = pick;
         if (pick === 0) {
@@ -63,14 +68,10 @@ const Plant = ({ plantData }: any) => {
         setPick(0);
     };
 
-    const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
-    const [pick, setPick] = useRecoilState(pickNumberState);
-
     const onNumberPicker = () => {
         setNumberPicker(true);
     };
 
-    const { register, handleSubmit, formState } = useForm();
     return (
         <>
             {editing ? (

@@ -1,5 +1,14 @@
+import { DocumentData } from 'firebase/firestore';
 import { atom } from 'recoil';
 import { v1 } from 'uuid';
+
+export interface IPlantData {
+    data?: DocumentData;
+    id: string;
+    plantName?: string;
+    wateringDate?: number;
+    lastWateringDate?: string;
+}
 
 export interface IUserObj {
     uid?: string | null;

@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { updateProfile } from 'firebase/auth';
 import { useForm } from 'react-hook-form';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { useRouter } from 'next/router';
 import Seo from '../components/Seo';
@@ -11,6 +11,7 @@ const Register: NextPage = () => {
     const { register, handleSubmit, watch, formState } =
         useForm<IRegisterForm>();
 
+    const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<String | null>(null);
     passwordRef.current = watch('regPassword');
 
@@ -31,6 +32,9 @@ const Register: NextPage = () => {
                 goToApp();
             });
     };
+    useEffect(() => {
+        emailRef.current?.focus();
+    }, []);
 
     return (
         <>
@@ -46,6 +50,7 @@ const Register: NextPage = () => {
                         },
                     })}
                     placeholder='이메일을 입력하세요.'
+                    ref={emailRef}
                 />
                 <input
                     {...register('regDisPlayName', {

@@ -42,7 +42,7 @@ const PlantSlider = ({ plantData }: any) => {
         return dateNow;
     };
 
-    const onWaterClick = async () => {
+    const onWateringClick = async () => {
         let dateNow = getDateNow();
 
         await updateDoc(PlantRef, {
@@ -95,16 +95,18 @@ const PlantSlider = ({ plantData }: any) => {
                 </div>
                 <div>
                     {waterRestPer < 0
-                        ? '목 말라요'
+                        ? '목이 말라요'
                         : `물이 ${Math.round(waterRestPer)}% 정도 남아있어요.`}
                 </div>
                 <div>
-                    {waterRestDay < 0 ? '' : `${waterRestDay} 일 남았습니다.`}
+                    {waterRestDay < 0
+                        ? '물을 주세요'
+                        : `${waterRestDay} 일 남았습니다.`}
                 </div>
                 <div>{plantData.plantName}</div>
                 <div>{newLastWater}</div>
 
-                <button onClick={onWaterClick}>물 주기</button>
+                <button onClick={onWateringClick}>물 주기</button>
             </PlantSliderContainer>
         </>
     );

@@ -11,16 +11,6 @@ import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import styled from 'styled-components';
 
-const NavContainer = styled.div`
-    position: absolute;
-    bottom: 8%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #fec200;
-    padding: 10px;
-    border-radius: 30px;
-`;
-
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { pathname } = router;
@@ -60,13 +50,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             </RecoilRoot>
 
             <br></br>
-            {noNav.includes(pathname) ? (
-                ''
-            ) : (
-                <NavContainer>
-                    <NavBar />
-                </NavContainer>
-            )}
+            {noNav.includes(pathname) ? '' : <NavBar />}
         </>
     );
 }

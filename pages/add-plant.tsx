@@ -1,7 +1,7 @@
 import { addDoc, collection } from 'firebase/firestore';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -18,6 +18,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { AnimatePresence, motion, transform } from 'framer-motion';
 import { getLoginUserObj } from '../firebase/auth_service';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;
@@ -39,14 +41,17 @@ interface ISubmitData {
 const AddPlant: NextPage = () => {
     const router = useRouter();
     const [userObj, setUserObj] = useRecoilState(userObjState);
+    const plantNameRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
         getLoginUserObj(setUserObj, router);
+        plantNameRef.current?.focus();
     }, []);
 
     const { register, handleSubmit, formState } = useForm();
     const [image, setImage] = useState('');
 
     const onPlantSubmit = async (submitData: ISubmitData) => {
+        if (formState.isSubmitting) return;
         let imageUrl = '';
         if (image !== '') {
             const fileRef = ref(fbStorage, `${userObj.uid}/${uuidv4()}`);
@@ -95,6 +100,14 @@ const AddPlant: NextPage = () => {
         router.push('/');
     };
 
+    useEffect(() => {
+        if (formState.isSubmitting) {
+            NProgress.start();
+        } else {
+            NProgress.done();
+        }
+    }, [formState.isSubmitting]);
+
     return (
         <>
             <Seo title='ADD' />
@@ -115,6 +128,7 @@ const AddPlant: NextPage = () => {
                         required: '식물 이름을 입력하세요.',
                     })}
                     placeholder='이름이 무엇인가요?'
+                    ref={plantNameRef}
                 ></input>
                 <input
                     placeholder='몇 일에 한번씩 물을 주나요?'

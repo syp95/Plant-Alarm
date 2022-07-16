@@ -1,8 +1,5 @@
 import {
     collection,
-    deleteDoc,
-    DocumentData,
-    getDocs,
     onSnapshot,
     orderBy,
     query,
@@ -13,18 +10,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
-import { userObjState } from '../atoms/atoms';
+import { IPlantData, userObjState } from '../atoms/atoms';
 import Plant from '../components/Plant';
 import { getLoginUserObj } from '../firebase/auth_service';
 import { fbDb } from '../firebase/firebase';
-
-export interface IPlantData {
-    data?: DocumentData;
-    id: string;
-    plantName?: string;
-    wateringDate?: number;
-    lastWateringDate?: string;
-}
 
 const PlantList: NextPage = () => {
     const router = useRouter();
