@@ -6,6 +6,7 @@ import {
 } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyCIFW3pTnW8turZvnWH_nuOU8jDMXlk5aQ',
@@ -21,6 +22,7 @@ const fbApp = initializeApp(firebaseConfig);
 const fbAuth = getAuth();
 const fbStorage = getStorage();
 const fbDb = getFirestore();
+
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 

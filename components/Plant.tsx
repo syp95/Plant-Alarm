@@ -17,10 +17,11 @@ const OpenPicker = styled(motion.div)`
 `;
 
 const Img = styled.div`
-    width: 75px;
-    height: 75px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     overflow: hidden;
+    border: #ebebeb solid 1px;
 `;
 
 const Plant = ({ plantData }: any) => {
@@ -104,13 +105,17 @@ const Plant = ({ plantData }: any) => {
                         <Img>
                             <Image
                                 src={plantData.imageUrl}
-                                width={75}
-                                height={75}
+                                width={100}
+                                height={100}
                             />
                         </Img>
                     ) : (
                         <Img>
-                            <Image src={plantDefault} width={75} height={75} />
+                            <Image
+                                src={plantDefault}
+                                width={100}
+                                height={100}
+                            />
                         </Img>
                     )}
 

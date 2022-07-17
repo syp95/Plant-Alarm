@@ -9,7 +9,7 @@ import 'nprogress/nprogress.css';
 
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import styled from 'styled-components';
+import useNotification from '../hooks/usePushNotification';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -17,6 +17,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     const noNav = ['/login', '/register', '/add-plant'];
 
     const [queryClient] = useState(() => new QueryClient());
+    const triggerNotif = useNotification('Test Noti', {
+        body: 'notification body test',
+    });
 
     useEffect(() => {
         const start = () => {
@@ -41,6 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <QueryClientProvider client={queryClient}>
                     <Hydrate state={pageProps.dehydratedState}>
                         <Component {...pageProps} />
+                        <button onClick={triggerNotif}></button>
                     </Hydrate>
                     <ReactQueryDevtools
                         initialIsOpen={false}
