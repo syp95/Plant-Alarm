@@ -1,27 +1,47 @@
 import { User } from 'firebase/auth';
+import AuthService, { ILoginForm } from '../firebase/auth_service';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Button from '../components/Button';
 import Line from '../components/Line';
 import Seo from '../components/Seo';
-import Logo from '../public/Logo.png';
-import Image from 'next/image';
-import AuthService, { ILoginForm } from '../firebase/auth_service';
 import ErrorMessage from '../components/ErrorMessage';
+import Logo from '../public/Logo.png';
+import PlantAnimation from '../components/PlantAnimation';
+import LeafAnimation from '../components/LeafAnimation';
 
 const LoginContainer = styled.div`
     height: 100%;
-    margin-top: 100px;
-
+    margin-top: 90px;
+    position: relative;
     h2 {
         margin-top: 0;
     }
     h5 {
         margin-bottom: 10px;
     }
+`;
+
+const IntroContainer = styled.div`
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    left: -20px;
+    bottom: -110px;
+    opacity: 0.8;
+`;
+
+const LeafContainer = styled.div`
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    right: -10px;
+    top: -90px;
+    opacity: 0.5;
 `;
 
 const LogIn: NextPage = () => {
@@ -80,6 +100,9 @@ const LogIn: NextPage = () => {
         <>
             <Seo title='Login' />
             <LoginContainer>
+                <LeafContainer>
+                    <LeafAnimation />
+                </LeafContainer>
                 <Image src={Logo} width={60} height={60} />
                 <h2>로그인</h2>
                 <h4>로그인하셔서 식물 알람을 이용해보세요</h4>

@@ -10,10 +10,27 @@ import Button from '../components/Button';
 import Line from '../components/Line';
 import styled from 'styled-components';
 import ErrorMessage from '../components/ErrorMessage';
+import LeafAnimation from '../components/LeafAnimation';
+import PlantAnimation from '../components/PlantAnimation';
 
 const Container = styled.div`
     h5 {
         margin-bottom: 10px;
+    }
+`;
+
+const PlantContainer = styled.div`
+    position: absolute;
+    opacity: 0.5;
+    width: 150px;
+    height: 150px;
+    left: 50%;
+    transform: translate(-50%, 30%);
+
+    @media (max-width: 450px) {
+        width: 90px;
+        height: 90px;
+        transform: translate(-50%, 0%);
     }
 `;
 
@@ -126,6 +143,9 @@ const Register: NextPage = () => {
                     name='로그인 페이지로'
                     width='100%'
                 />
+                <PlantContainer>
+                    <PlantAnimation />
+                </PlantContainer>
             </Container>
         </>
     );
