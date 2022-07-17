@@ -29,11 +29,10 @@ const PlantList = styled.div`
 const Home: NextPage = () => {
     const router = useRouter();
     const [userObj, setUserObj] = useRecoilState(userObjState);
-    const addPlantClick = () => {
-        router.push('/add-plant');
-    };
 
     const [plantList, setPlantList] = useState<IPlantData[]>([]);
+
+    const disPlayName = NameConverter(userObj.displayName);
 
     const getMyPlant = async () => {
         const q = query(
@@ -50,12 +49,15 @@ const Home: NextPage = () => {
         });
     };
 
+    const addPlantClick = () => {
+        router.push('/add-plant');
+    };
+
     useEffect(() => {
         getLoginUserObj(setUserObj, router);
         getMyPlant();
     }, []);
 
-    const disPlayName = NameConverter(userObj.displayName);
     return (
         <>
             <Seo title='Home' />

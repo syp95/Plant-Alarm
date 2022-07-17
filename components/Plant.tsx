@@ -36,7 +36,6 @@ const Plant = ({ plantData }: any) => {
     const onDelete = async () => {
         const ok = window.confirm('정말 지우실건가요?');
         if (ok) {
-            console.log(plantData.id);
             await deleteDoc(PlantRef);
         }
     };

@@ -22,8 +22,17 @@ const fbApp = initializeApp(firebaseConfig);
 const fbAuth = getAuth();
 const fbStorage = getStorage();
 const fbDb = getFirestore();
-
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 
-export { fbApp, fbAuth, fbStorage, fbDb, googleProvider, facebookProvider };
+const fbMessage = getMessaging(fbApp);
+
+export {
+    fbApp,
+    fbAuth,
+    fbStorage,
+    fbDb,
+    fbMessage,
+    googleProvider,
+    facebookProvider,
+};

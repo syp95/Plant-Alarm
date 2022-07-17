@@ -1,7 +1,7 @@
 import { addDoc, collection } from 'firebase/firestore';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -20,6 +20,7 @@ import { getLoginUserObj } from '../firebase/auth_service';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+import Button from '../components/Button';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;
@@ -41,13 +42,8 @@ interface ISubmitData {
 const AddPlant: NextPage = () => {
     const router = useRouter();
     const [userObj, setUserObj] = useRecoilState(userObjState);
-    const plantNameRef = useRef<HTMLInputElement>(null);
-    useEffect(() => {
-        getLoginUserObj(setUserObj, router);
-        plantNameRef.current?.focus();
-    }, []);
 
-    const { register, handleSubmit, formState } = useForm();
+    const { register, handleSubmit, formState, setFocus } = useForm();
     const [image, setImage] = useState('');
 
     const onPlantSubmit = async (submitData: ISubmitData) => {
@@ -58,6 +54,7 @@ const AddPlant: NextPage = () => {
             const response = await uploadString(fileRef, image, 'data_url');
             imageUrl = await getDownloadURL(response.ref);
         }
+
         const newPlantObj = {
             plantName: submitData.plantName,
             wateringDate: pick,
@@ -101,6 +98,11 @@ const AddPlant: NextPage = () => {
     };
 
     useEffect(() => {
+        getLoginUserObj(setUserObj, router);
+        setFocus('plantName');
+    }, []);
+
+    useEffect(() => {
         if (formState.isSubmitting) {
             NProgress.start();
         } else {
@@ -134,7 +136,6 @@ const AddPlant: NextPage = () => {
                     })}
                     autoComplete='off'
                     placeholder='이름이 무엇인가요?'
-                    ref={plantNameRef}
                 />
                 <input
                     autoComplete='off'
@@ -154,7 +155,8 @@ const AddPlant: NextPage = () => {
                     autoComplete='off'
                     placeholder='마지막으로 물을 준 날이 언젠가요?'
                 />
-                <button>ADD</button>
+
+                <Button width='100%' name='추가하기' />
             </form>
             <button onClick={() => goToApp()}>Cancel</button>
 

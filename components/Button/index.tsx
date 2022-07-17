@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
 interface IButton {
-    name?: React.ReactNode;
+    name?: string;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     width?: string;
-    className?: string;
+
     image?: string;
 }
 
@@ -17,14 +17,13 @@ const Container = styled.button<IButton>`
     font-family: Pretendard;
     border: none;
     width: ${(props) => props.width};
-    background-image: ${(props) => (props.image ? `url${props.image}` : '')};
-    background-size: ${(props) => (props.image ? 'cover' : '')};
+
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
 `;
 
-const Button = ({ name, onClick, width, className, image }: IButton) => {
+const Button = ({ name, onClick, width, image }: IButton) => {
     const nameSwitch = () => {
         switch (name) {
             case 'Google':
@@ -37,12 +36,7 @@ const Button = ({ name, onClick, width, className, image }: IButton) => {
     };
 
     return (
-        <Container
-            onClick={onClick}
-            width={width}
-            className={className}
-            image={image}
-        >
+        <Container onClick={onClick} name={name} width={width} image={image}>
             {nameSwitch()}
         </Container>
     );
