@@ -10,17 +10,17 @@ import Seo from '../components/Seo';
 import Logo from '../public/Logo.png';
 import Image from 'next/image';
 import AuthService, { ILoginForm } from '../firebase/auth_service';
+import ErrorMessage from '../components/ErrorMessage';
 
 const LoginContainer = styled.div`
     height: 100%;
     margin-top: 100px;
 
-    div {
-        font-size: 14px;
-        margin-bottom: 10px;
-    }
     h2 {
         margin-top: 0;
+    }
+    h5 {
+        margin-bottom: 10px;
     }
 `;
 
@@ -44,7 +44,7 @@ const LogIn: NextPage = () => {
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => {
         authService //
-            .socialLogin(e.currentTarget.className)
+            .socialLogin(e.currentTarget.name)
             .then((data) => goToApp());
     };
 
@@ -96,7 +96,8 @@ const LogIn: NextPage = () => {
                         })}
                         placeholder='이메일을 입력하세요.'
                     />
-                    <div>{loginFormState.errors.id?.message}</div>
+                    <ErrorMessage error={loginFormState.errors.id?.message} />
+
                     <input
                         {...loginRegister('password', {
                             required: '비밀번호를 입력하세요.',
@@ -104,26 +105,21 @@ const LogIn: NextPage = () => {
                         placeholder='비밀번호를 입력하세요.'
                         type='password'
                     />
-                    <div>{loginFormState.errors.password?.message}</div>
+                    <ErrorMessage
+                        error={loginFormState.errors.password?.message}
+                    />
+
                     <Button name='로그인' width='100%' />
 
-                    <div>{firebaseErrorConvert()}</div>
+                    <ErrorMessage error={firebaseErrorConvert()} />
                 </form>
                 <Line />
-                <div>소셜 로그인</div>
-                <Button
-                    onClick={onSocialLogin}
-                    className='Google'
-                    width='40px'
-                />
+                <h5>소셜 로그인</h5>
+                <Button onClick={onSocialLogin} name='Google' width='40px' />
                 <span> </span>
-                <Button
-                    onClick={onSocialLogin}
-                    className='Facebook'
-                    width='40px'
-                />
+                <Button onClick={onSocialLogin} name='Facebook' width='40px' />
                 <Line />
-                <div>아이디가 없으신가요?</div>
+                <h5>아이디가 없으신가요?</h5>
                 <Button
                     onClick={() => router.push('/register')}
                     name='회원가입'

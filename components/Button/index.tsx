@@ -1,5 +1,6 @@
 import { faFacebook, faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import styled from 'styled-components';
 
 interface IButton {
@@ -24,25 +25,25 @@ const Container = styled.button<IButton>`
 `;
 
 const Button = ({ name, onClick, width, className, image }: IButton) => {
+    const nameSwitch = () => {
+        switch (name) {
+            case 'Google':
+                return <FontAwesomeIcon icon={faGoogle} size='lg' />;
+            case 'Facebook':
+                return <FontAwesomeIcon icon={faFacebook} size='lg' />;
+            default:
+                return name;
+        }
+    };
+
     return (
         <Container
-            type='button'
             onClick={onClick}
             width={width}
             className={className}
             image={image}
         >
-            {className === 'Google' ? (
-                <FontAwesomeIcon icon={faGoogle} size='lg' />
-            ) : (
-                ''
-            )}
-            {className === 'Facebook' ? (
-                <FontAwesomeIcon icon={faFacebook} size='lg' />
-            ) : (
-                ''
-            )}
-            {name}
+            {nameSwitch()}
         </Container>
     );
 };
