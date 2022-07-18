@@ -19,17 +19,38 @@ import PlantSlider from '../components/PlantSlider';
 import Seo from '../components/Seo';
 import { NameConverter } from '../utils/nameConverter';
 
-const PlantList = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+
+const StyledSlider = styled(Slider)`
+    .slick-list {
+        width: 1600px;
+        margin: 0 auto;
+    }
+    .slick-slide div {
+    }
+    .slicks-dots {
+        bottom: -50px;
+        margin-top: 200px;
+    }
+    .slick-track {
+        overflow-x: hidden;
+    }
 `;
+
+const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    centerMode: true,
+};
 
 const Home: NextPage = () => {
     const router = useRouter();
     const [userObj, setUserObj] = useRecoilState(userObjState);
-
     const [plantList, setPlantList] = useState<IPlantData[]>([]);
 
     const disPlayName = NameConverter(userObj.displayName);
@@ -56,17 +77,16 @@ const Home: NextPage = () => {
     useEffect(() => {
         getLoginUserObj(setUserObj, router);
         getMyPlant();
-    }, []);
+    }, [router]);
 
     return (
         <>
             <Seo title='Home' />
             <h2>{disPlayName}님의 식물 알람</h2>
-            <PlantList>
-                {plantList.map((plant) => {
-                    return <PlantSlider key={plant.id} plantData={plant} />;
-                })}
-            </PlantList>
+
+            {plantList.map((plant) => {
+                return <PlantSlider key={plant.id} plantData={plant} />;
+            })}
 
             <button onClick={addPlantClick}>ADD</button>
         </>

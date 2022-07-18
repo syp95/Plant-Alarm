@@ -1,3 +1,5 @@
+// 사용하지 않는 훅.. 공부용으로 남겨둠.
+
 const useNotification = (title: string, options: any) => {
     if (!Notification) {
         return;

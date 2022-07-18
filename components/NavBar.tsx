@@ -5,12 +5,12 @@ import styled from 'styled-components';
 const NavContainer = styled.div`
     position: absolute;
 
-    bottom: 8%;
+    bottom: 7%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #292b37;
+    background-color: #64b058;
     padding: 10px;
-    border-radius: 30px;
+    border-radius: 50px;
 `;
 
 interface IRoute {
@@ -20,14 +20,14 @@ interface IRoute {
 const LinkA = styled.a<IRoute>`
     padding: 10px;
     cursor: pointer;
-    color: ${(props) => (props.routing ? '#fec200' : '#9d9d9d')};
+    color: ${(props) => (props.routing ? '#345a2e' : '#fff')};
 
     &:hover {
-        color: white;
+        color: #192b16;
     }
 
     &:active {
-        color: white;
+        color: #192b16;
     }
 `;
 

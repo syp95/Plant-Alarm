@@ -26,15 +26,6 @@ const LoginContainer = styled.div`
     }
 `;
 
-const IntroContainer = styled.div`
-    position: absolute;
-    width: 90px;
-    height: 90px;
-    left: -20px;
-    bottom: -110px;
-    opacity: 0.8;
-`;
-
 const LeafContainer = styled.div`
     position: absolute;
     width: 100px;

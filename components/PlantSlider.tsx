@@ -21,11 +21,14 @@ const Img = styled.div`
 
 const PlantSliderContainer = styled.div`
     display: flex;
+    width: 400px;
+    height: 500px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 10px;
     background-color: white;
+    border: 1px solid #ebebeb;
     border-radius: 15px;
 `;
 
@@ -91,7 +94,7 @@ const PlantSlider = ({ plantData }: any) => {
     };
 
     const notifyLastDay = () => {
-        toast.success(`${plantData.plantName} 에게 물을 줘야해요.`, {
+        toast.success(`${plantData.plantName} 에게 물을 줘야해요!`, {
             position: toast.POSITION.TOP_CENTER,
         });
     };
