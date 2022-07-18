@@ -25,14 +25,16 @@ const fbDb = getFirestore();
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 
-const fbMessage = getMessaging(fbApp);
+const firebaseClientKey =
+    'BCMtzWOMipNKS61_-r-WGRCFawS1xqBv1tjoq1jyPJLY8ErYn0pUH9vUa5-g8s1CRwQHefXXpJedS2ClpqgIG2w';
+const clikey = firebaseClientKey;
 
 export {
     fbApp,
     fbAuth,
     fbStorage,
     fbDb,
-    fbMessage,
     googleProvider,
     facebookProvider,
+    clikey,
 };

@@ -10,12 +10,36 @@ import 'nprogress/nprogress.css';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
+import initToken from './fcm/messaging_get_token';
+import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { fbDb } from '../firebase/firebase';
+
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { pathname } = router;
     const noNav = ['/login', '/register', '/add-plant'];
 
     const [queryClient] = useState(() => new QueryClient());
+
+    const dbTokenData = collection(fbDb, 'tokens');
+
+    const initTokenWrapper = async () => {
+        let mytoken = await initToken();
+        const docprofile = doc(dbTokenData, 'my');
+        const data = await getDoc(docprofile);
+
+        if (data.exists()) {
+            updateDoc(doc(dbTokenData, 'my'), {
+                token: mytoken,
+                timestamp: Date.now(),
+            });
+        } else {
+            setDoc(doc(dbTokenData, 'my'), {
+                token: mytoken,
+                timestamp: Date.now(),
+            });
+        }
+    };
 
     useEffect(() => {
         const start = () => {
@@ -27,6 +51,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         router.events.on('routeChangeStart', start);
         router.events.on('routeChangeComplete', end);
         router.events.on('routeChangeError', end);
+
+        initTokenWrapper();
 
         return () => {
             router.events.off('routeChangeStart', start);
