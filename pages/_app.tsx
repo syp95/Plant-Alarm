@@ -10,9 +10,10 @@ import 'nprogress/nprogress.css';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-import initToken from './fcm/messaging_get_token';
+import initToken from '../firebase/fcm/messaging_get_token';
 import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { fbDb } from '../firebase/firebase';
+import useNotification from '../hooks/useNotification';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -21,25 +22,27 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const [queryClient] = useState(() => new QueryClient());
 
-    const dbTokenData = collection(fbDb, 'tokens');
+    //파이어 베이스 fcm 백그라운드 알림 .. 추후 express api 서버 만들어서 구현.
+    // const dbTokenData = collection(fbDb, 'tokens');
 
-    const initTokenWrapper = async () => {
-        let mytoken = await initToken();
-        const docprofile = doc(dbTokenData, 'my');
-        const data = await getDoc(docprofile);
+    // const initTokenWrapper = async () => {
+    //     let mytoken = await initToken();
+    //     const docprofile = doc(dbTokenData, 'my');
+    //     const data = await getDoc(docprofile);
 
-        if (data.exists()) {
-            updateDoc(doc(dbTokenData, 'my'), {
-                token: mytoken,
-                timestamp: Date.now(),
-            });
-        } else {
-            setDoc(doc(dbTokenData, 'my'), {
-                token: mytoken,
-                timestamp: Date.now(),
-            });
-        }
-    };
+    //     if (data.exists()) {
+    //         updateDoc(doc(dbTokenData, 'my'), {
+    //             token: mytoken,
+    //             timestamp: Date.now(),
+    //         });
+    //     } else {
+    //         setDoc(doc(dbTokenData, 'my'), {
+    //             token: mytoken,
+    //             timestamp: Date.now(),
+    //         });
+    //     }
+    // };
+    // useEffect(()=>{initTokenWrapper()},[]);
 
     useEffect(() => {
         const start = () => {
@@ -51,8 +54,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         router.events.on('routeChangeStart', start);
         router.events.on('routeChangeComplete', end);
         router.events.on('routeChangeError', end);
-
-        initTokenWrapper();
 
         return () => {
             router.events.off('routeChangeStart', start);

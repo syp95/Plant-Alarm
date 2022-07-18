@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import plantDefault from '../public/plant-default-image.jpg';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { doc, updateDoc } from 'firebase/firestore';
 import { fbDb } from '../firebase/firebase';
+
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Img = styled.div`
     width: 100px;
@@ -25,12 +29,39 @@ const PlantSliderContainer = styled.div`
     border-radius: 15px;
 `;
 
+const StyledToastContainer = styled(ToastContainer)`
+    top: 40px;
+
+    .Toastify__toast {
+        cursor: inherit;
+        color: #fff;
+        background: #64b058;
+        font-family: Pretendard;
+        /* background: rgba(255, 255, 255, 1); */
+        box-shadow: none;
+
+        min-height: 10px;
+    }
+    .Toastify__toast-body {
+        padding: 0;
+        margin: 0;
+    }
+    .Toastify__toast-icon svg {
+        fill: #ffffff;
+    }
+    .Toastify__close-button > svg {
+        fill: #ebebeb;
+    }
+`;
+
 const PlantSlider = ({ plantData }: any) => {
     const [waterRestDay, setWaterRestDay] = useState(0);
     const [waterRestPer, setWaterRestPer] = useState(0);
     const [newLastWater, setNewLastWater] = useState(
         plantData.lastWateringDate,
     );
+    const [waterRestOneDay, setWaterRestOneDay] = useState(false);
+    const [waterRestNow, setWaterRestNow] = useState(false);
     const PlantRef = doc(fbDb, 'plant', plantData.id);
 
     const getDateNow = () => {
@@ -53,6 +84,18 @@ const PlantSlider = ({ plantData }: any) => {
         setNewLastWater(dateNow);
     };
 
+    const notifyTomorrow = () => {
+        toast.success(`${plantData.plantName} 에게 물 줄 날이 하루 남았어요!`, {
+            position: toast.POSITION.TOP_CENTER,
+        });
+    };
+
+    const notifyLastDay = () => {
+        toast.success(`${plantData.plantName} 에게 물을 줘야해요.`, {
+            position: toast.POSITION.TOP_CENTER,
+        });
+    };
+
     const getDateDiffNow = (lastDate: string, Water: string) => {
         let dateNow = getDateNow();
 
@@ -69,6 +112,11 @@ const PlantSlider = ({ plantData }: any) => {
 
         setWaterRestDay(restDay);
         setWaterRestPer(restPer);
+        if (restDay === 1) {
+            setWaterRestOneDay(true);
+        } else if (restDay === 0) {
+            setWaterRestNow(true);
+        }
     };
 
     useEffect(() => {
@@ -106,7 +154,22 @@ const PlantSlider = ({ plantData }: any) => {
                 </div>
                 <div>{plantData.plantName}</div>
                 <div>{newLastWater}</div>
-
+                {waterRestOneDay ? (
+                    <div>
+                        <>{notifyTomorrow()}</>
+                        <StyledToastContainer />
+                    </div>
+                ) : (
+                    ''
+                )}
+                {waterRestNow ? (
+                    <div>
+                        <>{notifyLastDay()}</>
+                        <ToastContainer />
+                    </div>
+                ) : (
+                    ''
+                )}
                 <button onClick={onWateringClick}>물 주기</button>
             </PlantSliderContainer>
         </>

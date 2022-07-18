@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 const useNotification = (title: string, options: any) => {
     if (!Notification) {
         return;

@@ -1,5 +1,5 @@
 import { getMessaging, getToken } from 'firebase/messaging';
-import { clikey, fbApp } from '../../firebase/firebase';
+import { clikey, fbApp } from '../firebase';
 
 // 토큰 생성
 const initToken = async () => {
