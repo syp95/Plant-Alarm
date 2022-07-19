@@ -10,11 +10,6 @@ import 'nprogress/nprogress.css';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-import initToken from '../firebase/fcm/messaging_get_token';
-import { collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { fbDb } from '../firebase/firebase';
-import useNotification from '../hooks/useNotification';
-
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { pathname } = router;
@@ -61,6 +56,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             router.events.off('routeChangeError', end);
         };
     }, []);
+
     return (
         <>
             <RecoilRoot>

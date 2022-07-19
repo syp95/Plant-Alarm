@@ -21,7 +21,7 @@ const Img = styled.div`
 
 const PlantSliderContainer = styled.div`
     display: flex;
-    width: 400px;
+    width: 96%;
     height: 500px;
     flex-direction: column;
     justify-content: center;
@@ -30,31 +30,6 @@ const PlantSliderContainer = styled.div`
     background-color: white;
     border: 1px solid #ebebeb;
     border-radius: 15px;
-`;
-
-const StyledToastContainer = styled(ToastContainer)`
-    top: 40px;
-
-    .Toastify__toast {
-        cursor: inherit;
-        color: #fff;
-        background: #64b058;
-        font-family: Pretendard;
-        /* background: rgba(255, 255, 255, 1); */
-        box-shadow: none;
-
-        min-height: 10px;
-    }
-    .Toastify__toast-body {
-        padding: 0;
-        margin: 0;
-    }
-    .Toastify__toast-icon svg {
-        fill: #ffffff;
-    }
-    .Toastify__close-button > svg {
-        fill: #ebebeb;
-    }
 `;
 
 const PlantSlider = ({ plantData }: any) => {
@@ -90,12 +65,14 @@ const PlantSlider = ({ plantData }: any) => {
     const notifyTomorrow = () => {
         toast.success(`${plantData.plantName} 에게 물 줄 날이 하루 남았어요!`, {
             position: toast.POSITION.TOP_CENTER,
+            toastId: 'success1',
         });
     };
 
     const notifyLastDay = () => {
         toast.success(`${plantData.plantName} 에게 물을 줘야해요!`, {
             position: toast.POSITION.TOP_CENTER,
+            toastId: 'success1',
         });
     };
 
@@ -160,7 +137,7 @@ const PlantSlider = ({ plantData }: any) => {
                 {waterRestOneDay ? (
                     <div>
                         <>{notifyTomorrow()}</>
-                        <StyledToastContainer />
+                        <ToastContainer />
                     </div>
                 ) : (
                     ''

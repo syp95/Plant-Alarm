@@ -19,7 +19,7 @@ body {
     margin: 20px 0;
     background-color: #fdfdfd;
     border-radius: 15px;
-
+    overflow-x: hidden;
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
         Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
         'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji',

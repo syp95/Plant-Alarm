@@ -23,10 +23,14 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import CircleButton from '../components/CircleButton';
+
 const StyledSlider = styled(Slider)`
     .slick-list {
-        width: 1600px;
-        margin: 0 auto;
+        width: 440px;
+        margin: 0;
     }
     .slick-slide div {
     }
@@ -45,8 +49,29 @@ const settings = {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    centerMode: true,
 };
+
+const StyledToastContainer = styled(ToastContainer)`
+    top: 40px;
+
+    .Toastify__toast {
+        color: #fff;
+        background: #64b058;
+        font-family: Pretendard;
+        box-shadow: none;
+        min-height: 10px;
+    }
+    .Toastify__toast-body {
+        padding: 0;
+        margin: 0;
+    }
+    .Toastify__toast-icon svg {
+        fill: #ffffff;
+    }
+    .Toastify__close-button > svg {
+        fill: #ebebeb;
+    }
+`;
 
 const Home: NextPage = () => {
     const router = useRouter();
@@ -83,12 +108,18 @@ const Home: NextPage = () => {
         <>
             <Seo title='Home' />
             <h2>{disPlayName}님의 식물 알람</h2>
+            <StyledSlider {...settings}>
+                {plantList.map((plant) => {
+                    return <PlantSlider key={plant.id} plantData={plant} />;
+                })}
+            </StyledSlider>
+            <StyledToastContainer />
 
-            {plantList.map((plant) => {
-                return <PlantSlider key={plant.id} plantData={plant} />;
-            })}
-
-            <button onClick={addPlantClick}>ADD</button>
+            <CircleButton
+                width='55px'
+                onClick={addPlantClick}
+                name='식물 추가'
+            />
         </>
     );
 };
