@@ -10,6 +10,7 @@ import { fbDb } from '../firebase/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import CircleButton from './CircleButton';
 
 const Img = styled.div`
     width: 100px;
@@ -30,6 +31,21 @@ const PlantSliderContainer = styled.div`
     background-color: white;
     border: 1px solid #ebebeb;
     border-radius: 15px;
+    @media (max-width: 430px) {
+        width: 330px;
+    }
+    @media (max-width: 414px) {
+        width: 315px;
+    }
+    @media (max-width: 400px) {
+        width: 290px;
+    }
+    @media (max-width: 375px) {
+        width: 275px;
+    }
+    @media (max-width: 360px) {
+        width: 265px;
+    }
 `;
 
 const PlantSlider = ({ plantData }: any) => {
@@ -132,8 +148,17 @@ const PlantSlider = ({ plantData }: any) => {
                         ? '물을 주세요'
                         : `${waterRestDay} 일 남았습니다.`}
                 </div>
+
+                <h4>이름</h4>
                 <div>{plantData.plantName}</div>
-                <div>{newLastWater}</div>
+                <br />
+                <div>{newLastWater}일에 물을 줬어요.</div>
+                <br />
+                <CircleButton
+                    onClick={onWateringClick}
+                    name='물주기'
+                    width='55px'
+                />
                 {waterRestOneDay ? (
                     <div>
                         <>{notifyTomorrow()}</>
@@ -150,7 +175,6 @@ const PlantSlider = ({ plantData }: any) => {
                 ) : (
                     ''
                 )}
-                <button onClick={onWateringClick}>물 주기</button>
             </PlantSliderContainer>
         </>
     );
