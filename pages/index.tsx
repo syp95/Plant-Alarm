@@ -86,11 +86,15 @@ const SliderMoveBtnContainer = styled.div`
     transform: translateY(-290px);
     button {
         position: absolute;
-        width: 5px;
+        width: 3px;
         height: 100px;
         border: none;
-        border-radius: 5px;
+        border-radius: 10px;
         background-color: rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: rgba(0, 0, 0, 0.4);
     }
     button:first-child {
         left: -10px;
@@ -145,6 +149,7 @@ const Home: NextPage = () => {
         <>
             <Seo title='Home' />
             <h2>{disPlayName}님의 식물 알람</h2>
+
             <SliderContainer>
                 <StyledSlider ref={setSliderRef} {...settings}>
                     {plantList.map((plant) => {

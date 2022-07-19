@@ -5,16 +5,20 @@ import styled from 'styled-components';
 import { numberPickerState, pickNumberState } from '../atoms/atoms';
 
 const Submit = styled.button`
+    font-family: Pretendard;
+    font-weight: 600;
     font-size: 16px;
     position: absolute;
     background-color: transparent;
     border: none;
-    color: darkblue;
+    color: #4c8144;
     right: 2px;
     top: 2px;
     user-select: none;
 `;
 const Cancel = styled.button`
+    font-family: Pretendard;
+    font-weight: 600;
     font-size: 16px;
     position: absolute;
     background-color: transparent;
@@ -30,14 +34,14 @@ const ButtonWrapper = styled.div`
     height: 10%;
     width: 100%;
     opacity: 1;
-    background-color: #000;
+    background-color: #fff;
     z-index: 3;
 `;
 const PickerContainer = styled(motion.div)`
     width: 100%;
     height: 300px;
     overflow: hidden;
-    background-color: black;
+    background-color: #fff;
 
     ul {
         list-style: none;
@@ -81,7 +85,7 @@ const NumUl = styled(motion.ul)`
     z-index: 19;
 `;
 const NumLi = styled.li`
-    color: white;
+    color: #000;
     font-size: 20px;
     line-height: 50px;
     user-select: none;

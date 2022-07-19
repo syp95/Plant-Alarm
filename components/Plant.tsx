@@ -9,19 +9,122 @@ import { fbDb } from '../firebase/firebase';
 import NumberPicker from './NumberPicker';
 import Image from 'next/image';
 import plantDefault from '../public/plant-default-image.jpg';
+import CircleButton from './CircleButton';
 
 const OpenPicker = styled(motion.div)`
-    width: 520px;
+    width: 440px;
     position: absolute;
     bottom: 0;
+    @media (max-width: 440px) {
+        width: 300px;
+    }
 `;
 
 const Img = styled.div`
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     overflow: hidden;
-    border: #ebebeb solid 1px;
+    border: #ebebeb solid 2px;
+`;
+
+const PlantContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #ebebeb;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    padding: 10px;
+    @media (max-width: 440px) {
+        button {
+            width: 45px;
+            height: 45px;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+    }
+`;
+
+const PlantTextContainer = styled.div`
+    font-size: 14px;
+    line-height: 24px;
+    b {
+        font-weight: 600;
+    }
+    @media (max-width: 440px) {
+        margin-left: 10px;
+        font-size: 12px;
+        line-height: 20px;
+    }
+`;
+
+const PlantEditContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    padding: 30px 0px 10px 0px;
+    background-color: #fff;
+
+    form {
+        display: flex;
+        flex-direction: row;
+
+        align-items: center;
+        h4 {
+            font-size: 14px;
+            position: absolute;
+            margin: 0;
+            margin-bottom: 10px;
+            transform: translate(0px, -15px);
+        }
+        h3 {
+            font-size: 14px;
+            position: absolute;
+            margin: 0;
+            margin-bottom: 10px;
+            transform: translate(165px, -15px);
+        }
+    }
+    input {
+        width: 40%;
+        margin-right: 10px;
+    }
+
+    @media (max-width: 440px) {
+        input {
+            width: 37%;
+        }
+        form {
+            h3 {
+                transform: translate(115px, -15px);
+            }
+        }
+        button {
+            width: 45px;
+            height: 45px;
+            font-size: 12px;
+        }
+    }
+    @media (max-width: 390px) {
+        input {
+            width: 35%;
+        }
+        form {
+            h3 {
+                transform: translate(100px, -15px);
+            }
+        }
+    }
+    @media (max-width: 360px) {
+        form {
+            h3 {
+                transform: translate(90px, -15px);
+            }
+        }
+    }
 `;
 
 const Plant = ({ plantData }: any) => {
@@ -76,53 +179,85 @@ const Plant = ({ plantData }: any) => {
         <>
             {editing ? (
                 <>
-                    <form onSubmit={handleSubmit((data) => onSubmit(data))}>
-                        <span>물 주기</span>
-                        <input
-                            {...register('name')}
-                            value={newPlantName}
-                            onChange={onChange}
-                            type='text'
-                            autoComplete='off'
-                            required
-                        />
-                        <input
-                            autoComplete='off'
-                            onClick={onNumberPicker}
-                            onChange={() => pick}
-                            value={pick ? pick : newPlantWater}
-                            type='text'
-                            required
-                        />
-                        <button>확인</button>
-                    </form>
-                    <button onClick={toggleEditing}>취소</button>
+                    <PlantEditContainer>
+                        <form onSubmit={handleSubmit((data) => onSubmit(data))}>
+                            <h4>이름</h4>
+                            <input
+                                {...register('name')}
+                                value={newPlantName}
+                                onChange={onChange}
+                                type='text'
+                                autoComplete='off'
+                                required
+                            />
+                            <h3>물주기</h3>
+                            <input
+                                autoComplete='off'
+                                onClick={onNumberPicker}
+                                onChange={() => pick}
+                                value={pick ? pick : newPlantWater}
+                                required
+                            />
+
+                            <CircleButton name='확인' width='50px' />
+                        </form>
+                        <div>
+                            <CircleButton
+                                onClick={toggleEditing}
+                                width='50px'
+                                name='취소'
+                            />
+                        </div>
+                    </PlantEditContainer>
                 </>
             ) : (
                 <>
-                    {plantData.imageUrl ? (
-                        <Img>
-                            <Image
-                                src={plantData.imageUrl}
-                                width={100}
-                                height={100}
-                            />
-                        </Img>
-                    ) : (
-                        <Img>
-                            <Image
-                                src={plantDefault}
-                                width={100}
-                                height={100}
-                            />
-                        </Img>
-                    )}
-
-                    <div>{plantData.plantName}</div>
-                    <div>{plantData.wateringDate}일 마다 한번씩</div>
-                    <div>{plantData.lastWateringDate}에 물을 줬어요</div>
-                    <button onClick={onDelete}>delete</button>
-                    <button onClick={toggleEditing}>update</button>
+                    <PlantContainer>
+                        <div>
+                            {plantData.imageUrl ? (
+                                <Img>
+                                    <Image
+                                        src={plantData.imageUrl}
+                                        width={90}
+                                        height={90}
+                                    />
+                                </Img>
+                            ) : (
+                                <Img>
+                                    <Image
+                                        src={plantDefault}
+                                        width={90}
+                                        height={90}
+                                    />
+                                </Img>
+                            )}
+                        </div>
+                        <PlantTextContainer>
+                            <div>
+                                이름 : <b>{plantData.plantName}</b>
+                            </div>
+                            <div>
+                                <b>{plantData.wateringDate}일</b> 마다 한번씩
+                            </div>
+                            <div>
+                                <b>{plantData.lastWateringDate}</b> 에 물을
+                                줬어요
+                            </div>
+                        </PlantTextContainer>
+                        <div>
+                            <CircleButton
+                                onClick={toggleEditing}
+                                width='50px'
+                                name='수정'
+                            ></CircleButton>
+                            <span> </span>
+                            <CircleButton
+                                onClick={onDelete}
+                                width='50px'
+                                name='삭제'
+                            ></CircleButton>
+                        </div>
+                    </PlantContainer>
                 </>
             )}
             <AnimatePresence>

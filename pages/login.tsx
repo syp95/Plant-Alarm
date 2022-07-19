@@ -11,7 +11,7 @@ import Line from '../components/Line';
 import Seo from '../components/Seo';
 import ErrorMessage from '../components/ErrorMessage';
 import Logo from '../public/Logo.png';
-import PlantAnimation from '../components/PlantAnimation';
+
 import LeafAnimation from '../components/LeafAnimation';
 
 const LoginContainer = styled.div`

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import plantDefault from '../public/plant-default-image.jpg';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { doc, updateDoc } from 'firebase/firestore';
@@ -13,11 +13,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import CircleButton from './CircleButton';
 
 const Img = styled.div`
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     overflow: hidden;
-    border: #ebebeb solid 1px;
+    border: #ebebeb solid 2px;
 `;
 
 const PlantSliderContainer = styled.div`
@@ -29,7 +29,7 @@ const PlantSliderContainer = styled.div`
     align-items: center;
     margin: 10px;
     background-color: white;
-    border: 1px solid #ebebeb;
+    border: 2px solid #ebebeb;
     border-radius: 15px;
     @media (max-width: 430px) {
         width: 330px;
@@ -45,6 +45,30 @@ const PlantSliderContainer = styled.div`
     }
     @media (max-width: 360px) {
         width: 265px;
+    }
+`;
+
+const ProgressContainer = styled.div`
+    position: absolute;
+    top: 35px;
+    width: 230px;
+    height: 230px;
+`;
+
+const WateringTextContainer = styled.div`
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
+`;
+
+const PlantNameContainer = styled.div`
+    text-align: center;
+    h4 {
+        margin-bottom: 10px;
+    }
+    div {
+        margin-bottom: 20px;
     }
 `;
 
@@ -126,34 +150,37 @@ const PlantSlider = ({ plantData }: any) => {
                     <Img>
                         <Image
                             src={plantData.imageUrl}
-                            width={100}
-                            height={100}
+                            width={200}
+                            height={200}
                         />
                     </Img>
                 ) : (
                     <Img>
-                        <Image src={plantDefault} width={100} height={100} />
+                        <Image src={plantDefault} width={200} height={200} />
                     </Img>
                 )}
-                <div style={{ width: 50, height: 50 }}>
-                    <CircularProgressbar value={waterRestPer} />
-                </div>
-                <div>
-                    {waterRestPer < 0
-                        ? '목이 말라요'
-                        : `물이 ${Math.round(waterRestPer)}% 정도 남아있어요.`}
-                </div>
-                <div>
-                    {waterRestDay < 0
-                        ? '물을 주세요'
-                        : `${waterRestDay} 일 남았습니다.`}
-                </div>
+                <ProgressContainer>
+                    <CircularProgressbar strokeWidth={2} value={waterRestPer} />
+                </ProgressContainer>
 
-                <h4>이름</h4>
-                <div>{plantData.plantName}</div>
-                <br />
-                <div>{newLastWater}일에 물을 줬어요.</div>
-                <br />
+                <WateringTextContainer>
+                    <div>
+                        {waterRestPer < 0
+                            ? '목이 말라요'
+                            : `물이 ${Math.round(waterRestPer)}% 남아있어요.`}
+                    </div>
+                    <div>{newLastWater}일에 마지막으로 물을 줬어요.</div>
+                    <div>
+                        {waterRestDay < 0
+                            ? '물을 주세요'
+                            : `물 주기 까지 ${waterRestDay} 일 남았습니다.`}
+                    </div>
+                </WateringTextContainer>
+                <PlantNameContainer>
+                    <h4>이름</h4>
+                    <div>{plantData.plantName}</div>
+                </PlantNameContainer>
+
                 <CircleButton
                     onClick={onWateringClick}
                     name='물주기'

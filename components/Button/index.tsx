@@ -17,10 +17,16 @@ const Container = styled.button<IButton>`
     font-family: Pretendard;
     border: none;
     width: ${(props) => props.width};
-
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
+
+    :hover {
+        background-color: #59994f;
+    }
+    :active {
+        background-color: #4c8144;
+    }
 `;
 
 const Button = ({ name, onClick, width, image }: IButton) => {

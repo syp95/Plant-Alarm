@@ -16,8 +16,14 @@ const Container = styled.button<ICircleButton>`
     border-radius: 50%;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
     padding: 10px;
-
     cursor: pointer;
+
+    :hover {
+        background-color: #59994f;
+    }
+    :active {
+        background-color: #4c8144;
+    }
 `;
 
 const CircleButton = ({ name, onClick, width }: ICircleButton) => {
