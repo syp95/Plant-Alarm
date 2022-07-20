@@ -15,6 +15,34 @@ import {
     query,
     where,
 } from 'firebase/firestore';
+import styled from 'styled-components';
+
+const UserContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 20px;
+    border: 2px solid #ebebeb;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 20px;
+`;
+
+const FeedbackContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 20px;
+    border: 2px solid #ebebeb;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 20px;
+    h4 {
+        font-size: 16px;
+        margin-top: 0px;
+        margin-bottom: 10px;
+    }
+`;
 
 const User: NextPage = () => {
     const [userObj, setUserObj] = useRecoilState(userObjState);
@@ -86,31 +114,57 @@ const User: NextPage = () => {
         <>
             <Seo title='회원정보' />
             <h2>{NameConverter(userObj.displayName)}님. 반갑습니다!</h2>
-            <div>
-                이름: <b>{userObj.displayName}</b>
-            </div>
-            <div>
-                이메일 :<b>{userObj.email}</b>
-            </div>
+            <UserContainer>
+                <div>
+                    이름: <b>{userObj.displayName}</b>
+                </div>
+                <div>
+                    이메일 :<b>{userObj.email}</b>
+                </div>
+                <br />
+                <div>
+                    <div>
+                        식물 알람을 시작한 날짜 :<b> {createDateConvert()}</b>
+                    </div>
+                    <div>
+                        함께하는 식물 수 : <b>{plantList.length}</b>
+                    </div>
+                </div>
+            </UserContainer>
             <br />
-            <div>
+            <FeedbackContainer>
+                <h4>식물 알람 : v1.0.0</h4>
+                <div>- 로그인 및 회원가입 기능</div>
+                <div>- 식물 추가 및 알람 설정 기능</div>
+                <div>- 알람 설정 시 시간 계산 및 어플 내부 알림</div>
+                <div>- 물 주기 기능 시 시간 리셋</div>
+                <br />
+                <br />
+                <h4>안내사항</h4>
                 <div>
-                    식물 알람을 시작한 날짜 :<b> {createDateConvert()}</b>
+                    불편한 사항, 피드백, 기능 추가 문의는 <br />
+                    <b>
+                        instagram : sy95_055
+                        <br /> E-mail : sy95_055@naver.com
+                        <br />
+                    </b>{' '}
+                    으로 부탁드립니다.
+                    <br />
+                    감사합니다!
                 </div>
+                <br />
+                <br />
+                <h4>Stack</h4>
                 <div>
-                    함께하는 식물 수 : <b>{plantList.length}</b>
+                    Front : NextJs / Recoil / ReactQuery / styled-components{' '}
+                    <br /> Back : Firebase
                 </div>
-            </div>
+            </FeedbackContainer>
+            <br />
             <br />
             <Button onClick={onLogOutClick} name='로그아웃' width='100%' />
             <br />
             <br />
-            <div>
-                불편한 사항, 피드백, 기능 추가 문의는 <br />
-                01035213095(박승영) 으로 해주세요.
-                <br />
-                감사합니다!
-            </div>
         </>
     );
 };
