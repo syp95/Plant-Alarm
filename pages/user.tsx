@@ -136,7 +136,8 @@ const User: NextPage = () => {
                 <h4>식물 알람 : v1.0.0</h4>
                 <div>- 로그인 및 회원가입 기능</div>
                 <div>- 식물 추가 및 알람 설정 기능</div>
-                <div>- 알람 설정 시 시간 계산 및 어플 내부 알림</div>
+                <div>- 알람 설정 시 시간 계산</div>
+                <div>- 1일, 당일시 홈 화면 알림 기능</div>
                 <div>- 물 주기 기능 시 시간 리셋</div>
                 <br />
                 <br />
@@ -147,7 +148,7 @@ const User: NextPage = () => {
                         instagram : sy95_055
                         <br /> E-mail : sy95_055@naver.com
                         <br />
-                    </b>{' '}
+                    </b>
                     으로 부탁드립니다.
                     <br />
                     감사합니다!

@@ -103,15 +103,30 @@ const SliderMoveBtnContainer = styled.div`
         right: -10px;
     }
 `;
+const NoPlantContainer = styled.div`
+    background-color: white;
+    margin-top: 40px;
+    width: 100%;
+    height: 300px;
+    border: 2px solid #ebebeb;
+    border-radius: 20px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+`;
 
 const WeatherContainer = styled.div`
     background-color: white;
     margin-top: 40px;
     width: 100%;
     height: 130px;
-    border: 1px solid #ebebeb;
+    border: 2px solid #ebebeb;
     border-radius: 20px;
+    display: flex;
     text-align: center;
+    justify-content: center;
+    align-items: center;
 `;
 
 const Home: NextPage = () => {
@@ -153,24 +168,26 @@ const Home: NextPage = () => {
             아래 문장이 뜨는 걸 방지하려면..? 
             데이터를 로딩 중 일때와 데이터가 아예 없을 때도 구분되면 좋겠다. */}
             {plantList.length === 0 ? (
-                <div>
+                <NoPlantContainer>
                     추가한 식물이 없습니다. <br />
                     식물을 추가해보세요.
-                </div>
+                </NoPlantContainer>
             ) : (
-                ''
+                <SliderContainer>
+                    <StyledSlider ref={setSliderRef} {...settings}>
+                        {plantList.map((plant) => {
+                            return (
+                                <PlantSlider key={plant.id} plantData={plant} />
+                            );
+                        })}
+                    </StyledSlider>
+                    <SliderMoveBtnContainer>
+                        <button onClick={sliderRef?.slickPrev}></button>
+                        <button onClick={sliderRef?.slickNext}></button>
+                    </SliderMoveBtnContainer>
+                </SliderContainer>
             )}
-            <SliderContainer>
-                <StyledSlider ref={setSliderRef} {...settings}>
-                    {plantList.map((plant) => {
-                        return <PlantSlider key={plant.id} plantData={plant} />;
-                    })}
-                </StyledSlider>
-                <SliderMoveBtnContainer>
-                    <button onClick={sliderRef?.slickPrev}></button>
-                    <button onClick={sliderRef?.slickNext}></button>
-                </SliderMoveBtnContainer>
-            </SliderContainer>
+
             <WeatherContainer>
                 <h1>날씨</h1>
             </WeatherContainer>

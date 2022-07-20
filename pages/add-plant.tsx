@@ -34,6 +34,11 @@ const OpenPicker = styled(motion.div)`
 `;
 
 const AddPlantContainer = styled.div`
+    b {
+        font-size: 12px;
+        font-weight: 500;
+        color: #9d9d9d;
+    }
     img {
         border-radius: 50%;
         border: solid 2px #ebebeb;
@@ -177,7 +182,10 @@ const AddPlant: NextPage = () => {
                             />
                         </ImagePickerContainer>
                     )}
-                    <div>사진을 선택해주세요.</div>
+                    <div>
+                        사진을 선택해주세요. <br />
+                        <b>(업로드하지 않으면 기본 이미지가 등록됩니다.)</b>
+                    </div>
                     <label htmlFor='input-file'>업로드</label>
                     <input
                         style={{ display: 'none' }}
