@@ -147,9 +147,19 @@ const Home: NextPage = () => {
 
     return (
         <>
-            <Seo title='Home' />
+            <Seo title='메인' />
             <h2>{disPlayName}님의 식물 알람</h2>
-
+            {/* 데이터 로딩 안됬을 때랑 데이터가 로딩 되는 걸 기다릴 때 
+            아래 문장이 뜨는 걸 방지하려면..? 
+            데이터를 로딩 중 일때와 데이터가 아예 없을 때도 구분되면 좋겠다. */}
+            {plantList.length === 0 ? (
+                <div>
+                    추가한 식물이 없습니다. <br />
+                    식물을 추가해보세요.
+                </div>
+            ) : (
+                ''
+            )}
             <SliderContainer>
                 <StyledSlider ref={setSliderRef} {...settings}>
                     {plantList.map((plant) => {

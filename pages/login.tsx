@@ -89,7 +89,7 @@ const LogIn: NextPage = () => {
 
     return (
         <>
-            <Seo title='Login' />
+            <Seo title='로그인' />
             <LoginContainer>
                 <LeafContainer>
                     <LeafAnimation />

@@ -14,6 +14,7 @@ export interface IUserObj {
     uid?: string | null;
     email?: string | null;
     displayName?: string | null;
+    createDate?: string | null;
 }
 
 const userObjState = atom<IUserObj>({

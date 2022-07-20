@@ -158,7 +158,7 @@ const AddPlant: NextPage = () => {
 
     return (
         <>
-            <Seo title='ADD' />
+            <Seo title='추가' />
             <h2>내 식물을 추가해보세요.</h2>
             <AddPlantContainer>
                 <form

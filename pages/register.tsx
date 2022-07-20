@@ -65,7 +65,7 @@ const Register: NextPage = () => {
     return (
         <>
             <Container>
-                <Seo title='Register' />
+                <Seo title='회원가입' />
                 <h2>회원가입</h2>
                 <form onSubmit={handleSubmit((data) => onRegisterValid(data))}>
                     <input

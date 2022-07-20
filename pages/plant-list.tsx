@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { IPlantData, userObjState } from '../atoms/atoms';
 import Plant from '../components/Plant';
+import Seo from '../components/Seo';
 import { getLoginUserObj } from '../firebase/auth_service';
 import { fbDb } from '../firebase/firebase';
 
@@ -43,7 +44,16 @@ const PlantList: NextPage = () => {
 
     return (
         <>
+            <Seo title='리스트' />
             <h2>식물 리스트</h2>
+            {plantList.length === 0 ? (
+                <div>
+                    추가한 식물이 없습니다. <br />
+                    식물을 추가해보세요.
+                </div>
+            ) : (
+                ''
+            )}
             {plantList.map((plant) => {
                 return <Plant key={plant.id} plantData={plant} />;
             })}

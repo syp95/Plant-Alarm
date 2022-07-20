@@ -5,9 +5,10 @@ type Props = {
 };
 
 export default function Seo({ title }: Props) {
+    const message = `${title} | 식물알람`;
     return (
         <Head>
-            <title>{title} | Plant Alarm</title>
+            <title>{message}</title>
         </Head>
     );
 }

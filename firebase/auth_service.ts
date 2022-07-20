@@ -66,6 +66,7 @@ export function getLoginUserObj(setUserObj: Function, router: any) {
                 email: user?.email,
                 uid: user?.uid,
                 displayName: user?.displayName,
+                createDate: user?.metadata.creationTime,
             });
         } else {
             router.push('/login');
