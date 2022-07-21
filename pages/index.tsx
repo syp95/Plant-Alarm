@@ -63,7 +63,7 @@ const StyledToastContainer = styled(ToastContainer)`
 
     .Toastify__toast {
         color: #fff;
-        background: #64b058;
+        background: #4c8144;
         font-family: Pretendard;
         box-shadow: none;
         min-height: 10px;
@@ -200,14 +200,6 @@ const CloudAnimationContainer = styled.div`
     }
 `;
 
-const RainAnimationContainer = styled.div`
-    width: 180px;
-    height: 180px;
-    position: absolute;
-    top: -10px;
-    left: -15px;
-`;
-
 const Home: NextPage = () => {
     const router = useRouter();
     const [userObj, setUserObj] = useRecoilState(userObjState);
@@ -323,7 +315,7 @@ const Home: NextPage = () => {
                 <CircleButton
                     width='55px'
                     onClick={addPlantClick}
-                    name='식물 추가'
+                    name='추가'
                 />
             </AddBtnContainer>
             <StyledToastContainer />
