@@ -8,7 +8,7 @@ import {
 import { getLoginUserObj } from '../firebase/auth_service';
 import { fbDb } from '../firebase/firebase';
 
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -27,6 +27,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CircleButton from '../components/CircleButton';
 import SunAnimation from '../components/SunAnimation';
+import { dehydrate, QueryClient, useQuery } from 'react-query';
+import { getWeather, IWeather } from './api/getWeatherData';
+import useGeolocation from '../hooks/useGeolocation';
+import CloudAnimation from '../components/CloudAnimation';
+import RainAnimation from '../components/RainAnimation';
 
 const StyledSlider = styled(Slider)`
     .slick-list {
@@ -120,6 +125,7 @@ const NoPlantContainer = styled.div`
 
 const WeatherContainer = styled.div`
     position: relative;
+    font-size: 12px;
     background-color: #73cc65;
     color: white;
     margin-top: 40px;
@@ -138,20 +144,68 @@ const WeatherContainer = styled.div`
     h2:last-child {
         margin-right: 15px;
     }
+    @media (max-width: 440px) {
+        font-size: 10px;
+    }
 `;
 
 const VerticalLine = styled.div`
-    width: 5px;
-    height: 80px;
+    width: 3px;
+    height: 50px;
     background-color: #fff;
     margin: 0px 15px;
+    @media (max-width: 440px) {
+        margin: 0px 15px;
+    }
+    @media (max-width: 390px) {
+        margin: 0px 7px;
+    }
 `;
 
-const AnimationContainer = styled.div`
+const SunAnimationContainer = styled.div`
     width: 200px;
     height: 200px;
     position: absolute;
-    left: -35px;
+    left: -20px;
+
+    @media (max-width: 440px) {
+        width: 150px;
+        height: 150px;
+    }
+    @media (max-width: 360px) {
+        left: -35px;
+    }
+`;
+const CloudAnimationContainer = styled.div`
+    width: 180px;
+    height: 180px;
+    position: absolute;
+    top: -10px;
+    left: -15px;
+
+    @media (max-width: 440px) {
+        width: 120px;
+        height: 120px;
+        top: 15px;
+        left: 0px;
+    }
+    @media (max-width: 390px) {
+        left: -10px;
+    }
+    @media (max-width: 360px) {
+        width: 90px;
+        height: 90px;
+        top: 25px;
+        left: -10px;
+    }
+`;
+
+const RainAnimationContainer = styled.div`
+    width: 180px;
+    height: 180px;
+    position: absolute;
+    top: -10px;
+    left: -15px;
 `;
 
 const Home: NextPage = () => {
@@ -159,7 +213,31 @@ const Home: NextPage = () => {
     const [userObj, setUserObj] = useRecoilState(userObjState);
     const [plantList, setPlantList] = useState<IPlantData[]>([]);
     const [sliderRef, setSliderRef] = useState<any>(null);
+    const [cloudy, setCloudy] = useState(false);
     const disPlayName = NameConverter(userObj.displayName);
+
+    const { data } = useQuery<IWeather>(['weather', 'nowWeather'], getWeather, {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        keepPreviousData: true,
+    });
+
+    const tempConvert = () => {
+        if (data?.main.temp === undefined) return 0;
+        const temp = Math.ceil(data?.main.temp);
+        return temp;
+    };
+
+    const cloudConvert = () => {
+        if (data?.clouds.all === undefined) {
+            console.log('cloud data undefined');
+            return;
+        } else if (data?.clouds.all < 50) {
+            setCloudy(false);
+        } else if (data?.clouds.all > 50) {
+            setCloudy(true);
+        }
+    };
 
     const getMyPlant = async () => {
         const q = query(
@@ -182,6 +260,7 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         getLoginUserObj(setUserObj, router);
+        cloudConvert();
         getMyPlant();
     }, [router]);
 
@@ -214,15 +293,31 @@ const Home: NextPage = () => {
             )}
 
             <WeatherContainer>
-                <AnimationContainer>
-                    <SunAnimation />
-                </AnimationContainer>
-                <div>
-                    <h2>오늘은 맑아요.</h2>
-                    <div>햇빛을 주기 좋은 날씨에요</div>
-                </div>
-                <VerticalLine></VerticalLine>
-                <h2>기온 : 0C</h2>
+                {cloudy ? (
+                    <>
+                        <CloudAnimationContainer>
+                            <CloudAnimation />
+                        </CloudAnimationContainer>
+                        <div>
+                            <h2>오늘은 흐려요.</h2>
+                            <div>햇빛이 구름에 가리는 날</div>
+                        </div>
+                        <VerticalLine></VerticalLine>
+                    </>
+                ) : (
+                    <>
+                        <SunAnimationContainer>
+                            <SunAnimation />
+                        </SunAnimationContainer>
+                        <div>
+                            <h2>오늘은 맑아요.</h2>
+                            <div>햇빛을 주기 좋은 날</div>
+                        </div>
+                        <VerticalLine></VerticalLine>
+                    </>
+                )}
+
+                <h2>기온 : {tempConvert()}°C</h2>
             </WeatherContainer>
             <AddBtnContainer>
                 <CircleButton
@@ -237,3 +332,18 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+    const queryClient = new QueryClient();
+
+    await queryClient.prefetchQuery(
+        ['weather', 'nowWeather'],
+        async () => await getWeather(),
+    );
+
+    return {
+        props: {
+            dehydratedState: dehydrate(queryClient),
+        },
+    };
+};

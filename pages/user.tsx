@@ -139,17 +139,18 @@ const User: NextPage = () => {
                 <div>- 알람 설정 시 시간 계산</div>
                 <div>- 1일, 당일시 홈 화면 알림 기능</div>
                 <div>- 물 주기 기능 시 시간 리셋</div>
+                <div>- 오늘 구름 확인 기능</div>
                 <br />
                 <br />
                 <h4>안내사항</h4>
                 <div>
-                    불편한 점, 피드백, 기능 추가 문의는 <br />
+                    불편한 점, 피드백, 기능 추가 문의
+                    <br />
                     <b>
                         instagram : sy95_055
                         <br /> E-mail : sy95_055@naver.com
                         <br />
                     </b>
-                    으로 부탁드립니다.
                     <br />
                     감사합니다!
                 </div>
