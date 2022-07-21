@@ -26,6 +26,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CircleButton from '../components/CircleButton';
+import SunAnimation from '../components/SunAnimation';
 
 const StyledSlider = styled(Slider)`
     .slick-list {
@@ -91,6 +92,7 @@ const SliderMoveBtnContainer = styled.div`
         border: none;
         border-radius: 10px;
         background-color: rgba(0, 0, 0, 0.2);
+
         cursor: pointer;
     }
     button:hover {
@@ -117,16 +119,39 @@ const NoPlantContainer = styled.div`
 `;
 
 const WeatherContainer = styled.div`
-    background-color: white;
+    position: relative;
+    background-color: #73cc65;
+    color: white;
     margin-top: 40px;
     width: 100%;
     height: 130px;
     border: 2px solid #ebebeb;
     border-radius: 20px;
     display: flex;
-    text-align: center;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
+    overflow: hidden;
+    h2 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    h2:last-child {
+        margin-right: 15px;
+    }
+`;
+
+const VerticalLine = styled.div`
+    width: 5px;
+    height: 80px;
+    background-color: #fff;
+    margin: 0px 15px;
+`;
+
+const AnimationContainer = styled.div`
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    left: -35px;
 `;
 
 const Home: NextPage = () => {
@@ -189,7 +214,15 @@ const Home: NextPage = () => {
             )}
 
             <WeatherContainer>
-                <h1>날씨</h1>
+                <AnimationContainer>
+                    <SunAnimation />
+                </AnimationContainer>
+                <div>
+                    <h2>오늘은 맑아요.</h2>
+                    <div>햇빛을 주기 좋은 날씨에요</div>
+                </div>
+                <VerticalLine></VerticalLine>
+                <h2>기온 : 0C</h2>
             </WeatherContainer>
             <AddBtnContainer>
                 <CircleButton

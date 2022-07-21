@@ -143,7 +143,7 @@ const User: NextPage = () => {
                 <br />
                 <h4>안내사항</h4>
                 <div>
-                    불편한 사항, 피드백, 기능 추가 문의는 <br />
+                    불편한 점, 피드백, 기능 추가 문의는 <br />
                     <b>
                         instagram : sy95_055
                         <br /> E-mail : sy95_055@naver.com
