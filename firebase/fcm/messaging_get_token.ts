@@ -1,6 +1,8 @@
 import { getMessaging, getToken } from 'firebase/messaging';
 import { clikey, fbApp } from '../firebase';
 
+//추후 적용 예정
+
 // 토큰 생성
 const initToken = async () => {
     // firebaseConfig에서 생성한 initApp 객체로 메세징 객체-messaging 생성

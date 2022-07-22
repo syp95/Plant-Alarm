@@ -1,27 +1,29 @@
-import { addDoc, collection } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { SubmitHandler, useForm, UseFormGetValues } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
-
 import {
     numberPickerState,
     pickNumberState,
     userObjState,
 } from '../atoms/atoms';
-import NumberPicker from '../components/NumberPicker';
-import Seo from '../components/Seo';
+import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import { AnimatePresence, motion } from 'framer-motion';
+
 import { fbDb, fbStorage } from '../firebase/firebase';
-import { v4 as uuidv4 } from 'uuid';
-import { AnimatePresence, motion, transform } from 'framer-motion';
+import { addDoc, collection } from 'firebase/firestore';
 import { getLoginUserObj } from '../firebase/auth_service';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+
+import { v4 as uuidv4 } from 'uuid';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+
+import Seo from '../components/Seo';
 import Button from '../components/Button';
 import CircleButton from '../components/CircleButton';
+import NumberPicker from '../components/NumberPicker';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;

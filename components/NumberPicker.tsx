@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import styled from 'styled-components';
 import { numberPickerState, pickNumberState } from '../atoms/atoms';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 const Submit = styled.button`
     font-family: Pretendard;

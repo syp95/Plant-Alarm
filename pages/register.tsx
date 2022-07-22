@@ -1,16 +1,16 @@
-import { NextPage } from 'next';
-import { updateProfile } from 'firebase/auth';
-import { useForm } from 'react-hook-form';
 import { useEffect, useRef } from 'react';
-
+import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import Seo from '../components/Seo';
+import { useForm } from 'react-hook-form';
+import styled from 'styled-components';
+
+import { updateProfile } from 'firebase/auth';
 import AuthService, { IRegisterForm } from '../firebase/auth_service';
+
+import Seo from '../components/Seo';
 import Button from '../components/Button';
 import Line from '../components/Line';
-import styled from 'styled-components';
 import ErrorMessage from '../components/ErrorMessage';
-import LeafAnimation from '../components/LeafAnimation';
 import PlantAnimation from '../components/PlantAnimation';
 
 const Container = styled.div`

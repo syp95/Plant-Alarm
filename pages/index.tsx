@@ -1,3 +1,12 @@
+import { useEffect, useState } from 'react';
+import type { GetServerSideProps, NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { dehydrate, QueryClient, useQuery } from 'react-query';
+import { getWeather, IWeather } from './api/getWeatherData';
+import { useRecoilState } from 'recoil';
+import { IPlantData, userObjState } from '../atoms/atoms';
+import styled from 'styled-components';
+
 import {
     collection,
     onSnapshot,
@@ -8,30 +17,18 @@ import {
 import { getLoginUserObj } from '../firebase/auth_service';
 import { fbDb } from '../firebase/firebase';
 
-import type { GetServerSideProps, NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useRecoilState } from 'recoil';
-import { IPlantData, userObjState } from '../atoms/atoms';
-
 import PlantSlider from '../components/PlantSlider';
+import CircleButton from '../components/CircleButton';
 import Seo from '../components/Seo';
-import { NameConverter } from '../utils/nameConverter';
+import Weather from '../components/Weather';
 
+import { NameConverter } from '../utils/nameConverter';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import CircleButton from '../components/CircleButton';
-import SunAnimation from '../components/SunAnimation';
-import { dehydrate, QueryClient, useQuery } from 'react-query';
-import { getWeather, IWeather } from './api/getWeatherData';
-
-import CloudAnimation from '../components/CloudAnimation';
-import Weather from '../components/Weather';
 
 const StyledSlider = styled(Slider)`
     .slick-list {

@@ -1,18 +1,19 @@
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import Image from 'next/image';
 import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
 import {
-    IPlantData,
     IPlantDataProps,
     numberPickerState,
     pickNumberState,
 } from '../atoms/atoms';
+import styled from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
+
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { fbDb } from '../firebase/firebase';
+
 import NumberPicker from './NumberPicker';
-import Image from 'next/image';
 import plantDefault from '../public/plant-default-image.jpg';
 import CircleButton from './CircleButton';
 

@@ -1,18 +1,20 @@
-import { User } from 'firebase/auth';
-import AuthService, { ILoginForm } from '../firebase/auth_service';
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+
+import { User } from 'firebase/auth';
+import AuthService, { ILoginForm } from '../firebase/auth_service';
+
 import Button from '../components/Button';
 import Line from '../components/Line';
 import Seo from '../components/Seo';
 import ErrorMessage from '../components/ErrorMessage';
-import Logo from '../public/Logo.png';
-
 import LeafAnimation from '../components/LeafAnimation';
+
+import Logo from '../public/Logo.png';
 
 const LoginContainer = styled.div`
     height: 100%;

@@ -1,3 +1,10 @@
+import { useEffect, useState } from 'react';
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { IPlantData, userObjState } from '../atoms/atoms';
+import styled from 'styled-components';
+
 import {
     collection,
     onSnapshot,
@@ -5,17 +12,11 @@ import {
     query,
     where,
 } from 'firebase/firestore';
-import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-
-import { useRecoilState } from 'recoil';
-import styled from 'styled-components';
-import { IPlantData, userObjState } from '../atoms/atoms';
-import Plant from '../components/Plant';
-import Seo from '../components/Seo';
 import { getLoginUserObj } from '../firebase/auth_service';
 import { fbDb } from '../firebase/firebase';
+
+import Plant from '../components/Plant';
+import Seo from '../components/Seo';
 
 const NoPlantContainer = styled.div`
     background-color: white;

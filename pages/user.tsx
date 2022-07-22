@@ -1,13 +1,12 @@
+import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { fbAuth, fbDb } from '../firebase/firebase';
 import { IPlantData, userObjState } from '../atoms/atoms';
+import styled from 'styled-components';
+
+import { fbAuth, fbDb } from '../firebase/firebase';
 import { getLoginUserObj } from '../firebase/auth_service';
-import { NameConverter } from '../utils/nameConverter';
-import Button from '../components/Button';
-import Seo from '../components/Seo';
 import {
     collection,
     onSnapshot,
@@ -15,7 +14,10 @@ import {
     query,
     where,
 } from 'firebase/firestore';
-import styled from 'styled-components';
+
+import { NameConverter } from '../utils/nameConverter';
+import Button from '../components/Button';
+import Seo from '../components/Seo';
 
 const UserContainer = styled.div`
     width: 100%;

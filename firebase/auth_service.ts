@@ -4,7 +4,6 @@ import {
     signInWithPopup,
     User,
 } from 'firebase/auth';
-import { useRouter } from 'next/router';
 import { facebookProvider, fbAuth, googleProvider } from './firebase';
 
 export interface ILoginForm {

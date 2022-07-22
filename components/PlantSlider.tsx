@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import plantDefault from '../public/plant-default-image.jpg';
+import { IPlantDataProps } from '../atoms/atoms';
 import styled from 'styled-components';
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+
 import { doc, updateDoc } from 'firebase/firestore';
 import { fbDb } from '../firebase/firebase';
 
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import { ToastContainer, toast } from 'react-toastify';
-
 import 'react-toastify/dist/ReactToastify.css';
+import plantDefault from '../public/plant-default-image.jpg';
 import CircleButton from './CircleButton';
-import { IPlantDataProps } from '../atoms/atoms';
 
 const Img = styled.div`
     width: 200px;

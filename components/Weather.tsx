@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { IWeather, IWeatherProps } from '../pages/api/getWeatherData';
+import { IWeatherProps } from '../pages/api/getWeatherData';
 import CloudAnimation from './CloudAnimation';
 import SunAnimation from './SunAnimation';
 
