@@ -1,5 +1,11 @@
 # 식물 알람
 
+## Front
+### NEXT JS / React Query / Recoil / styled-components
+### react-toastify / react-slick / react-hook-form / react-circular-progressbar
+## Back
+### Firebase
+
 ### 로그인 에러 핸들링
 
 ![1](https://user-images.githubusercontent.com/101640894/180445836-68c1bfd3-95cd-40c7-aa15-db80cde86828.gif)
