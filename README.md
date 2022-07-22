@@ -10,4 +10,14 @@
 ![3](https://user-images.githubusercontent.com/101640894/180446270-0b1d1f20-1e9a-4c71-a09b-78b34f8bf5c2.gif)
 
 알림 기능
+
 ![4](https://user-images.githubusercontent.com/101640894/180446446-b2266c6b-c140-4a24-bbba-2a278405e9eb.gif)
+
+물주기 기능
+
+![5](https://user-images.githubusercontent.com/101640894/180446829-48d1f612-ab1e-4e18-a6d6-47e4e1274292.gif)
+
+식물 추가 기능
+
+![6](https://user-images.githubusercontent.com/101640894/180446894-8c137d4e-68b2-45d0-89ca-a7295f7eae73.gif)
+
