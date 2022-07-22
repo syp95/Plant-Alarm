@@ -33,12 +33,6 @@ const NoPlantContainer = styled.div`
 const PlantList: NextPage = () => {
     const router = useRouter();
     const [userObj, setUserObj] = useRecoilState(userObjState);
-
-    useEffect(() => {
-        getLoginUserObj(setUserObj, router);
-        getMyPlant();
-    }, []);
-
     const [plantList, setPlantList] = useState<IPlantData[]>([]);
 
     const getMyPlant = async () => {
@@ -55,6 +49,11 @@ const PlantList: NextPage = () => {
             setPlantList(plantArr);
         });
     };
+
+    useEffect(() => {
+        getLoginUserObj(setUserObj, router);
+        getMyPlant();
+    }, []);
 
     return (
         <>

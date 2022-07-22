@@ -8,6 +8,7 @@ export interface IPlantData {
     plantName?: string;
     wateringDate?: number;
     lastWateringDate?: string;
+    imageUrl?: string;
 }
 
 export interface IUserObj {

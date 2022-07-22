@@ -4,7 +4,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { numberPickerState, pickNumberState } from '../atoms/atoms';
+import {
+    IPlantData,
+    IPlantDataProps,
+    numberPickerState,
+    pickNumberState,
+} from '../atoms/atoms';
 import { fbDb } from '../firebase/firebase';
 import NumberPicker from './NumberPicker';
 import Image from 'next/image';
@@ -127,13 +132,17 @@ const PlantEditContainer = styled.div`
     }
 `;
 
-const Plant = ({ plantData }: any) => {
+interface ISubmitProps {
+    name: string;
+}
+
+const Plant = ({ plantData }: IPlantDataProps) => {
     const [editing, setEditing] = useState(false);
     const [newPlantWater, setNewPlantWater] = useState(plantData.wateringDate);
     const [newPlantName, setNewPlantName] = useState(plantData.plantName);
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
     const [pick, setPick] = useRecoilState(pickNumberState);
-    const { register, handleSubmit, formState } = useForm();
+    const { register, handleSubmit, formState } = useForm<ISubmitProps>();
     const PlantRef = doc(fbDb, 'plant', plantData.id);
 
     const onDelete = async () => {
@@ -148,17 +157,18 @@ const Plant = ({ plantData }: any) => {
         setPick(0);
     };
 
-    const onChange = (e: any) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {
             target: { value },
         } = e;
         setNewPlantName(value);
     };
 
-    const onSubmit = async (data: any) => {
+    const onSubmit = async (data: ISubmitProps) => {
         let wateringNumber = pick;
+
         if (pick === 0) {
-            wateringNumber = newPlantWater;
+            wateringNumber = newPlantWater ? newPlantWater : 0;
         }
 
         await updateDoc(PlantRef, {

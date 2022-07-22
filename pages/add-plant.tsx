@@ -1,8 +1,8 @@
 import { addDoc, collection } from 'firebase/firestore';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { SubmitHandler, useForm, UseFormGetValues } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
@@ -94,8 +94,12 @@ const AddPlant: NextPage = () => {
     const router = useRouter();
     const [userObj, setUserObj] = useRecoilState(userObjState);
 
-    const { register, handleSubmit, formState, setFocus } = useForm();
+    const { register, handleSubmit, formState, setFocus } =
+        useForm<ISubmitData>();
     const [image, setImage] = useState('');
+
+    const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
+    const [pick, setPick] = useRecoilState(pickNumberState);
 
     const onPlantSubmit = async (submitData: ISubmitData) => {
         if (formState.isSubmitting) return;
@@ -123,10 +127,11 @@ const AddPlant: NextPage = () => {
             .catch((err) => console.log(err));
     };
 
-    const onFileChange = (e: any) => {
+    const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {
             target: { files },
         } = e;
+        if (!files || files.length === 0) return;
         const theFile = files[0];
         const render = new FileReader();
         render.onloadend = (finish: any) => {
@@ -138,8 +143,6 @@ const AddPlant: NextPage = () => {
         setImage('');
     };
 
-    const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
-    const [pick, setPick] = useRecoilState(pickNumberState);
     const onNumberPicker = () => {
         setNumberPicker(true);
     };
@@ -167,7 +170,7 @@ const AddPlant: NextPage = () => {
             <h2>내 식물을 추가해보세요.</h2>
             <AddPlantContainer>
                 <form
-                    onSubmit={handleSubmit((data: any) => {
+                    onSubmit={handleSubmit((data) => {
                         onPlantSubmit(data);
                     })}
                 >

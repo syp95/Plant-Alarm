@@ -29,9 +29,9 @@ import CircleButton from '../components/CircleButton';
 import SunAnimation from '../components/SunAnimation';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import { getWeather, IWeather } from './api/getWeatherData';
-import useGeolocation from '../hooks/useGeolocation';
+
 import CloudAnimation from '../components/CloudAnimation';
-import RainAnimation from '../components/RainAnimation';
+import Weather from '../components/Weather';
 
 const StyledSlider = styled(Slider)`
     .slick-list {
@@ -149,63 +149,12 @@ const WeatherContainer = styled.div`
     }
 `;
 
-const VerticalLine = styled.div`
-    width: 3px;
-    height: 50px;
-    background-color: #fff;
-    margin: 0px 15px;
-    @media (max-width: 440px) {
-        margin: 0px 15px;
-    }
-    @media (max-width: 390px) {
-        margin: 0px 7px;
-    }
-`;
-
-const SunAnimationContainer = styled.div`
-    width: 200px;
-    height: 200px;
-    position: absolute;
-    left: -20px;
-
-    @media (max-width: 440px) {
-        width: 150px;
-        height: 150px;
-    }
-    @media (max-width: 360px) {
-        left: -35px;
-    }
-`;
-const CloudAnimationContainer = styled.div`
-    width: 180px;
-    height: 180px;
-    position: absolute;
-    top: -10px;
-    left: -15px;
-
-    @media (max-width: 440px) {
-        width: 120px;
-        height: 120px;
-        top: 15px;
-        left: 0px;
-    }
-    @media (max-width: 390px) {
-        left: -10px;
-    }
-    @media (max-width: 360px) {
-        width: 90px;
-        height: 90px;
-        top: 25px;
-        left: -10px;
-    }
-`;
-
 const Home: NextPage = () => {
     const router = useRouter();
     const [userObj, setUserObj] = useRecoilState(userObjState);
     const [plantList, setPlantList] = useState<IPlantData[]>([]);
     const [sliderRef, setSliderRef] = useState<any>(null);
-    const [cloudy, setCloudy] = useState(false);
+
     const disPlayName = NameConverter(userObj.displayName);
 
     const { data } = useQuery<IWeather>(['weather', 'nowWeather'], getWeather, {
@@ -213,23 +162,6 @@ const Home: NextPage = () => {
         refetchOnMount: false,
         keepPreviousData: true,
     });
-
-    const tempConvert = () => {
-        if (data?.main.temp === undefined) return 0;
-        const temp = Math.ceil(data?.main.temp);
-        return temp;
-    };
-
-    const cloudConvert = () => {
-        if (data?.clouds.all === undefined) {
-            console.log('cloud data undefined');
-            return;
-        } else if (data?.clouds.all < 50) {
-            setCloudy(false);
-        } else if (data?.clouds.all > 50) {
-            setCloudy(true);
-        }
-    };
 
     const getMyPlant = async () => {
         const q = query(
@@ -252,7 +184,7 @@ const Home: NextPage = () => {
 
     useEffect(() => {
         getLoginUserObj(setUserObj, router);
-        cloudConvert();
+
         getMyPlant();
     }, [router]);
 
@@ -285,31 +217,7 @@ const Home: NextPage = () => {
             )}
 
             <WeatherContainer>
-                {cloudy ? (
-                    <>
-                        <CloudAnimationContainer>
-                            <CloudAnimation />
-                        </CloudAnimationContainer>
-                        <div>
-                            <h2>오늘은 흐려요.</h2>
-                            <div>햇빛이 구름에 가리는 날</div>
-                        </div>
-                        <VerticalLine></VerticalLine>
-                    </>
-                ) : (
-                    <>
-                        <SunAnimationContainer>
-                            <SunAnimation />
-                        </SunAnimationContainer>
-                        <div>
-                            <h2>오늘은 맑아요.</h2>
-                            <div>햇빛을 주기 좋은 날</div>
-                        </div>
-                        <VerticalLine></VerticalLine>
-                    </>
-                )}
-
-                <h2>기온 : {tempConvert()}°C</h2>
+                <Weather weatherData={data} />
             </WeatherContainer>
             <AddBtnContainer>
                 <CircleButton

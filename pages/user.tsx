@@ -158,7 +158,7 @@ const User: NextPage = () => {
                 <br />
                 <h4>Stack</h4>
                 <div>
-                    Front : NextJs / Recoil / ReactQuery / styled-components{' '}
+                    Front : NextJs / Recoil / ReactQuery / styled-components
                     <br /> Back : Firebase
                 </div>
             </FeedbackContainer>

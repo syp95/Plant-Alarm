@@ -1,4 +1,7 @@
 import axios from 'axios';
+export interface IWeatherProps {
+    weatherData?: IWeather;
+}
 
 export interface IWeather {
     main: { temp: number };

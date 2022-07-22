@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 import CircleButton from './CircleButton';
+import { IPlantDataProps } from '../atoms/atoms';
 
 const Img = styled.div`
     width: 200px;
@@ -72,7 +73,7 @@ const PlantNameContainer = styled.div`
     }
 `;
 
-const PlantSlider = ({ plantData }: any) => {
+const PlantSlider = ({ plantData }: IPlantDataProps) => {
     const [waterRestDay, setWaterRestDay] = useState(0);
     const [waterRestPer, setWaterRestPer] = useState(0);
     const [newLastWater, setNewLastWater] = useState(
@@ -116,9 +117,8 @@ const PlantSlider = ({ plantData }: any) => {
         });
     };
 
-    const getDateDiffNow = (lastDate: string, Water: string) => {
+    const getDateDiffNow = (lastDate: string, Water: number) => {
         let dateNow = getDateNow();
-
         const currentDate = new Date(dateNow);
         const lastWateringDate = new Date(lastDate);
         const wateringDate = Number(Water) * (1000 * 60 * 60 * 24);
@@ -140,6 +140,8 @@ const PlantSlider = ({ plantData }: any) => {
     };
 
     useEffect(() => {
+        if (newLastWater === undefined || plantData.wateringDate === undefined)
+            return;
         getDateDiffNow(newLastWater, plantData.wateringDate);
     }, [newLastWater]);
 
