@@ -145,7 +145,14 @@ const WeatherContainer = styled.div`
         margin-right: 15px;
     }
     @media (max-width: 440px) {
+        width: 330px;
         font-size: 10px;
+    }
+    @media (max-width: 390px) {
+        width: 290px;
+    }
+    @media (max-width: 360px) {
+        width: 265px;
     }
 `;
 
