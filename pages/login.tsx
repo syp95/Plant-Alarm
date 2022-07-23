@@ -14,11 +14,9 @@ import Seo from '../components/Seo';
 import ErrorMessage from '../components/ErrorMessage';
 import LeafAnimation from '../components/LeafAnimation';
 
-import Logo from '../public/Logo.png';
-
 const LoginContainer = styled.div`
     height: 100%;
-    margin-top: 90px;
+    margin-top: 140px;
     position: relative;
     h2 {
         margin-top: 0;
@@ -96,7 +94,7 @@ const LogIn: NextPage = () => {
                 <LeafContainer>
                     <LeafAnimation />
                 </LeafContainer>
-                <Image src={Logo} width={60} height={60} />
+
                 <h2>로그인</h2>
                 <h4>로그인하셔서 식물 알람을 이용해보세요</h4>
                 <form

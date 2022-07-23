@@ -31,7 +31,7 @@ const PlantSliderContainer = styled.div`
     margin: 10px;
     background-color: white;
     border: 2px solid #ebebeb;
-    border-radius: 15px;
+    border-radius: 10px;
     @media (max-width: 430px) {
         width: 330px;
     }

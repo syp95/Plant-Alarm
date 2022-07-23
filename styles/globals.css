@@ -17,7 +17,7 @@ html {
 
 body {
     margin: 20px 0;
-    background-color: #fdfdfd;
+    background-color: #eff1f5;
     border-radius: 15px;
     overflow-x: hidden;
     font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui,
@@ -40,6 +40,7 @@ input {
     height: 40px;
     border: none;
     border-bottom: solid 1px #555555;
+    background-color: #f5f7fa;
     font-family: Pretendard;
 }
 

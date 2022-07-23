@@ -30,6 +30,10 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const HomeTitle = styled.h2`
+    margin-left: 15px;
+`;
+
 const StyledSlider = styled(Slider)`
     .slick-list {
         width: 440px;
@@ -83,8 +87,6 @@ const AddBtnContainer = styled.div`
     bottom: 6%;
 `;
 
-const SliderContainer = styled.div``;
-
 const SliderMoveBtnContainer = styled.div`
     transform: translateY(-290px);
     button {
@@ -113,7 +115,7 @@ const NoPlantContainer = styled.div`
     width: 100%;
     height: 300px;
     border: 2px solid #ebebeb;
-    border-radius: 20px;
+    border-radius: 10px;
     display: flex;
     text-align: center;
     justify-content: center;
@@ -123,13 +125,14 @@ const NoPlantContainer = styled.div`
 const WeatherContainer = styled.div`
     position: relative;
     font-size: 12px;
-    background-color: #73cc65;
-    color: white;
+    background-color: #fff;
+    color: #000;
     margin-top: 40px;
-    width: 100%;
+    margin-left: 10px;
+    width: 422px;
     height: 130px;
     border: 2px solid #ebebeb;
-    border-radius: 20px;
+    border-radius: 10px;
     display: flex;
     justify-content: right;
     align-items: center;
@@ -188,7 +191,7 @@ const Home: NextPage = () => {
     return (
         <>
             <Seo title='메인' />
-            <h2>{disPlayName}님의 식물 알람</h2>
+            <HomeTitle>{disPlayName}님의 식물 알람</HomeTitle>
             {/* 데이터 로딩 안됬을 때랑 데이터가 로딩 되는 걸 기다릴 때 
             아래 문장이 뜨는 걸 방지하려면..? 
             데이터를 로딩 중 일때와 데이터가 아예 없을 때도 구분되면 좋겠다. */}
@@ -198,7 +201,7 @@ const Home: NextPage = () => {
                     식물을 추가해보세요.
                 </NoPlantContainer>
             ) : (
-                <SliderContainer>
+                <>
                     <StyledSlider ref={setSliderRef} {...settings}>
                         {plantList.map((plant) => {
                             return (
@@ -210,7 +213,7 @@ const Home: NextPage = () => {
                         <button onClick={sliderRef?.slickPrev}></button>
                         <button onClick={sliderRef?.slickNext}></button>
                     </SliderMoveBtnContainer>
-                </SliderContainer>
+                </>
             )}
 
             <WeatherContainer>

@@ -18,6 +18,10 @@ import { fbDb } from '../firebase/firebase';
 import Plant from '../components/Plant';
 import Seo from '../components/Seo';
 
+const ListTitle = styled.h2`
+    margin-left: 5px;
+`;
+
 const NoPlantContainer = styled.div`
     background-color: white;
     margin-top: 40px;
@@ -59,7 +63,7 @@ const PlantList: NextPage = () => {
     return (
         <>
             <Seo title='리스트' />
-            <h2>식물 리스트</h2>
+            <ListTitle>식물 리스트</ListTitle>
             {plantList.length === 0 ? (
                 <NoPlantContainer>
                     추가한 식물이 없습니다. <br />

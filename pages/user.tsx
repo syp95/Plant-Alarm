@@ -23,7 +23,7 @@ const UserContainer = styled.div`
     width: 100%;
     height: 100%;
     background-color: #fff;
-    border-radius: 20px;
+    border-radius: 10px;
     border: 2px solid #ebebeb;
     font-size: 14px;
     line-height: 18px;
@@ -34,7 +34,7 @@ const FeedbackContainer = styled.div`
     width: 100%;
     height: 100%;
     background-color: #fff;
-    border-radius: 20px;
+    border-radius: 10px;
     border: 2px solid #ebebeb;
     font-size: 14px;
     line-height: 18px;
@@ -44,6 +44,9 @@ const FeedbackContainer = styled.div`
         margin-top: 0px;
         margin-bottom: 10px;
     }
+`;
+const UserTitle = styled.h2`
+    margin-left: 5px;
 `;
 
 const User: NextPage = () => {
@@ -115,7 +118,9 @@ const User: NextPage = () => {
     return (
         <>
             <Seo title='회원정보' />
-            <h2>{NameConverter(userObj.displayName)}님. 반갑습니다!</h2>
+            <UserTitle>
+                {NameConverter(userObj.displayName)}님. 반갑습니다!
+            </UserTitle>
             <UserContainer>
                 <div>
                     이름: <b>{userObj.displayName}</b>

@@ -59,14 +59,14 @@ const Up = styled.button`
     position: relative;
     height: 40%;
     width: 100%;
-    opacity: 0.1;
+    opacity: 0.2;
     z-index: 1;
 `;
 const Down = styled.button`
     position: relative;
     height: 40%;
     width: 100%;
-    opacity: 0.1;
+    opacity: 0.2;
     z-index: 1;
 `;
 

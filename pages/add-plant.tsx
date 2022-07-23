@@ -141,6 +141,7 @@ const AddPlant: NextPage = () => {
         };
         render.readAsDataURL(theFile);
     };
+
     const onImageClear = () => {
         setImage('');
     };

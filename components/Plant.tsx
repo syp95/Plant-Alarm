@@ -41,7 +41,7 @@ const PlantContainer = styled.div`
     align-items: center;
     background-color: white;
     border: 2px solid #ebebeb;
-    border-radius: 20px;
+    border-radius: 10px;
     margin-bottom: 10px;
     padding: 10px;
     @media (max-width: 440px) {
@@ -70,8 +70,8 @@ const PlantTextContainer = styled.div`
 const PlantEditContainer = styled.div`
     display: flex;
     flex-direction: row;
-    border-radius: 20px;
-    padding: 30px 0px 10px 0px;
+    border-radius: 10px;
+    padding: 30px 10px 10px 10px;
     background-color: #fff;
 
     form {
@@ -83,15 +83,15 @@ const PlantEditContainer = styled.div`
             font-size: 14px;
             position: absolute;
             margin: 0;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
             transform: translate(0px, -15px);
         }
         h3 {
             font-size: 14px;
             position: absolute;
             margin: 0;
-            margin-bottom: 10px;
-            transform: translate(165px, -15px);
+            margin-bottom: 25px;
+            transform: translate(158px, -15px);
         }
     }
     input {

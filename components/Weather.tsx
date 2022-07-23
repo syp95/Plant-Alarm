@@ -104,7 +104,7 @@ export default function Weather({ weatherData }: IWeatherProps) {
                     <VerticalLine></VerticalLine>
                 </>
             )}
-            <h2>기온 : {tempConvert()}°C</h2>;
+            <h2>기온 : {tempConvert()}°C</h2>
         </>
     );
 }
