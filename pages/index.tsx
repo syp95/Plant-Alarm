@@ -197,8 +197,8 @@ const Home: NextPage = () => {
             데이터를 로딩 중 일때와 데이터가 아예 없을 때도 구분되면 좋겠다. */}
             {plantList.length === 0 ? (
                 <NoPlantContainer>
-                    추가한 식물이 없습니다. <br />
-                    식물을 추가해보세요.
+                    추가한 식물이 없습니다 <br />
+                    식물을 추가해보세요
                 </NoPlantContainer>
             ) : (
                 <>
