@@ -11,6 +11,10 @@ export interface IPlantData {
     imageUrl?: string;
 }
 
+export interface IPlantDataProps {
+    plantData: IPlantData;
+}
+
 export interface IUserObj {
     uid?: string | null;
     email?: string | null;

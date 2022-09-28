@@ -11,9 +11,9 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { fbDb, fbStorage } from '../firebase/firebase';
+import { fbDb, fbStorage } from '../../firebase/firebase';
 import { addDoc, collection } from 'firebase/firestore';
-import { getLoginUserObj } from '../firebase/auth_service';
+import { getLoginUserObj } from '../../firebase/auth_service';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 
 import { v4 as uuidv4 } from 'uuid';

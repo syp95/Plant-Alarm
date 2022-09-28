@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { User } from 'firebase/auth';
-import AuthService, { ILoginForm } from '../firebase/auth_service';
+import AuthService, { ILoginForm } from '../../firebase/auth_service';
 
 import Button from '../components/Button';
 import Line from '../components/Line';
@@ -14,7 +14,7 @@ import Seo from '../components/Seo';
 import ErrorMessage from '../components/ErrorMessage';
 import LeafAnimation from '../components/LeafAnimation';
 
-import Logo from '../public/Logo.png';
+import Logo from 'public/Logo.png';
 
 const LoginContainer = styled.div`
     height: 100%;

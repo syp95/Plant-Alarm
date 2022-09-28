@@ -12,8 +12,8 @@ import {
     query,
     where,
 } from 'firebase/firestore';
-import { getLoginUserObj } from '../firebase/auth_service';
-import { fbDb } from '../firebase/firebase';
+import { getLoginUserObj } from '../../firebase/auth_service';
+import { fbDb } from '../../firebase/firebase';
 
 import Plant from '../components/Plant';
 import Seo from '../components/Seo';

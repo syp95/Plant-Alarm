@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
 import { updateProfile } from 'firebase/auth';
-import AuthService, { IRegisterForm } from '../firebase/auth_service';
+import AuthService, { IRegisterForm } from '../../firebase/auth_service';
 
 import Seo from '../components/Seo';
 import Button from '../components/Button';

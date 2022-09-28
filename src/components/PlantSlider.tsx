@@ -4,13 +4,13 @@ import { IPlantDataProps } from '../atoms/atoms';
 import styled from 'styled-components';
 
 import { doc, updateDoc } from 'firebase/firestore';
-import { fbDb } from '../firebase/firebase';
+import { fbDb } from '../../firebase/firebase';
 
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import plantDefault from '../public/plant-default-image.jpg';
+import plantDefault from 'public/plant-default-image.jpg';
 import CircleButton from './CircleButton';
 
 const Img = styled.div`

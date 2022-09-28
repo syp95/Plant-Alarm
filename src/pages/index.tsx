@@ -14,15 +14,15 @@ import {
     query,
     where,
 } from 'firebase/firestore';
-import { getLoginUserObj } from '../firebase/auth_service';
-import { fbDb } from '../firebase/firebase';
+import { getLoginUserObj } from '../../firebase/auth_service';
+import { fbDb } from '../../firebase/firebase';
 
 import PlantSlider from '../components/PlantSlider';
 import CircleButton from '../components/CircleButton';
 import Seo from '../components/Seo';
 import Weather from '../components/Weather';
 
-import { NameConverter } from '../utils/nameConverter';
+import { NameConverter } from '../../utils/nameConverter';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';

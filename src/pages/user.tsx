@@ -5,8 +5,8 @@ import { useRecoilState } from 'recoil';
 import { IPlantData, userObjState } from '../atoms/atoms';
 import styled from 'styled-components';
 
-import { fbAuth, fbDb } from '../firebase/firebase';
-import { getLoginUserObj } from '../firebase/auth_service';
+import { fbAuth, fbDb } from '../../firebase/firebase';
+import { getLoginUserObj } from '../../firebase/auth_service';
 import {
     collection,
     onSnapshot,
@@ -15,7 +15,7 @@ import {
     where,
 } from 'firebase/firestore';
 
-import { NameConverter } from '../utils/nameConverter';
+import { NameConverter } from '../../utils/nameConverter';
 import Button from '../components/Button';
 import Seo from '../components/Seo';
 
