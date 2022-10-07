@@ -11,11 +11,6 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { fbDb, fbStorage } from '../../firebase/firebase';
-import { addDoc, collection } from 'firebase/firestore';
-import { getLoginUserObj } from '../../firebase/auth_service';
-import { getDownloadURL, ref, uploadString } from 'firebase/storage';
-
 import { v4 as uuidv4 } from 'uuid';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -105,11 +100,9 @@ const AddPlant: NextPage = () => {
 
     const onPlantSubmit = async (submitData: ISubmitData) => {
         if (formState.isSubmitting) return;
-        let imageUrl = '';
-        if (image !== '') {
-            const fileRef = ref(fbStorage, `${userObj.uid}/${uuidv4()}`);
-            const response = await uploadString(fileRef, image, 'data_url');
-            imageUrl = await getDownloadURL(response.ref);
+
+        if (localStorage.getItem('1') > 1) {
+            retrun;
         }
 
         const newPlantObj = {
@@ -118,15 +111,16 @@ const AddPlant: NextPage = () => {
             lastWateringDate: submitData.lastWateringDate,
             createAt: Date.now(),
             creatorId: userObj.uid,
-            imageUrl,
+            imageUrl: image,
         };
-        await addDoc(collection(fbDb, 'plant'), newPlantObj)
-            .then((res) => {
-                console.log('data gone');
-                setPick(0);
-                router.push('/');
-            })
-            .catch((err) => console.log(err));
+
+        await fetch('http://localhost:3001/api/plants', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newPlantObj),
+        }).then((response) => console.log(response));
     };
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
