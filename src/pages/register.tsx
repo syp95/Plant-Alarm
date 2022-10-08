@@ -49,8 +49,15 @@ const Register: NextPage = () => {
     const router = useRouter();
 
     const onRegisterValid = (data: IRegisterForm) => {
+        const registerData = {
+            userid: data.regId,
+            userpassword: data.regPassword,
+            username: data.regDisPlayName,
+        };
+        console.log(registerData);
+
         axios
-            .post('http://localhost:3001/api/register', data, {
+            .post('/plantapi/api/auth/register', registerData, {
                 withCredentials: true,
             })
             .then((res) => {

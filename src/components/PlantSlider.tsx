@@ -3,9 +3,6 @@ import Image from 'next/image';
 import { IPlantDataProps } from '../atoms/atoms';
 import styled from 'styled-components';
 
-import { doc, updateDoc } from 'firebase/firestore';
-import { fbDb } from '../../firebase/firebase';
-
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { ToastContainer, toast } from 'react-toastify';

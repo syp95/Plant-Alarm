@@ -64,7 +64,7 @@ const LogIn: NextPage = () => {
             userpassword: loginData.password,
         };
         axios
-            .post('http://localhost:3001/api/login', data, {
+            .post('/plantapi/api/auth/login', data, {
                 withCredentials: true,
             })
             .then((res) => {
