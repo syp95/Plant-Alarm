@@ -5,9 +5,6 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import { User } from 'firebase/auth';
-import AuthService, { ILoginForm } from '../../firebase/auth_service';
-
 import Button from '../components/Button';
 import Line from '../components/Line';
 import Seo from '../components/Seo';
@@ -15,6 +12,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import LeafAnimation from '../components/LeafAnimation';
 
 import Logo from 'public/Logo.png';
+import axios from 'axios';
 
 const LoginContainer = styled.div`
     height: 100%;
@@ -37,10 +35,14 @@ const LeafContainer = styled.div`
     opacity: 0.5;
 `;
 
+interface ILoginForm {
+    id: string;
+    password: string;
+}
+
 const LogIn: NextPage = () => {
     const router = useRouter();
-
-    const authService = new AuthService();
+    const [errorMessage, setErrorMessage] = useState('');
     const {
         register: loginRegister,
         handleSubmit: loginHandleSubmit,
@@ -48,44 +50,36 @@ const LogIn: NextPage = () => {
         setFocus,
     } = useForm<ILoginForm>();
 
-    const [firebaseErrorMessage, setFirebaseErrorMessage] = useState('');
     const goToApp = () => {
         router.push('/');
     };
 
-    const onSocialLogin = (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => {
-        authService //
-            .socialLogin(e.currentTarget.name)
-            .then((data) => goToApp());
-    };
+    // const onSocialLogin = (
+    //     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    // ) => {};
 
     const onEmailLogin = (loginData: ILoginForm) => {
-        authService //
-            .emailLogin(loginData)
-            .then((data) => goToApp())
+        const data = {
+            userid: loginData.id,
+            userpassword: loginData.password,
+        };
+        axios
+            .post('http://localhost:3001/api/login', data, {
+                withCredentials: true,
+            })
+            .then((res) => {
+                const { accessToken } = res.data;
+                axios.defaults.headers.common[
+                    'Authorization'
+                ] = `Bearer ${accessToken}`;
+            })
             .catch((err) => {
-                console.log(`not login: ${err}`);
-                setFirebaseErrorMessage(`${err}`);
+                setErrorMessage(err);
+                console.log(`login error : ${err}`);
             });
     };
 
-    const firebaseErrorConvert = () => {
-        switch (firebaseErrorMessage) {
-            case 'FirebaseError: Firebase: Error (auth/user-not-found).':
-                return '이메일 혹은 비밀번호가 틀렸습니다.';
-            case 'FirebaseError: Firebase: Error (auth/wrong-password).':
-                return '이메일 혹은 비밀번호가 틀렸습니다.';
-            default:
-                return '';
-        }
-    };
-
     useEffect(() => {
-        authService.onAuthChange((user: User) => {
-            user && goToApp();
-        });
         setFocus('id');
     }, []);
 
@@ -127,13 +121,13 @@ const LogIn: NextPage = () => {
 
                     <Button name='로그인' width='100%' />
 
-                    <ErrorMessage error={firebaseErrorConvert()} />
+                    <ErrorMessage error={errorMessage} />
                 </form>
                 <Line />
                 <h5>소셜 로그인</h5>
-                <Button onClick={onSocialLogin} name='Google' width='40px' />
+                {/* <Button onClick={onSocialLogin} name='Google' width='40px' />
                 <span> </span>
-                <Button onClick={onSocialLogin} name='Facebook' width='40px' />
+                <Button onClick={onSocialLogin} name='Facebook' width='40px' /> */}
                 <Line />
                 <h5>아이디가 없으신가요?</h5>
                 <Button

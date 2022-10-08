@@ -4,14 +4,12 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import { updateProfile } from 'firebase/auth';
-import AuthService, { IRegisterForm } from '../../firebase/auth_service';
-
 import Seo from '../components/Seo';
 import Button from '../components/Button';
 import Line from '../components/Line';
 import ErrorMessage from '../components/ErrorMessage';
 import PlantAnimation from '../components/PlantAnimation';
+import axios from 'axios';
 
 const Container = styled.div`
     h5 {
@@ -34,6 +32,13 @@ const PlantContainer = styled.div`
     }
 `;
 
+interface IRegisterForm {
+    regId: string;
+    regPassword: string;
+    regPasswordConfirm: string;
+    regDisPlayName: string;
+}
+
 const Register: NextPage = () => {
     const { register, handleSubmit, watch, formState, setFocus } =
         useForm<IRegisterForm>();
@@ -42,20 +47,18 @@ const Register: NextPage = () => {
     passwordRef.current = watch('regPassword');
 
     const router = useRouter();
-    const authService = new AuthService();
-
-    const goToApp = () => {
-        router.push('/');
-    };
 
     const onRegisterValid = (data: IRegisterForm) => {
-        authService
-            .emailRegister(data) //
+        axios
+            .post('http://localhost:3001/api/register', data, {
+                withCredentials: true,
+            })
             .then((res) => {
-                updateProfile(res.user, {
-                    displayName: data.regDisPlayName,
-                });
-                goToApp();
+                console.log(res);
+                router.push('/login');
+            })
+            .catch((err) => {
+                console.log(`register error : ${err}`);
             });
     };
     useEffect(() => {
