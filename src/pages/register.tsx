@@ -54,7 +54,6 @@ const Register: NextPage = () => {
             userpassword: data.regPassword,
             username: data.regDisPlayName,
         };
-        console.log(registerData);
 
         axios
             .post('/plantapi/api/auth/register', registerData, {

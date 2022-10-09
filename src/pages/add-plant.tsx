@@ -19,6 +19,7 @@ import Seo from '../components/Seo';
 import Button from '../components/Button';
 import CircleButton from '../components/CircleButton';
 import NumberPicker from '../components/NumberPicker';
+import axios from 'axios';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;
@@ -101,9 +102,7 @@ const AddPlant: NextPage = () => {
     const onPlantSubmit = async (submitData: ISubmitData) => {
         if (formState.isSubmitting) return;
 
-        if (localStorage.getItem('1') > 1) {
-            retrun;
-        }
+        // 로그인 안할 시 로컬스토리지 한개만?
 
         const newPlantObj = {
             plantName: submitData.plantName,
@@ -114,13 +113,11 @@ const AddPlant: NextPage = () => {
             imageUrl: image,
         };
 
-        await fetch('http://localhost:3001/api/plants', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newPlantObj),
-        }).then((response) => console.log(response));
+        await axios
+            .post('/plantapi/api/plants', newPlantObj, {
+                withCredentials: true,
+            })
+            .then((response) => console.log(response));
     };
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

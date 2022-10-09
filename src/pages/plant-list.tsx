@@ -5,16 +5,6 @@ import { useRecoilState } from 'recoil';
 import { IPlantData, userObjState } from '../atoms/atoms';
 import styled from 'styled-components';
 
-import {
-    collection,
-    onSnapshot,
-    orderBy,
-    query,
-    where,
-} from 'firebase/firestore';
-import { getLoginUserObj } from '../../firebase/auth_service';
-import { fbDb } from '../../firebase/firebase';
-
 import Plant from '../components/Plant';
 import Seo from '../components/Seo';
 

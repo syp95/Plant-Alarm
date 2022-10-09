@@ -7,16 +7,6 @@ import { useRecoilState } from 'recoil';
 import { IPlantData, userObjState } from '../atoms/atoms';
 import styled from 'styled-components';
 
-import {
-    collection,
-    onSnapshot,
-    orderBy,
-    query,
-    where,
-} from 'firebase/firestore';
-import { getLoginUserObj } from '../../firebase/auth_service';
-import { fbDb } from '../../firebase/firebase';
-
 import PlantSlider from '../components/PlantSlider';
 import CircleButton from '../components/CircleButton';
 import Seo from '../components/Seo';
@@ -29,6 +19,7 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 const StyledSlider = styled(Slider)`
     .slick-list {
@@ -160,18 +151,17 @@ const Home: NextPage = () => {
         keepPreviousData: true,
     });
 
+    const userId = localStorage.getItem('userId');
+
     const getMyPlant = async () => {
-        const q = query(
-            collection(fbDb, 'plant'),
-            where('creatorId', '==', userObj.uid),
-            orderBy('createAt', 'desc'),
-        );
-        await onSnapshot(q, (snapshot) => {
-            const plantArr = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setPlantList(plantArr);
+        axios.get(`/plantapi/api/plants/${userId}`).then((res: any) => {
+            setPlantList(res);
+        });
+    };
+
+    const getUserObj = async () => {
+        axios.get(`/plantapi/api/auth/id/${userId}`).then((res: any) => {
+            setUserObj(res);
         });
     };
 
@@ -180,8 +170,7 @@ const Home: NextPage = () => {
     };
 
     useEffect(() => {
-        getLoginUserObj(setUserObj, router);
-
+        getUserObj();
         getMyPlant();
     }, [router]);
 

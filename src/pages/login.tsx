@@ -69,9 +69,11 @@ const LogIn: NextPage = () => {
             })
             .then((res) => {
                 const { accessToken } = res.data;
+                localStorage.setItem('userId', data.userid);
                 axios.defaults.headers.common[
                     'Authorization'
                 ] = `Bearer ${accessToken}`;
+                goToApp();
             })
             .catch((err) => {
                 setErrorMessage(err);

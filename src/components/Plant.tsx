@@ -10,9 +10,6 @@ import {
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import { fbDb } from '../../firebase/firebase';
-
 import NumberPicker from './NumberPicker';
 import plantDefault from 'public/plant-default-image.jpg';
 import CircleButton from './CircleButton';
