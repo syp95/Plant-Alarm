@@ -58,23 +58,40 @@ const LogIn: NextPage = () => {
     //     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     // ) => {};
 
-    const onEmailLogin = (loginData: ILoginForm) => {
+    const onEmailLogin = async (loginData: ILoginForm) => {
         const data = {
             userid: loginData.id,
             userpassword: loginData.password,
         };
-        axios
+
+        await axios
             .post('/plantapi/api/auth/login', data, {
                 withCredentials: true,
             })
             .then((res) => {
-                const { accessToken } = res.data;
+                const { accessToken, refreshToken } = res.data.logindata;
                 localStorage.setItem('userId', data.userid);
+                localStorage.setItem('refresh', refreshToken);
                 axios.defaults.headers.common[
                     'Authorization'
                 ] = `Bearer ${accessToken}`;
+
+                setTimeout(() => {
+                    const refresh = `${localStorage.getItem('refresh')}`;
+                    axios.post(
+                        '/plantapi/api/auth/refresh',
+                        {},
+                        {
+                            headers: {
+                                Refresh: refresh,
+                            },
+                        },
+                    );
+                }, 24 * 3600 * 1000);
+
                 goToApp();
             })
+            .then(() => {})
             .catch((err) => {
                 setErrorMessage(err);
                 console.log(`login error : ${err}`);

@@ -151,17 +151,17 @@ const Home: NextPage = () => {
         keepPreviousData: true,
     });
 
-    const userId = localStorage.getItem('userId');
-
     const getMyPlant = async () => {
+        const userId = localStorage.getItem('userId');
         axios.get(`/plantapi/api/plants/${userId}`).then((res: any) => {
-            setPlantList(res);
+            console.log(res);
         });
     };
 
     const getUserObj = async () => {
+        const userId = localStorage.getItem('userId');
         axios.get(`/plantapi/api/auth/id/${userId}`).then((res: any) => {
-            setUserObj(res);
+            console.log(res);
         });
     };
 
