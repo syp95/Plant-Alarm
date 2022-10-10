@@ -9,6 +9,7 @@ import 'nprogress/nprogress.css';
 
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import axios from 'axios';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -17,27 +18,28 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     const [queryClient] = useState(() => new QueryClient());
 
-    //파이어 베이스 fcm 백그라운드 알림 .. 추후 express api 서버 만들어서 구현.
-    // const dbTokenData = collection(fbDb, 'tokens');
-
-    // const initTokenWrapper = async () => {
-    //     let mytoken = await initToken();
-    //     const docprofile = doc(dbTokenData, 'my');
-    //     const data = await getDoc(docprofile);
-
-    //     if (data.exists()) {
-    //         updateDoc(doc(dbTokenData, 'my'), {
-    //             token: mytoken,
-    //             timestamp: Date.now(),
+    // 리프레쉬 토큰..
+    // useEffect(() => {
+    //     const refresh = `${localStorage.getItem('refresh')}`;
+    //     axios
+    //         .post(
+    //             '/plantapi/api/auth/refresh',
+    //             {},
+    //             {
+    //                 headers: {
+    //                     Refresh: refresh,
+    //                 },
+    //             },
+    //         )
+    //         .then((res) => {
+    //             const { accessToken, refreshToken } = res.data.logindata;
+    //             console.log(accessToken);
+    //             localStorage.setItem('refresh', refreshToken);
+    //             axios.defaults.headers.common[
+    //                 'Authorization'
+    //             ] = `Bearer ${accessToken}`;
     //         });
-    //     } else {
-    //         setDoc(doc(dbTokenData, 'my'), {
-    //             token: mytoken,
-    //             timestamp: Date.now(),
-    //         });
-    //     }
-    // };
-    // useEffect(()=>{initTokenWrapper()},[]);
+    // }, []);
 
     useEffect(() => {
         const start = () => {

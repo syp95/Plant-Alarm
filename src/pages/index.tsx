@@ -12,7 +12,7 @@ import CircleButton from '../components/CircleButton';
 import Seo from '../components/Seo';
 import Weather from '../components/Weather';
 
-import { NameConverter } from '../../utils/nameConverter';
+import { parseNameLength } from '../../utils/parseNameLength';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -143,7 +143,7 @@ const Home: NextPage = () => {
     const [plantList, setPlantList] = useState<IPlantData[]>([]);
     const [sliderRef, setSliderRef] = useState<any>(null);
 
-    const disPlayName = NameConverter(userObj.displayName);
+    const disPlayName = parseNameLength(userObj.displayName);
 
     const { data } = useQuery<IWeather>(['weather', 'nowWeather'], getWeather, {
         refetchOnWindowFocus: false,
@@ -162,6 +162,7 @@ const Home: NextPage = () => {
         const userId = localStorage.getItem('userId');
         axios.get(`/plantapi/api/auth/id/${userId}`).then((res: any) => {
             console.log(res);
+            setUserObj(res.data);
         });
     };
 

@@ -145,7 +145,13 @@ const AddPlant: NextPage = () => {
     };
 
     useEffect(() => {
-        getLoginUserObj(setUserObj, router);
+        if (
+            userObj.uid === '' &&
+            userObj.email === '' &&
+            userObj.displayName === null
+        ) {
+            router.push('/');
+        }
         setFocus('plantName');
     }, []);
 

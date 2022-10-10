@@ -1,4 +1,4 @@
-const NameConverter = (userName: string | null | undefined) => {
+const parseNameLength = (userName: string | null | undefined) => {
     if (userName === null || userName === undefined) {
         return '';
     }
@@ -11,4 +11,4 @@ const NameConverter = (userName: string | null | undefined) => {
     }
 };
 
-export { NameConverter };
+export { parseNameLength };

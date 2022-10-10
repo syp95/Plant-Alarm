@@ -5,17 +5,7 @@ import { useRecoilState } from 'recoil';
 import { IPlantData, userObjState } from '../atoms/atoms';
 import styled from 'styled-components';
 
-import { fbAuth, fbDb } from '../../firebase/firebase';
-import { getLoginUserObj } from '../../firebase/auth_service';
-import {
-    collection,
-    onSnapshot,
-    orderBy,
-    query,
-    where,
-} from 'firebase/firestore';
-
-import { NameConverter } from '../../utils/nameConverter';
+import { parseNameLength } from '../../utils/parseNameLength';
 import Button from '../components/Button';
 import Seo from '../components/Seo';
 
@@ -115,7 +105,7 @@ const User: NextPage = () => {
     return (
         <>
             <Seo title='회원정보' />
-            <h2>{NameConverter(userObj.displayName)}님. 반갑습니다!</h2>
+            <h2>{parseNameLength(userObj.displayName)}님. 반갑습니다!</h2>
             <UserContainer>
                 <div>
                     이름: <b>{userObj.displayName}</b>

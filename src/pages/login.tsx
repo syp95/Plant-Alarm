@@ -76,18 +76,28 @@ const LogIn: NextPage = () => {
                     'Authorization'
                 ] = `Bearer ${accessToken}`;
 
-                setTimeout(() => {
-                    const refresh = `${localStorage.getItem('refresh')}`;
-                    axios.post(
-                        '/plantapi/api/auth/refresh',
-                        {},
-                        {
-                            headers: {
-                                Refresh: refresh,
-                            },
-                        },
-                    );
-                }, 24 * 3600 * 1000);
+                // 리프레쉬 토큰..
+                // setTimeout(() => {
+                //     const refresh = `${localStorage.getItem('refresh')}`;
+                //     axios
+                //         .post(
+                //             '/plantapi/api/auth/refresh',
+                //             {},
+                //             {
+                //                 headers: {
+                //                     Refresh: refresh,
+                //                 },
+                //             },
+                //         )
+                //         .then((res) => {
+                //             const { accessToken, refreshToken } =
+                //                 res.data.logindata;
+                //             localStorage.setItem('refresh', refreshToken);
+                //             axios.defaults.headers.common[
+                //                 'Authorization'
+                //             ] = `Bearer ${accessToken}`;
+                //         });
+                // }, 3600 * 1000);
 
                 goToApp();
             })
