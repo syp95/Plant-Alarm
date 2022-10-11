@@ -109,7 +109,7 @@ const AddPlant: NextPage = () => {
             wateringDate: pick,
             lastWateringDate: submitData.lastWateringDate,
             createAt: Date.now(),
-            creatorId: userObj.uid,
+            creatorId: String(localStorage.getItem('userId')),
             imageUrl: image,
         };
 
@@ -117,7 +117,7 @@ const AddPlant: NextPage = () => {
             .post('/plantapi/api/plants', newPlantObj, {
                 withCredentials: true,
             })
-            .then((response) => console.log(response));
+            .then((res) => console.log(res));
     };
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
