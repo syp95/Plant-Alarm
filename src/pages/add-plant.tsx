@@ -94,15 +94,31 @@ const AddPlant: NextPage = () => {
 
     const { register, handleSubmit, formState, setFocus } =
         useForm<ISubmitData>();
-    const [image, setImage] = useState('');
+
+    const [imagePreview, setImagePreview] = useState('');
+    const [imageContent, setImageContent] = useState<any>();
 
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
     const [pick, setPick] = useRecoilState(pickNumberState);
 
     const onPlantSubmit = async (submitData: ISubmitData) => {
         if (formState.isSubmitting) return;
+        let uploadedFilePath;
 
-        // 로그인 안할 시 로컬스토리지 한개만?
+        if (imageContent) {
+            const formData = new FormData();
+            formData.append('image', imageContent);
+
+            await axios
+                .post('/plantapi/api/plants/images', formData)
+                .then((res) => {
+                    const { fileName } = res.data;
+                    uploadedFilePath = fileName;
+                })
+                .catch((err) => console.log(err));
+        } else {
+            uploadedFilePath = '';
+        }
 
         const newPlantObj = {
             plantName: submitData.plantName,
@@ -110,14 +126,17 @@ const AddPlant: NextPage = () => {
             lastWateringDate: submitData.lastWateringDate,
             createAt: Date.now(),
             creatorId: String(localStorage.getItem('userId')),
-            imageUrl: image,
+            imageUrl: uploadedFilePath,
         };
 
         await axios
             .post('/plantapi/api/plants', newPlantObj, {
                 withCredentials: true,
             })
-            .then((res) => console.log(res));
+            .then((res) => {
+                console.log(res);
+                goToApp();
+            });
     };
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,14 +145,19 @@ const AddPlant: NextPage = () => {
         } = e;
         if (!files || files.length === 0) return;
         const theFile = files[0];
+        setImageContent(theFile);
+        console.log('setImagecontent : ' + theFile);
+        // 이미지 미리보기
         const render = new FileReader();
         render.onloadend = (finish: any) => {
-            setImage(finish.currentTarget.result);
+            setImagePreview(finish.currentTarget.result);
         };
         render.readAsDataURL(theFile);
     };
+
     const onImageClear = () => {
-        setImage('');
+        setImagePreview('');
+        setImageContent('');
     };
 
     const onNumberPicker = () => {
@@ -155,14 +179,6 @@ const AddPlant: NextPage = () => {
         setFocus('plantName');
     }, []);
 
-    useEffect(() => {
-        if (formState.isSubmitting) {
-            NProgress.start();
-        } else {
-            NProgress.done();
-        }
-    }, [formState.isSubmitting]);
-
     return (
         <>
             <Seo title='추가' />
@@ -173,10 +189,13 @@ const AddPlant: NextPage = () => {
                         onPlantSubmit(data);
                     })}
                 >
-                    {image && (
+                    {imagePreview && (
                         <ImagePickerContainer>
                             <div>미리보기</div>
-                            <img style={{ width: '100px' }} src={image} />
+                            <img
+                                style={{ width: '100px' }}
+                                src={imagePreview}
+                            />
                             <CircleButton
                                 onClick={onImageClear}
                                 name='취소'
@@ -192,6 +211,7 @@ const AddPlant: NextPage = () => {
                     <input
                         style={{ display: 'none' }}
                         id='input-file'
+                        name='image'
                         type='file'
                         accept='image/*'
                         autoComplete='off'
