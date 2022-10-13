@@ -27,22 +27,11 @@ const PlantList: NextPage = () => {
     const [plantList, setPlantList] = useState<IPlantData[]>([]);
 
     const getMyPlant = async () => {
-        const q = query(
-            collection(fbDb, 'plant'),
-            where('creatorId', '==', userObj.uid),
-            orderBy('createAt', 'desc'),
-        );
-        await onSnapshot(q, (snapshot) => {
-            const plantArr = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setPlantList(plantArr);
-        });
+        
     };
 
     useEffect(() => {
-        getLoginUserObj(setUserObj, router);
+        
         getMyPlant();
     }, []);
 

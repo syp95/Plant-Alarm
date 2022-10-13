@@ -153,17 +153,25 @@ const Home: NextPage = () => {
 
     const getMyPlant = async () => {
         const userId = localStorage.getItem('userId');
-        axios.get(`/plantapi/api/plants/${userId}`).then((res: any) => {
-            console.log(res);
-        });
+        axios
+            .get(`/plantapi/api/plants/${userId}`, {
+                withCredentials: true,
+            })
+            .then((res: any) => {
+                console.log(res);
+            });
     };
 
     const getUserObj = async () => {
         const userId = localStorage.getItem('userId');
-        axios.get(`/plantapi/api/auth/id/${userId}`).then((res: any) => {
-            console.log(res);
-            setUserObj(res.data);
-        });
+        axios
+            .get(`/plantapi/api/auth/id/${userId}`, {
+                withCredentials: true,
+            })
+            .then((res: any) => {
+                console.log(res);
+                setUserObj(res.data);
+            });
     };
 
     const addPlantClick = () => {
@@ -173,7 +181,7 @@ const Home: NextPage = () => {
     useEffect(() => {
         getUserObj();
         getMyPlant();
-    }, [router]);
+    }, []);
 
     return (
         <>

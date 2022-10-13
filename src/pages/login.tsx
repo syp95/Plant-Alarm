@@ -69,43 +69,34 @@ const LogIn: NextPage = () => {
                 withCredentials: true,
             })
             .then((res) => {
-                const { accessToken, refreshToken } = res.data.logindata;
+                const { accessToken } = res.data.logindata;
                 localStorage.setItem('userId', data.userid);
-                localStorage.setItem('refresh', refreshToken);
+                localStorage.setItem('access', accessToken);
+
+                // 리코일 로그인 true로. 기본은 false
+
                 axios.defaults.headers.common[
                     'Authorization'
                 ] = `Bearer ${accessToken}`;
 
-                // 리프레쉬 토큰..
-                // setTimeout(() => {
-                //     const refresh = `${localStorage.getItem('refresh')}`;
-                //     axios
-                //         .post(
-                //             '/plantapi/api/auth/refresh',
-                //             {},
-                //             {
-                //                 headers: {
-                //                     Refresh: refresh,
-                //                 },
-                //             },
-                //         )
-                //         .then((res) => {
-                //             const { accessToken, refreshToken } =
-                //                 res.data.logindata;
-                //             localStorage.setItem('refresh', refreshToken);
-                //             axios.defaults.headers.common[
-                //                 'Authorization'
-                //             ] = `Bearer ${accessToken}`;
-                //         });
-                // }, 3600 * 1000);
+                setTimeout(async () => {
+                    await axios
+                        .post('/plantapi/api/auth/refresh', {})
+                        .then((res) => {
+                            const { accessToken } = res.data.logindata;
+                            localStorage.setItem('access', accessToken);
 
-                goToApp();
+                            axios.defaults.headers.common[
+                                'Authorization'
+                            ] = `Bearer ${accessToken}`;
+                        });
+                }, 3000);
             })
-            .then(() => {})
             .catch((err) => {
                 setErrorMessage(err);
                 console.log(`login error : ${err}`);
             });
+        goToApp();
     };
 
     useEffect(() => {

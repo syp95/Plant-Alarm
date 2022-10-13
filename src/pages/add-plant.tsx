@@ -146,7 +146,7 @@ const AddPlant: NextPage = () => {
         if (!files || files.length === 0) return;
         const theFile = files[0];
         setImageContent(theFile);
-        console.log('setImagecontent : ' + theFile);
+
         // 이미지 미리보기
         const render = new FileReader();
         render.onloadend = (finish: any) => {

@@ -17,29 +17,14 @@ function MyApp({ Component, pageProps }: AppProps) {
     const noNav = ['/login', '/register', '/add-plant'];
 
     const [queryClient] = useState(() => new QueryClient());
+    axios.defaults.withCredentials = true;
 
-    // 리프레쉬 토큰..
-    // useEffect(() => {
-    //     const refresh = `${localStorage.getItem('refresh')}`;
-    //     axios
-    //         .post(
-    //             '/plantapi/api/auth/refresh',
-    //             {},
-    //             {
-    //                 headers: {
-    //                     Refresh: refresh,
-    //                 },
-    //             },
-    //         )
-    //         .then((res) => {
-    //             const { accessToken, refreshToken } = res.data.logindata;
-    //             console.log(accessToken);
-    //             localStorage.setItem('refresh', refreshToken);
-    //             axios.defaults.headers.common[
-    //                 'Authorization'
-    //             ] = `Bearer ${accessToken}`;
-    //         });
-    // }, []);
+    //리프레쉬 토큰..
+    useEffect(() => {
+        const access = `${localStorage.getItem('access')}`;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${access}`;
+        //if 겟요청 해서 되면 로그인 트루로.
+    }, []);
 
     useEffect(() => {
         const start = () => {
