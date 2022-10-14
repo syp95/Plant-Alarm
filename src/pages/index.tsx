@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
-import { getWeather, IWeather } from './api/getWeatherData';
+import { getWeather, IWeather } from '../apis/getWeatherData';
 import { useRecoilState } from 'recoil';
 import { IPlantData, userObjState } from '../atoms/atoms';
 import styled from 'styled-components';
@@ -20,6 +20,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { getPlantData, getUserData, IUserObj } from 'src/apis';
 
 const StyledSlider = styled(Slider)`
     .slick-list {
@@ -139,11 +140,17 @@ const WeatherContainer = styled.div`
 
 const Home: NextPage = () => {
     const router = useRouter();
-    const [userObj, setUserObj] = useRecoilState(userObjState);
-    const [plantList, setPlantList] = useState<IPlantData[]>([]);
+    const { data: userObj } = useQuery<IUserObj>(
+        ['plantUser', 'userData'],
+        getUserData,
+    );
+    const { data: plantList } = useQuery<IPlantData[]>(
+        ['plantList', 'plant'],
+        getPlantData,
+    );
     const [sliderRef, setSliderRef] = useState<any>(null);
 
-    const disPlayName = parseNameLength(userObj.displayName);
+    const disPlayName = parseNameLength(userObj?.username);
 
     const { data } = useQuery<IWeather>(['weather', 'nowWeather'], getWeather, {
         refetchOnWindowFocus: false,
@@ -151,45 +158,15 @@ const Home: NextPage = () => {
         keepPreviousData: true,
     });
 
-    const getMyPlant = async () => {
-        const userId = localStorage.getItem('userId');
-        axios
-            .get(`/plantapi/api/plants/${userId}`, {
-                withCredentials: true,
-            })
-            .then((res: any) => {
-                console.log(res);
-            });
-    };
-
-    const getUserObj = async () => {
-        const userId = localStorage.getItem('userId');
-        axios
-            .get(`/plantapi/api/auth/id/${userId}`, {
-                withCredentials: true,
-            })
-            .then((res: any) => {
-                console.log(res);
-                setUserObj(res.data);
-            });
-    };
-
     const addPlantClick = () => {
         router.push('/add-plant');
     };
-
-    useEffect(() => {
-        getUserObj();
-        getMyPlant();
-    }, []);
 
     return (
         <>
             <Seo title='메인' />
             <h2>{disPlayName}님의 식물 알람</h2>
-            {/* 데이터 로딩 안됬을 때랑 데이터가 로딩 되는 걸 기다릴 때 
-            아래 문장이 뜨는 걸 방지하려면..? 
-            데이터를 로딩 중 일때와 데이터가 아예 없을 때도 구분되면 좋겠다. */}
+
             {plantList.length === 0 ? (
                 <NoPlantContainer>
                     추가한 식물이 없습니다. <br />

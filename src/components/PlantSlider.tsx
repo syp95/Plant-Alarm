@@ -78,7 +78,6 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
     );
     const [waterRestOneDay, setWaterRestOneDay] = useState(false);
     const [waterRestNow, setWaterRestNow] = useState(false);
-    const PlantRef = doc(fbDb, 'plant', plantData.id);
 
     const getDateNow = () => {
         let today = new Date();
@@ -92,10 +91,6 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
 
     const onWateringClick = async () => {
         let dateNow = getDateNow();
-
-        await updateDoc(PlantRef, {
-            lastWateringDate: dateNow,
-        });
 
         setNewLastWater(dateNow);
     };

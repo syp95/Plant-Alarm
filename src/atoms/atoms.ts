@@ -15,17 +15,10 @@ export interface IPlantDataProps {
     plantData: IPlantData;
 }
 
-export interface IUserObj {
-    uid?: string | null;
-    email?: string | null;
-    displayName?: string | null;
-    createDate?: string | null;
-}
-
-const userObjState = atom<IUserObj>({
-    key: `userObjState/${v1()}`,
-    default: { uid: '', email: '', displayName: null },
-});
+// const userObjState = atom<IUserObj>({
+//     key: `userObjState/${v1()}`,
+//     default: { uid: '', email: '', displayName: null },
+// });
 
 const numberPickerState = atom({
     key: `numberPcikerState/${v1()}`,

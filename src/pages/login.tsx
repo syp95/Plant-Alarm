@@ -90,7 +90,7 @@ const LogIn: NextPage = () => {
                                 'Authorization'
                             ] = `Bearer ${accessToken}`;
                         });
-                }, 3000);
+                }, 24 * 3600 * 1000);
             })
             .catch((err) => {
                 setErrorMessage(err);
