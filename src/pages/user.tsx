@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
-import { IPlantData, userObjState } from '../atoms/atoms';
+
 import styled from 'styled-components';
 
 import { parseNameLength } from '../../utils/parseNameLength';
 import Button from '../components/Button';
 import Seo from '../components/Seo';
+import { getPlantData, getUserData, IPlantData, IUserObj } from 'src/apis';
+import { useQuery } from 'react-query';
 
 const UserContainer = styled.div`
     width: 100%;
@@ -37,81 +38,41 @@ const FeedbackContainer = styled.div`
 `;
 
 const User: NextPage = () => {
-    const [userObj, setUserObj] = useRecoilState(userObjState);
-    const [plantList, setPlantList] = useState<IPlantData[]>([]);
+    const { data: userObj } = useQuery<IUserObj>(
+        ['plantUser', 'userData'],
+        getUserData,
+    );
+    const { data: plantList } = useQuery<IPlantData[]>(
+        ['plantList', 'plant'],
+        getPlantData,
+    );
     const router = useRouter();
     const onLogOutClick = () => {
-        fbAuth.signOut();
+        localStorage.setItem('access', '');
+        // 쿠키 비우는 post
         router.push('/login');
     };
 
-    const getMyPlant = async () => {
-        const q = query(
-            collection(fbDb, 'plant'),
-            where('creatorId', '==', userObj.uid),
-            orderBy('createAt', 'desc'),
-        );
-        await onSnapshot(q, (snapshot) => {
-            const plantArr = snapshot.docs.map((doc) => ({
-                id: doc.id,
-                ...doc.data(),
-            }));
-            setPlantList(plantArr);
-        });
-    };
-
     const createDateConvert = () => {
-        const createDate = userObj.createDate?.slice(5, 16).split(' ');
+        const createDate = userObj?.createdAt?.slice(0, 10).split(' ');
         if (!createDate) return;
         const date = [...createDate];
-        const year = date[2];
-        const month = date[1];
+
         const day = date[0];
-        const convertMonth = () => {
-            switch (month) {
-                case 'Jan':
-                    return 1;
-                case 'Feb':
-                    return 2;
-                case 'Mar':
-                    return 3;
-                case 'Apr':
-                    return 4;
-                case 'May':
-                    return 5;
-                case 'Jun':
-                    return 6;
-                case 'Jul':
-                    return 7;
-                case 'Aug':
-                    return 8;
-                case 'Sep':
-                    return 9;
-                case 'Oct':
-                    return 10;
-                case 'Nov':
-                    return 11;
-                case 'Dec':
-                    return 12;
-            }
-        };
-        return `${year}년 ${convertMonth()}월 ${day}일`;
+
+        return day;
     };
 
-    useEffect(() => {
-        getLoginUserObj(setUserObj, router);
-        getMyPlant();
-    }, [router]);
     return (
         <>
             <Seo title='회원정보' />
-            <h2>{parseNameLength(userObj.displayName)}님. 반갑습니다!</h2>
+            <h2>{parseNameLength(userObj?.username)}님. 반갑습니다!</h2>
             <UserContainer>
                 <div>
-                    이름: <b>{userObj.displayName}</b>
+                    이름: <b>{userObj?.username}</b>
                 </div>
                 <div>
-                    이메일 :<b>{userObj.email}</b>
+                    이메일 :<b>{userObj?.userid}</b>
                 </div>
                 <br />
                 <div>
@@ -119,7 +80,7 @@ const User: NextPage = () => {
                         식물 알람을 시작한 날짜 :<b> {createDateConvert()}</b>
                     </div>
                     <div>
-                        함께하는 식물 수 : <b>{plantList.length}</b>
+                        함께하는 식물 수 : <b>{plantList?.length}</b>
                     </div>
                 </div>
             </UserContainer>
@@ -151,7 +112,7 @@ const User: NextPage = () => {
                 <h4>Stack</h4>
                 <div>
                     Front : NextJs / Recoil / ReactQuery / styled-components
-                    <br /> Back : Firebase
+                    <br /> Back : NodeJs / Express / Sequalize / Redis
                 </div>
             </FeedbackContainer>
             <br />
