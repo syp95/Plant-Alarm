@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { useMutation } from 'react-query';
 
 export interface IUserObj {
     createdAt: string;
@@ -11,9 +10,9 @@ export interface IUserObj {
 }
 
 export interface IPlantData {
-    createdAt: 'string';
-    creatorId: 'string';
-    id: number;
+    createdAt?: string;
+    creatorId: string;
+    id?: number;
     plantName?: string;
     wateringDate?: number;
     lastWateringDate?: string;
@@ -46,6 +45,21 @@ export const getPlantData = async () => {
         withCredentials: true,
     });
 
+    return data;
+};
+
+export const postPlantImage = async (imageContent: File) => {
+    const formData = new FormData();
+    formData.append('image', imageContent);
+
+    const { data } = await axios.post('/plantapi/api/plants/images', formData);
+    return data;
+};
+
+export const postPlantData = async (newPlantObj: IPlantData) => {
+    const { data } = await axios.post('/plantapi/api/plants', newPlantObj, {
+        withCredentials: true,
+    });
     return data;
 };
 

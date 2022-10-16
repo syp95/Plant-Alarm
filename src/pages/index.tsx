@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import { getWeather, IWeather } from '../apis/getWeatherData';
-import { useRecoilState } from 'recoil';
 
 import styled from 'styled-components';
 
@@ -19,7 +18,7 @@ import 'slick-carousel/slick/slick-theme.css';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
+
 import { getPlantData, getUserData, IPlantData, IUserObj } from 'src/apis';
 
 const StyledSlider = styled(Slider)`

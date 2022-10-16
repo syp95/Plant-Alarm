@@ -9,7 +9,7 @@ import Button from '../components/Button';
 import Line from '../components/Line';
 import ErrorMessage from '../components/ErrorMessage';
 import PlantAnimation from '../components/PlantAnimation';
-import axios from 'axios';
+
 import { postRegisterData } from 'src/apis';
 
 const Container = styled.div`

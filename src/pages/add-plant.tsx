@@ -13,7 +13,7 @@ import CircleButton from '../components/CircleButton';
 import NumberPicker from '../components/NumberPicker';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { getUserData, IUserObj } from 'src/apis';
+import { getUserData, IUserObj, postPlantData, postPlantImage } from 'src/apis';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;
@@ -103,11 +103,7 @@ const AddPlant: NextPage = () => {
         let uploadedFilePath;
 
         if (imageContent) {
-            const formData = new FormData();
-            formData.append('image', imageContent);
-
-            await axios
-                .post('/plantapi/api/plants/images', formData)
+            postPlantImage(imageContent)
                 .then((res) => {
                     const { fileName } = res.data;
                     uploadedFilePath = `https://localhost:3001/uploads/image/${fileName}`;
@@ -118,22 +114,17 @@ const AddPlant: NextPage = () => {
         }
 
         const newPlantObj = {
+            creatorId: String(localStorage.getItem('userId')),
             plantName: submitData.plantName,
             wateringDate: pick,
             lastWateringDate: submitData.lastWateringDate,
-            createAt: Date.now(),
-            creatorId: String(localStorage.getItem('userId')),
             imageUrl: uploadedFilePath,
         };
 
-        await axios
-            .post('/plantapi/api/plants', newPlantObj, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                console.log(res);
-                goToApp();
-            });
+        postPlantData(newPlantObj).then((res) => {
+            console.log(res);
+            goToApp();
+        });
     };
 
     const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

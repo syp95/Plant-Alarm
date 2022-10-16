@@ -12,7 +12,6 @@ import ErrorMessage from '../components/ErrorMessage';
 import LeafAnimation from '../components/LeafAnimation';
 
 import Logo from 'public/Logo.png';
-import axios from 'axios';
 import { postLoginData } from 'src/apis';
 
 const LoginContainer = styled.div`
