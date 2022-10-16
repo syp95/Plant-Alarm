@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
@@ -161,6 +161,10 @@ const Home: NextPage = () => {
     const addPlantClick = () => {
         router.push('/add-plant');
     };
+
+    useEffect(() => {
+        console.log(plantList);
+    }, [plantList]);
 
     return (
         <>

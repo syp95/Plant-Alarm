@@ -48,14 +48,6 @@ export const getPlantData = async () => {
     return data;
 };
 
-export const postPlantImage = async (imageContent: File) => {
-    const formData = new FormData();
-    formData.append('image', imageContent);
-
-    const { data } = await axios.post('/plantapi/api/plants/images', formData);
-    return data;
-};
-
 export const postPlantData = async (newPlantObj: IPlantData) => {
     const { data } = await axios.post('/plantapi/api/plants', newPlantObj, {
         withCredentials: true,

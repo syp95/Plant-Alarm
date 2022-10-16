@@ -13,7 +13,7 @@ import CircleButton from '../components/CircleButton';
 import NumberPicker from '../components/NumberPicker';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { getUserData, IUserObj, postPlantData, postPlantImage } from 'src/apis';
+import { getUserData, IUserObj, postPlantData } from 'src/apis';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;
@@ -101,9 +101,13 @@ const AddPlant: NextPage = () => {
     const onPlantSubmit = async (submitData: ISubmitData) => {
         if (formState.isSubmitting) return;
         let uploadedFilePath;
-
+        // 이미지 체크
         if (imageContent) {
-            postPlantImage(imageContent)
+            const formData = new FormData();
+            formData.append('image', imageContent);
+
+            await axios
+                .post('/plantapi/api/plants/images', formData)
                 .then((res) => {
                     const { fileName } = res.data;
                     uploadedFilePath = `https://localhost:3001/uploads/image/${fileName}`;
