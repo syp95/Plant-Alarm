@@ -92,7 +92,7 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
 
     const onWateringClick = async () => {
         let dateNow = getDateNow();
-
+        //put plantData.id data
         setNewLastWater(dateNow);
     };
 
@@ -164,7 +164,9 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
                             ? '목이 말라요'
                             : `물이 ${Math.round(waterRestPer)}% 남아있어요.`}
                     </div>
-                    <div>{newLastWater}일에 마지막으로 물을 줬어요.</div>
+                    <div>
+                        {newLastWater?.slice(0, 10)}일에 마지막으로 물을 줬어요.
+                    </div>
                     <div>
                         {waterRestDay < 0
                             ? '물을 주세요'

@@ -14,6 +14,7 @@ import NumberPicker from '../components/NumberPicker';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { getUserData, IUserObj, postPlantData } from 'src/apis';
+import { format } from 'date-fns';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;
@@ -78,7 +79,7 @@ const BackBtnContainer = styled.div`
 interface ISubmitData {
     plantName: string;
     wateringDate: string;
-    lastWateringDate: string;
+    lastWateringDate: Date;
     FieldValues: any;
 }
 
@@ -121,7 +122,7 @@ const AddPlant: NextPage = () => {
             creatorId: String(localStorage.getItem('userId')),
             plantName: submitData.plantName,
             wateringDate: pick,
-            lastWateringDate: submitData.lastWateringDate,
+            lastWateringDate: String(submitData.lastWateringDate),
             imageUrl: uploadedFilePath,
         };
 

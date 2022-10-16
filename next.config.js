@@ -2,7 +2,7 @@
 const nextConfig = {
     reactStrictMode: false,
     images: {
-        domains: ['firebasestorage.googleapis.com'],
+        domains: ['localhost', '*'],
     },
     async rewrites() {
         return [

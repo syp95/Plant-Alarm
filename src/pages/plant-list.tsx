@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
-import { IPlantData, userObjState } from '../atoms/atoms';
+
 import styled from 'styled-components';
 
 import Plant from '../components/Plant';
 import Seo from '../components/Seo';
+import { useQuery } from 'react-query';
+import { getPlantData, IPlantData } from 'src/apis';
 
 const NoPlantContainer = styled.div`
     background-color: white;
@@ -22,24 +21,16 @@ const NoPlantContainer = styled.div`
 `;
 
 const PlantList: NextPage = () => {
-    const router = useRouter();
-    const [userObj, setUserObj] = useRecoilState(userObjState);
-    const [plantList, setPlantList] = useState<IPlantData[]>([]);
-
-    const getMyPlant = async () => {
-        
-    };
-
-    useEffect(() => {
-        
-        getMyPlant();
-    }, []);
+    const { data: plantList } = useQuery<IPlantData[]>(
+        ['plantList', 'plant'],
+        getPlantData,
+    );
 
     return (
         <>
             <Seo title='리스트' />
             <h2>식물 리스트</h2>
-            {plantList.length === 0 ? (
+            {plantList?.length === 0 ? (
                 <NoPlantContainer>
                     추가한 식물이 없습니다. <br />
                     식물을 추가해보세요.
@@ -47,7 +38,7 @@ const PlantList: NextPage = () => {
             ) : (
                 ''
             )}
-            {plantList.map((plant) => {
+            {plantList?.map((plant) => {
                 return <Plant key={plant.id} plantData={plant} />;
             })}
         </>

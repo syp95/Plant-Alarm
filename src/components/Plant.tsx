@@ -2,17 +2,14 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
-import {
-    IPlantDataProps,
-    numberPickerState,
-    pickNumberState,
-} from '../atoms/atoms';
+import { numberPickerState, pickNumberState } from '../atoms/atoms';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import NumberPicker from './NumberPicker';
 import plantDefault from 'public/plant-default-image.jpg';
 import CircleButton from './CircleButton';
+import { IPlantDataProps } from 'src/apis';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;
@@ -138,15 +135,17 @@ const Plant = ({ plantData }: IPlantDataProps) => {
     const [editing, setEditing] = useState(false);
     const [newPlantWater, setNewPlantWater] = useState(plantData.wateringDate);
     const [newPlantName, setNewPlantName] = useState(plantData.plantName);
+    const [newLastWater, setNewLastWater] = useState(
+        plantData.lastWateringDate,
+    );
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
     const [pick, setPick] = useRecoilState(pickNumberState);
     const { register, handleSubmit, formState } = useForm<ISubmitProps>();
-    const PlantRef = doc(fbDb, 'plant', plantData.id);
 
     const onDelete = async () => {
         const ok = window.confirm('정말 지우실건가요?');
         if (ok) {
-            await deleteDoc(PlantRef);
+            // 삭제 API 호출
         }
     };
 
@@ -169,10 +168,7 @@ const Plant = ({ plantData }: IPlantDataProps) => {
             wateringNumber = newPlantWater ? newPlantWater : 0;
         }
 
-        await updateDoc(PlantRef, {
-            wateringDate: wateringNumber,
-            plantName: data.name,
-        });
+        //업데이트 API
 
         toggleEditing();
         setNewPlantWater(pick);
@@ -222,7 +218,7 @@ const Plant = ({ plantData }: IPlantDataProps) => {
                 <>
                     <PlantContainer>
                         <div>
-                            {plantData.imageUrl ? (
+                            {/* {plantData.imageUrl ? (
                                 <Img>
                                     <Image
                                         src={plantData.imageUrl}
@@ -231,14 +227,14 @@ const Plant = ({ plantData }: IPlantDataProps) => {
                                     />
                                 </Img>
                             ) : (
-                                <Img>
-                                    <Image
-                                        src={plantDefault}
-                                        width={90}
-                                        height={90}
-                                    />
-                                </Img>
-                            )}
+                            )} */}
+                            <Img>
+                                <Image
+                                    src={plantDefault}
+                                    width={90}
+                                    height={90}
+                                />
+                            </Img>
                         </div>
                         <PlantTextContainer>
                             <div>
@@ -248,7 +244,7 @@ const Plant = ({ plantData }: IPlantDataProps) => {
                                 <b>{plantData.wateringDate}일</b> 마다 한번씩
                             </div>
                             <div>
-                                <b>{plantData.lastWateringDate}</b> 에 물을
+                                <b>{newLastWater?.slice(0, 10)}</b> 에 물을
                                 줬어요
                             </div>
                         </PlantTextContainer>
