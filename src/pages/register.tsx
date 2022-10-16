@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -10,7 +10,7 @@ import Line from '../components/Line';
 import ErrorMessage from '../components/ErrorMessage';
 import PlantAnimation from '../components/PlantAnimation';
 import axios from 'axios';
-
+import { postRegisterData } from 'src/apis';
 
 const Container = styled.div`
     h5 {
@@ -43,7 +43,7 @@ interface IRegisterForm {
 const Register: NextPage = () => {
     const { register, handleSubmit, watch, formState, setFocus } =
         useForm<IRegisterForm>();
-    
+    const [errorMessage, setErrormessage] = useState('');
     const passwordRef = useRef<String | null>(null);
     passwordRef.current = watch('regPassword');
 
@@ -56,17 +56,16 @@ const Register: NextPage = () => {
             username: data.regDisPlayName,
         };
 
-        
-        axios
-            .post('/plantapi/api/auth/register', registerData, {
-                withCredentials: true,
-            })
+        postRegisterData(registerData)
             .then((res) => {
                 console.log(res);
                 router.push('/login');
             })
             .catch((err) => {
-                console.log(`register error : ${err}`);
+                console.log(err);
+                if (err.message === 'Request failed with status code 401') {
+                    setErrormessage('이미 사용 중인 이메일 입니다.');
+                }
             });
     };
     useEffect(() => {
@@ -141,7 +140,7 @@ const Register: NextPage = () => {
 
                     <Button name='가입하기' width='100%' />
                 </form>
-
+                <ErrorMessage error={errorMessage} />
                 {formState.errors?.regPasswordConfirm?.type === 'validate' ? (
                     <ErrorMessage error='비밀번호가 일치하지 않습니다.' />
                 ) : (

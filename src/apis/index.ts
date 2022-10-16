@@ -34,6 +34,12 @@ export interface ILoginUserPostData {
     accessToken: string;
 }
 
+export interface IRegisterUserPostData {
+    userid: string;
+    userpassword: string;
+    username: string;
+}
+
 export const getPlantData = async () => {
     const userId = localStorage.getItem('userId');
     const { data } = await axios.get(`/plantapi/api/plants/id/${userId}`, {
@@ -79,4 +85,10 @@ export const postLoginData = async (data: ILoginUserData) => {
                     });
             }, 24 * 3600 * 1000);
         });
+};
+
+export const postRegisterData = async (registerData: IRegisterUserPostData) => {
+    await axios.post('/plantapi/api/auth/register', registerData, {
+        withCredentials: true,
+    });
 };
