@@ -1,24 +1,5 @@
-import { DocumentData } from 'firebase/firestore';
 import { atom } from 'recoil';
 import { v1 } from 'uuid';
-
-export interface IPlantData {
-    data?: DocumentData;
-    id: string;
-    plantName?: string;
-    wateringDate?: number;
-    lastWateringDate?: string;
-    imageUrl?: string;
-}
-
-export interface IPlantDataProps {
-    plantData: IPlantData;
-}
-
-// const userObjState = atom<IUserObj>({
-//     key: `userObjState/${v1()}`,
-//     default: { uid: '', email: '', displayName: null },
-// });
 
 const numberPickerState = atom({
     key: `numberPcikerState/${v1()}`,
@@ -30,4 +11,4 @@ const pickNumberState = atom({
     default: 0,
 });
 
-export { userObjState, numberPickerState, pickNumberState };
+export { numberPickerState, pickNumberState };

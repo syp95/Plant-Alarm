@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 import { getWeather, IWeather } from '../apis/getWeatherData';
 import { useRecoilState } from 'recoil';
-import { IPlantData, userObjState } from '../atoms/atoms';
+
 import styled from 'styled-components';
 
 import PlantSlider from '../components/PlantSlider';
@@ -20,7 +20,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import { getPlantData, getUserData, IUserObj } from 'src/apis';
+import { getPlantData, getUserData, IPlantData, IUserObj } from 'src/apis';
 
 const StyledSlider = styled(Slider)`
     .slick-list {
@@ -148,6 +148,7 @@ const Home: NextPage = () => {
         ['plantList', 'plant'],
         getPlantData,
     );
+
     const [sliderRef, setSliderRef] = useState<any>(null);
 
     const disPlayName = parseNameLength(userObj?.username);
@@ -167,7 +168,7 @@ const Home: NextPage = () => {
             <Seo title='메인' />
             <h2>{disPlayName}님의 식물 알람</h2>
 
-            {plantList.length === 0 ? (
+            {plantList?.length === 0 ? (
                 <NoPlantContainer>
                     추가한 식물이 없습니다. <br />
                     식물을 추가해보세요.
@@ -175,7 +176,7 @@ const Home: NextPage = () => {
             ) : (
                 <SliderContainer>
                     <StyledSlider ref={setSliderRef} {...settings}>
-                        {plantList.map((plant) => {
+                        {plantList?.map((plant) => {
                             return (
                                 <PlantSlider key={plant.id} plantData={plant} />
                             );

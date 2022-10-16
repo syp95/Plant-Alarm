@@ -11,6 +11,7 @@ import ErrorMessage from '../components/ErrorMessage';
 import PlantAnimation from '../components/PlantAnimation';
 import axios from 'axios';
 
+
 const Container = styled.div`
     h5 {
         margin-bottom: 10px;
@@ -42,7 +43,7 @@ interface IRegisterForm {
 const Register: NextPage = () => {
     const { register, handleSubmit, watch, formState, setFocus } =
         useForm<IRegisterForm>();
-
+    
     const passwordRef = useRef<String | null>(null);
     passwordRef.current = watch('regPassword');
 
@@ -55,6 +56,7 @@ const Register: NextPage = () => {
             username: data.regDisPlayName,
         };
 
+        
         axios
             .post('/plantapi/api/auth/register', registerData, {
                 withCredentials: true,

@@ -13,6 +13,7 @@ import LeafAnimation from '../components/LeafAnimation';
 
 import Logo from 'public/Logo.png';
 import axios from 'axios';
+import { postLoginData } from 'src/apis';
 
 const LoginContainer = styled.div`
     height: 100%;
@@ -63,40 +64,16 @@ const LogIn: NextPage = () => {
             userid: loginData.id,
             userpassword: loginData.password,
         };
-
-        await axios
-            .post('/plantapi/api/auth/login', data, {
-                withCredentials: true,
-            })
-            .then((res) => {
-                const { accessToken } = res.data.logindata;
-                localStorage.setItem('userId', data.userid);
-                localStorage.setItem('access', accessToken);
-
-                // 리코일 로그인 true로. 기본은 false
-
-                axios.defaults.headers.common[
-                    'Authorization'
-                ] = `Bearer ${accessToken}`;
-
-                setTimeout(async () => {
-                    await axios
-                        .post('/plantapi/api/auth/refresh', {})
-                        .then((res) => {
-                            const { accessToken } = res.data.logindata;
-                            localStorage.setItem('access', accessToken);
-
-                            axios.defaults.headers.common[
-                                'Authorization'
-                            ] = `Bearer ${accessToken}`;
-                        });
-                }, 24 * 3600 * 1000);
+        postLoginData(data)
+            .then(() => {
+                goToApp();
             })
             .catch((err) => {
-                setErrorMessage(err);
-                console.log(`login error : ${err}`);
+                console.log(err);
+                if (err.message === 'Request failed with status code 401') {
+                    setErrorMessage('이에밀 혹은 비밀번호가 틀렸습니다.');
+                }
             });
-        goToApp();
     };
 
     useEffect(() => {

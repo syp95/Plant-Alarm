@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { IPlantDataProps } from '../atoms/atoms';
+
 import styled from 'styled-components';
 
 import { CircularProgressbar } from 'react-circular-progressbar';
@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import plantDefault from 'public/plant-default-image.jpg';
 import CircleButton from './CircleButton';
+import { IPlantDataProps } from 'src/apis';
 
 const Img = styled.div`
     width: 200px;
@@ -140,7 +141,7 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
     return (
         <>
             <PlantSliderContainer>
-                {plantData.imageUrl ? (
+                {/* {plantData.imageUrl ? (
                     <Img>
                         <Image
                             src={plantData.imageUrl}
@@ -149,10 +150,10 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
                         />
                     </Img>
                 ) : (
-                    <Img>
-                        <Image src={plantDefault} width={200} height={200} />
-                    </Img>
-                )}
+                )} */}
+                <Img>
+                    <Image src={plantDefault} width={200} height={200} />
+                </Img>
                 <ProgressContainer>
                     <CircularProgressbar strokeWidth={2} value={waterRestPer} />
                 </ProgressContainer>

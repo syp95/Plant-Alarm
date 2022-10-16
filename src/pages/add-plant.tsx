@@ -2,24 +2,18 @@ import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
-import {
-    numberPickerState,
-    pickNumberState,
-    userObjState,
-} from '../atoms/atoms';
+import { numberPickerState, pickNumberState } from '../atoms/atoms';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
-
-import { v4 as uuidv4 } from 'uuid';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
 
 import Seo from '../components/Seo';
 import Button from '../components/Button';
 import CircleButton from '../components/CircleButton';
 import NumberPicker from '../components/NumberPicker';
 import axios from 'axios';
+import { useQuery } from 'react-query';
+import { getUserData, IUserObj } from 'src/apis';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;
@@ -90,7 +84,10 @@ interface ISubmitData {
 
 const AddPlant: NextPage = () => {
     const router = useRouter();
-    const [userObj, setUserObj] = useRecoilState(userObjState);
+    const { data: userObj } = useQuery<IUserObj>(
+        ['plantUser', 'userData'],
+        getUserData,
+    );
 
     const { register, handleSubmit, formState, setFocus } =
         useForm<ISubmitData>();
@@ -113,7 +110,7 @@ const AddPlant: NextPage = () => {
                 .post('/plantapi/api/plants/images', formData)
                 .then((res) => {
                     const { fileName } = res.data;
-                    uploadedFilePath = fileName;
+                    uploadedFilePath = `https://localhost:3001/uploads/image/${fileName}`;
                 })
                 .catch((err) => console.log(err));
         } else {
@@ -169,13 +166,6 @@ const AddPlant: NextPage = () => {
     };
 
     useEffect(() => {
-        if (
-            userObj.uid === '' &&
-            userObj.email === '' &&
-            userObj.displayName === null
-        ) {
-            router.push('/');
-        }
         setFocus('plantName');
     }, []);
 
