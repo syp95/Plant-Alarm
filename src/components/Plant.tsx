@@ -218,7 +218,7 @@ const Plant = ({ plantData }: IPlantDataProps) => {
                 <>
                     <PlantContainer>
                         <div>
-                            {/* {plantData.imageUrl ? (
+                            {plantData.imageUrl ? (
                                 <Img>
                                     <Image
                                         src={plantData.imageUrl}
@@ -227,14 +227,14 @@ const Plant = ({ plantData }: IPlantDataProps) => {
                                     />
                                 </Img>
                             ) : (
-                            )} */}
-                            <Img>
-                                <Image
-                                    src={plantDefault}
-                                    width={90}
-                                    height={90}
-                                />
-                            </Img>
+                                <Img>
+                                    <Image
+                                        src={plantDefault}
+                                        width={90}
+                                        height={90}
+                                    />
+                                </Img>
+                            )}
                         </div>
                         <PlantTextContainer>
                             <div>

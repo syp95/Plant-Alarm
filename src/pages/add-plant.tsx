@@ -111,7 +111,7 @@ const AddPlant: NextPage = () => {
                 .post('/plantapi/api/plants/images', formData)
                 .then((res) => {
                     const { fileName } = res.data;
-                    uploadedFilePath = `https://localhost:3001/uploads/image/${fileName}`;
+                    uploadedFilePath = `http://localhost:3001/uploads/img/${fileName}`;
                 })
                 .catch((err) => console.log(err));
         } else {

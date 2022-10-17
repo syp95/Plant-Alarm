@@ -141,7 +141,7 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
     return (
         <>
             <PlantSliderContainer>
-                {/* {plantData.imageUrl ? (
+                {plantData.imageUrl ? (
                     <Img>
                         <Image
                             src={plantData.imageUrl}
@@ -150,10 +150,11 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
                         />
                     </Img>
                 ) : (
-                )} */}
-                <Img>
-                    <Image src={plantDefault} width={200} height={200} />
-                </Img>
+                    <Img>
+                        <Image src={plantDefault} width={200} height={200} />
+                    </Img>
+                )}
+
                 <ProgressContainer>
                     <CircularProgressbar strokeWidth={2} value={waterRestPer} />
                 </ProgressContainer>

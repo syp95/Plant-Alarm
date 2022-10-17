@@ -44,7 +44,7 @@ export const getPlantData = async () => {
     const { data } = await axios.get(`/plantapi/api/plants/id/${userId}`, {
         withCredentials: true,
     });
-
+    
     return data;
 };
 
