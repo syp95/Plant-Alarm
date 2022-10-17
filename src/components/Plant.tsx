@@ -9,7 +9,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import NumberPicker from './NumberPicker';
 import plantDefault from 'public/plant-default-image.jpg';
 import CircleButton from './CircleButton';
-import { IPlantDataProps } from 'src/apis';
+import { deletePlantData, IPlantDataProps, putPlantData } from 'src/apis';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;
@@ -145,7 +145,9 @@ const Plant = ({ plantData }: IPlantDataProps) => {
     const onDelete = async () => {
         const ok = window.confirm('정말 지우실건가요?');
         if (ok) {
-            // 삭제 API 호출
+            if (plantData.id) {
+                deletePlantData(plantData.id);
+            }
         }
     };
 
@@ -165,10 +167,15 @@ const Plant = ({ plantData }: IPlantDataProps) => {
         let wateringNumber = pick;
 
         if (pick === 0) {
-            wateringNumber = newPlantWater ? newPlantWater : 0;
+            wateringNumber = newPlantWater ? newPlantWater : 1;
         }
 
-        //업데이트 API
+        if (plantData.id) {
+            putPlantData(plantData.id, {
+                plantName: data.name,
+                wateringDate: wateringNumber,
+            });
+        }
 
         toggleEditing();
         setNewPlantWater(pick);

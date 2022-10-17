@@ -11,7 +11,7 @@ export interface IUserObj {
 
 export interface IPlantData {
     createdAt?: string;
-    creatorId: string;
+    creatorId?: string;
     id?: number;
     plantName?: string;
     wateringDate?: number;
@@ -44,7 +44,7 @@ export const getPlantData = async () => {
     const { data } = await axios.get(`/plantapi/api/plants/id/${userId}`, {
         withCredentials: true,
     });
-    
+
     return data;
 };
 
@@ -53,6 +53,14 @@ export const postPlantData = async (newPlantObj: IPlantData) => {
         withCredentials: true,
     });
     return data;
+};
+
+export const putPlantData = async (id: number, putObj: IPlantData) => {
+    await axios.put(`/plantapi/api/plants/${id}`, putObj);
+};
+
+export const deletePlantData = async (id: number) => {
+    await axios.delete(`/plantapi/api/plants/${id}`);
 };
 
 export const getUserData = async () => {
@@ -91,6 +99,14 @@ export const postLoginData = async (data: ILoginUserData) => {
                     });
             }, 24 * 3600 * 1000);
         });
+};
+
+export const postLogoutData = async () => {
+    await axios.post('/plantapi/api/auth/logout').then(() => {
+        localStorage.setItem('access', '');
+        localStorage.setItem('userId', '');
+        axios.defaults.headers.common['Authorization'] = '';
+    });
 };
 
 export const postRegisterData = async (registerData: IRegisterUserPostData) => {

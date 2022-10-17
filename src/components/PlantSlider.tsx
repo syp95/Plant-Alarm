@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import plantDefault from 'public/plant-default-image.jpg';
 import CircleButton from './CircleButton';
-import { IPlantDataProps } from 'src/apis';
+import { IPlantDataProps, putPlantData } from 'src/apis';
 
 const Img = styled.div`
     width: 200px;
@@ -92,7 +92,10 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
 
     const onWateringClick = async () => {
         let dateNow = getDateNow();
-        //put plantData.id data
+        if (plantData.id) {
+            putPlantData(plantData.id, { lastWateringDate: dateNow });
+        }
+
         setNewLastWater(dateNow);
     };
 

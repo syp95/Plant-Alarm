@@ -7,7 +7,13 @@ import styled from 'styled-components';
 import { parseNameLength } from '../../utils/parseNameLength';
 import Button from '../components/Button';
 import Seo from '../components/Seo';
-import { getPlantData, getUserData, IPlantData, IUserObj } from 'src/apis';
+import {
+    getPlantData,
+    getUserData,
+    IPlantData,
+    IUserObj,
+    postLogoutData,
+} from 'src/apis';
 import { useQuery } from 'react-query';
 
 const UserContainer = styled.div`
@@ -48,8 +54,7 @@ const User: NextPage = () => {
     );
     const router = useRouter();
     const onLogOutClick = () => {
-        localStorage.setItem('access', '');
-        // 쿠키 비우는 post
+        postLogoutData();
         router.push('/login');
     };
 
