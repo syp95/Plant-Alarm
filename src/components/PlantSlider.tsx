@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import plantDefault from 'public/plant-default-image.jpg';
 import CircleButton from './CircleButton';
-import { IPlantDataProps, putPlantData } from 'src/apis';
+import { IPlantDataProps, usePutPlantMutation } from 'src/apis';
 
 const Img = styled.div`
     width: 200px;
@@ -77,6 +77,9 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
     const [newLastWater, setNewLastWater] = useState(
         plantData.lastWateringDate,
     );
+
+    const { mutate } = usePutPlantMutation();
+
     const [waterRestOneDay, setWaterRestOneDay] = useState(false);
     const [waterRestNow, setWaterRestNow] = useState(false);
 
@@ -99,7 +102,7 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
             },
         };
         if (plantData.id) {
-            putPlantData(plantObj);
+            mutate(plantObj);
         }
 
         setNewLastWater(dateNow);

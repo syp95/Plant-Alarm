@@ -61,15 +61,24 @@ export const postPlantData = async (newPlantObj: IPlantData) => {
     return data;
 };
 
+export function useAddPlantMutation() {
+    const queryClient = useQueryClient();
+    return useMutation(postPlantData, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('plantList');
+        },
+    });
+}
+
 export const putPlantData = async (plantObj: IPutPlantObj) => {
     await axios.put(`/plantapi/api/plants/${plantObj.id}`, plantObj.putObj);
 };
 
-export function useAddPlantMutation() {
+export function usePutPlantMutation() {
     const queryClient = useQueryClient();
     return useMutation(putPlantData, {
         onSuccess: () => {
-            queryClient.invalidateQueries();
+            queryClient.invalidateQueries('plantList');
         },
     });
 }

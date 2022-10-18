@@ -12,8 +12,8 @@ import CircleButton from './CircleButton';
 import {
     deletePlantData,
     IPlantDataProps,
-    putPlantData,
-    useAddPlantMutation,
+    useDeletePlantMutation,
+    usePutPlantMutation,
 } from 'src/apis';
 
 const OpenPicker = styled(motion.div)`
@@ -144,7 +144,8 @@ const Plant = ({ plantData }: IPlantDataProps) => {
         plantData.lastWateringDate,
     );
 
-    const { mutate } = useAddPlantMutation();
+    const { mutate } = usePutPlantMutation();
+    const { mutate: deleteMutate } = useDeletePlantMutation();
 
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
     const [pick, setPick] = useRecoilState(pickNumberState);
@@ -154,7 +155,7 @@ const Plant = ({ plantData }: IPlantDataProps) => {
         const ok = window.confirm('정말 지우실건가요?');
         if (ok) {
             if (plantData.id) {
-                deletePlantData(plantData.id);
+                deleteMutate(plantData.id);
             }
         }
     };
@@ -188,10 +189,6 @@ const Plant = ({ plantData }: IPlantDataProps) => {
 
         if (plantData.id) {
             mutate(plantObj);
-            // putPlantData(plantData.id, {
-            //     plantName: data.name,
-            //     wateringDate: wateringNumber,
-            // });
         }
 
         toggleEditing();

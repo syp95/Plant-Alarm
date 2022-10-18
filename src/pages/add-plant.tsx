@@ -13,7 +13,12 @@ import CircleButton from '../components/CircleButton';
 import NumberPicker from '../components/NumberPicker';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { getUserData, IUserObj, postPlantData } from 'src/apis';
+import {
+    getUserData,
+    IUserObj,
+    postPlantData,
+    useAddPlantMutation,
+} from 'src/apis';
 import { format } from 'date-fns';
 
 const OpenPicker = styled(motion.div)`
@@ -90,6 +95,8 @@ const AddPlant: NextPage = () => {
         getUserData,
     );
 
+    const { mutate } = useAddPlantMutation();
+
     const { register, handleSubmit, formState, setFocus } =
         useForm<ISubmitData>();
 
@@ -126,9 +133,10 @@ const AddPlant: NextPage = () => {
             imageUrl: uploadedFilePath,
         };
 
-        postPlantData(newPlantObj).then((res) => {
-            console.log(res);
-            goToApp();
+        mutate(newPlantObj, {
+            onSuccess: () => {
+                goToApp();
+            },
         });
     };
 
