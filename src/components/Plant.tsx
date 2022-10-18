@@ -9,7 +9,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import NumberPicker from './NumberPicker';
 import plantDefault from 'public/plant-default-image.jpg';
 import CircleButton from './CircleButton';
-import { deletePlantData, IPlantDataProps, putPlantData } from 'src/apis';
+import {
+    deletePlantData,
+    IPlantDataProps,
+    putPlantData,
+    useAddPlantMutation,
+} from 'src/apis';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;
@@ -138,6 +143,9 @@ const Plant = ({ plantData }: IPlantDataProps) => {
     const [newLastWater, setNewLastWater] = useState(
         plantData.lastWateringDate,
     );
+
+    const { mutate } = useAddPlantMutation();
+
     const [numberPicker, setNumberPicker] = useRecoilState(numberPickerState);
     const [pick, setPick] = useRecoilState(pickNumberState);
     const { register, handleSubmit, formState } = useForm<ISubmitProps>();
@@ -170,11 +178,20 @@ const Plant = ({ plantData }: IPlantDataProps) => {
             wateringNumber = newPlantWater ? newPlantWater : 1;
         }
 
-        if (plantData.id) {
-            putPlantData(plantData.id, {
+        const plantObj = {
+            id: plantData.id,
+            putObj: {
                 plantName: data.name,
                 wateringDate: wateringNumber,
-            });
+            },
+        };
+
+        if (plantData.id) {
+            mutate(plantObj);
+            // putPlantData(plantData.id, {
+            //     plantName: data.name,
+            //     wateringDate: wateringNumber,
+            // });
         }
 
         toggleEditing();

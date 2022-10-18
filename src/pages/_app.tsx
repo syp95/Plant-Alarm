@@ -19,11 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     const [queryClient] = useState(() => new QueryClient());
     axios.defaults.withCredentials = true;
 
-    //리프레쉬 토큰..
     useEffect(() => {
         const access = `${localStorage.getItem('access')}`;
         axios.defaults.headers.common['Authorization'] = `Bearer ${access}`;
-        //if 겟요청 해서 되면 로그인 트루로.
     }, []);
 
     useEffect(() => {

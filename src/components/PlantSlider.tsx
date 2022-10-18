@@ -92,8 +92,14 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
 
     const onWateringClick = async () => {
         let dateNow = getDateNow();
+        const plantObj = {
+            id: plantData.id,
+            putObj: {
+                lastWateringDate: dateNow,
+            },
+        };
         if (plantData.id) {
-            putPlantData(plantData.id, { lastWateringDate: dateNow });
+            putPlantData(plantObj);
         }
 
         setNewLastWater(dateNow);

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useMutation, useQueryClient } from 'react-query';
 
 export interface IUserObj {
     createdAt: string;
@@ -39,6 +40,11 @@ export interface IRegisterUserPostData {
     username: string;
 }
 
+export interface IPutPlantObj {
+    id?: number;
+    putObj?: IPlantData;
+}
+
 export const getPlantData = async () => {
     const userId = localStorage.getItem('userId');
     const { data } = await axios.get(`/plantapi/api/plants/id/${userId}`, {
@@ -55,9 +61,18 @@ export const postPlantData = async (newPlantObj: IPlantData) => {
     return data;
 };
 
-export const putPlantData = async (id: number, putObj: IPlantData) => {
-    await axios.put(`/plantapi/api/plants/${id}`, putObj);
+export const putPlantData = async (plantObj: IPutPlantObj) => {
+    await axios.put(`/plantapi/api/plants/${plantObj.id}`, plantObj.putObj);
 };
+
+export function useAddPlantMutation() {
+    const queryClient = useQueryClient();
+    return useMutation(putPlantData, {
+        onSuccess: () => {
+            queryClient.invalidateQueries();
+        },
+    });
+}
 
 export const deletePlantData = async (id: number) => {
     await axios.delete(`/plantapi/api/plants/${id}`);

@@ -162,10 +162,6 @@ const Home: NextPage = () => {
         router.push('/add-plant');
     };
 
-    useEffect(() => {
-        console.log(plantList);
-    }, [plantList]);
-
     return (
         <>
             <Seo title='메인' />
