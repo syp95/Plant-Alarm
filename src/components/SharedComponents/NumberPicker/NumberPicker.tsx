@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { numberPickerState, pickNumberState } from '../atoms/atoms';
+import { numberPickerState, pickNumberState } from '../../../atoms/atoms';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 

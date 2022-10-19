@@ -2,10 +2,10 @@ import type { NextPage } from 'next';
 
 import styled from 'styled-components';
 
-import Plant from '../components/Plant';
-import Seo from '../components/Seo';
+import Plant from '../components/PlantListComponents/Plant/Plant';
+import Seo from '../components/SharedComponents/Seo/Seo';
 import { useQuery } from 'react-query';
-import { getPlantData, IPlantData } from 'src/apis';
+import { getPlantData, IPlantData } from 'src/apis/plant';
 
 const NoPlantContainer = styled.div`
     background-color: white;

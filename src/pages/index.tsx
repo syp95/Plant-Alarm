@@ -6,10 +6,10 @@ import { getWeather, IWeather } from '../apis/getWeatherData';
 
 import styled from 'styled-components';
 
-import PlantSlider from '../components/PlantSlider';
-import CircleButton from '../components/CircleButton';
-import Seo from '../components/Seo';
-import Weather from '../components/Weather';
+import PlantSlider from '../components/HomeComponents/PlantSlider/PlantSlider';
+import CircleButton from '../components/SharedComponents/CircleButton';
+import Seo from '../components/SharedComponents/Seo/Seo';
+import Weather from '../components/HomeComponents/WeatherComponents/Weather';
 
 import { parseNameLength } from '../../utils/parseNameLength';
 import Slider from 'react-slick';
@@ -19,7 +19,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { getPlantData, getUserData, IPlantData, IUserObj } from 'src/apis';
+import { getPlantData, IPlantData } from 'src/apis/plant';
+import { getUserData, IUserObj } from 'src/apis/auth';
 
 const StyledSlider = styled(Slider)`
     .slick-list {

@@ -4,13 +4,12 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import Seo from '../components/Seo';
-import Button from '../components/Button';
-import Line from '../components/Line';
-import ErrorMessage from '../components/ErrorMessage';
-import PlantAnimation from '../components/PlantAnimation';
-
-import { postRegisterData } from 'src/apis';
+import Seo from '../components/SharedComponents/Seo/Seo';
+import Button from '../components/SharedComponents/Button';
+import Line from '../components/SharedComponents/Line';
+import ErrorMessage from '../components/SharedComponents/ErrorMessage';
+import PlantAnimation from '../components/LoginComponents/PlantAnimation';
+import { postRegisterData } from 'src/apis/auth';
 
 const Container = styled.div`
     h5 {

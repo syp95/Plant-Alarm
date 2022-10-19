@@ -7,19 +7,14 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import Seo from '../components/Seo';
-import Button from '../components/Button';
-import CircleButton from '../components/CircleButton';
-import NumberPicker from '../components/NumberPicker';
+import Seo from '../components/SharedComponents/Seo/Seo';
+import Button from '../components/SharedComponents/Button';
+import CircleButton from '../components/SharedComponents/CircleButton';
+import NumberPicker from '../components/SharedComponents/NumberPicker/NumberPicker';
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import {
-    getUserData,
-    IUserObj,
-    postPlantData,
-    useAddPlantMutation,
-} from 'src/apis';
-import { format } from 'date-fns';
+import { useAddPlantMutation } from 'src/apis/plant';
+import { getUserData, IUserObj } from 'src/apis/auth';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;

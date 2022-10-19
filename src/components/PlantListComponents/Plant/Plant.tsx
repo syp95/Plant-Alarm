@@ -2,19 +2,19 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
-import { numberPickerState, pickNumberState } from '../atoms/atoms';
+import { numberPickerState, pickNumberState } from '../../../atoms/atoms';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import NumberPicker from './NumberPicker';
+import NumberPicker from '../../SharedComponents/NumberPicker/NumberPicker';
 import plantDefault from 'public/plant-default-image.jpg';
-import CircleButton from './CircleButton';
+import CircleButton from '../../SharedComponents/CircleButton';
 import {
     deletePlantData,
     IPlantDataProps,
     useDeletePlantMutation,
     usePutPlantMutation,
-} from 'src/apis';
+} from 'src/apis/plant';
 
 const OpenPicker = styled(motion.div)`
     width: 440px;

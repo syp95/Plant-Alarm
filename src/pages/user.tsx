@@ -4,16 +4,11 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import { parseNameLength } from '../../utils/parseNameLength';
-import Button from '../components/Button';
-import Seo from '../components/Seo';
-import {
-    getPlantData,
-    getUserData,
-    IPlantData,
-    IUserObj,
-    postLogoutData,
-} from 'src/apis';
+import Button from '../components/SharedComponents/Button';
+import Seo from '../components/SharedComponents/Seo/Seo';
+import { getPlantData, IPlantData } from 'src/apis/plant';
 import { useQuery } from 'react-query';
+import { getUserData, IUserObj, postLogoutData } from 'src/apis/auth';
 
 const UserContainer = styled.div`
     width: 100%;

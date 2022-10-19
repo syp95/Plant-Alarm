@@ -5,14 +5,14 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import Button from '../components/Button';
-import Line from '../components/Line';
-import Seo from '../components/Seo';
-import ErrorMessage from '../components/ErrorMessage';
-import LeafAnimation from '../components/LeafAnimation';
+import Button from '../components/SharedComponents/Button';
+import Line from '../components/SharedComponents/Line';
+import Seo from '../components/SharedComponents/Seo/Seo';
+import ErrorMessage from '../components/SharedComponents/ErrorMessage';
+import LeafAnimation from '../components/LoginComponents/LeafAnimation';
 
 import Logo from 'public/Logo.png';
-import { postLoginData } from 'src/apis';
+import { ILoginUserData, postLoginData } from 'src/apis/auth';
 
 const LoginContainer = styled.div`
     height: 100%;
@@ -35,11 +35,6 @@ const LeafContainer = styled.div`
     opacity: 0.5;
 `;
 
-interface ILoginForm {
-    id: string;
-    password: string;
-}
-
 const LogIn: NextPage = () => {
     const router = useRouter();
     const [errorMessage, setErrorMessage] = useState('');
@@ -48,7 +43,7 @@ const LogIn: NextPage = () => {
         handleSubmit: loginHandleSubmit,
         formState: loginFormState,
         setFocus,
-    } = useForm<ILoginForm>();
+    } = useForm<ILoginUserData>();
 
     const goToApp = () => {
         router.push('/');
@@ -58,10 +53,10 @@ const LogIn: NextPage = () => {
     //     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     // ) => {};
 
-    const onEmailLogin = async (loginData: ILoginForm) => {
+    const onEmailLogin = async (loginData: ILoginUserData) => {
         const data = {
-            userid: loginData.id,
-            userpassword: loginData.password,
+            userid: loginData.userid,
+            userpassword: loginData.userpassword,
         };
         postLoginData(data)
             .then(() => {
@@ -76,7 +71,7 @@ const LogIn: NextPage = () => {
     };
 
     useEffect(() => {
-        setFocus('id');
+        setFocus('userid');
     }, []);
 
     return (
@@ -93,7 +88,7 @@ const LogIn: NextPage = () => {
                     onSubmit={loginHandleSubmit((data) => onEmailLogin(data))}
                 >
                     <input
-                        {...loginRegister('id', {
+                        {...loginRegister('userid', {
                             required: '이메일을 입력하세요.',
                             pattern: {
                                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -102,17 +97,19 @@ const LogIn: NextPage = () => {
                         })}
                         placeholder='이메일을 입력하세요.'
                     />
-                    <ErrorMessage error={loginFormState.errors.id?.message} />
+                    <ErrorMessage
+                        error={loginFormState.errors.userid?.message}
+                    />
 
                     <input
-                        {...loginRegister('password', {
+                        {...loginRegister('userpassword', {
                             required: '비밀번호를 입력하세요.',
                         })}
                         placeholder='비밀번호를 입력하세요.'
                         type='password'
                     />
                     <ErrorMessage
-                        error={loginFormState.errors.password?.message}
+                        error={loginFormState.errors.userpassword?.message}
                     />
 
                     <Button name='로그인' width='100%' />
