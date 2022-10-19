@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IWeatherProps } from '../../../apis/getWeatherData';
-import CloudAnimation from '../../CloudAnimation';
-import SunAnimation from '../../SunAnimation';
+import CloudAnimation from './CloudAnimation';
+import SunAnimation from './SunAnimation';
 
 const VerticalLine = styled.div`
     width: 3px;

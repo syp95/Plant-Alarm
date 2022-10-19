@@ -5,35 +5,15 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import Button from '../components/SharedComponents/Button';
-import Line from '../components/SharedComponents/Line';
-import Seo from '../components/SharedComponents/Seo/Seo';
-import ErrorMessage from '../components/SharedComponents/ErrorMessage';
+import Button from '../components/0.SharedComponents/Button';
+import Line from '../components/0.SharedComponents/Line';
+import Seo from '../components/0.SharedComponents/Seo/Seo';
+import ErrorMessage from '../components/0.SharedComponents/ErrorMessage';
 import LeafAnimation from '../components/LoginComponents/LeafAnimation';
 
 import Logo from 'public/Logo.png';
 import { ILoginUserData, postLoginData } from 'src/apis/auth';
-
-const LoginContainer = styled.div`
-    height: 100%;
-    margin-top: 90px;
-    position: relative;
-    h2 {
-        margin-top: 0;
-    }
-    h5 {
-        margin-bottom: 10px;
-    }
-`;
-
-const LeafContainer = styled.div`
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    right: -10px;
-    top: -90px;
-    opacity: 0.5;
-`;
+import { LeafContainer, LoginContainer } from 'styles/loginstyles';
 
 const LogIn: NextPage = () => {
     const router = useRouter();

@@ -1,41 +1,13 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import styled from 'styled-components';
-
 import { parseNameLength } from '../../utils/parseNameLength';
-import Button from '../components/SharedComponents/Button';
-import Seo from '../components/SharedComponents/Seo/Seo';
+import Button from '../components/0.SharedComponents/Button';
+import Seo from '../components/0.SharedComponents/Seo/Seo';
 import { getPlantData, IPlantData } from 'src/apis/plant';
 import { useQuery } from 'react-query';
 import { getUserData, IUserObj, postLogoutData } from 'src/apis/auth';
-
-const UserContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    border-radius: 20px;
-    border: 2px solid #ebebeb;
-    font-size: 14px;
-    line-height: 18px;
-    padding: 20px;
-`;
-
-const FeedbackContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    border-radius: 20px;
-    border: 2px solid #ebebeb;
-    font-size: 14px;
-    line-height: 18px;
-    padding: 20px;
-    h4 {
-        font-size: 16px;
-        margin-top: 0px;
-        margin-bottom: 10px;
-    }
-`;
+import { FeedbackContainer, UserContainer } from 'styles/userstyles';
 
 const User: NextPage = () => {
     const { data: userObj } = useQuery<IUserObj>(

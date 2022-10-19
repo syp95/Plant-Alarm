@@ -3,22 +3,10 @@ import type { NextPage } from 'next';
 import styled from 'styled-components';
 
 import Plant from '../components/PlantListComponents/Plant/Plant';
-import Seo from '../components/SharedComponents/Seo/Seo';
+import Seo from '../components/0.SharedComponents/Seo/Seo';
 import { useQuery } from 'react-query';
 import { getPlantData, IPlantData } from 'src/apis/plant';
-
-const NoPlantContainer = styled.div`
-    background-color: white;
-    margin-top: 40px;
-    width: 100%;
-    height: 120px;
-    border: 2px solid #ebebeb;
-    border-radius: 20px;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-`;
+import { NoPlantContainer } from 'styles/plantliststyles';
 
 const PlantList: NextPage = () => {
     const { data: plantList } = useQuery<IPlantData[]>(

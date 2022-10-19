@@ -1,6 +1,6 @@
 import 'styles/globals.css';
 import type { AppProps } from 'next/app';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/0.SharedComponents/NavBar/NavBar';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { RecoilRoot } from 'recoil';
@@ -10,6 +10,12 @@ import 'nprogress/nprogress.css';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import axios from 'axios';
+import GlobalStyle from 'styles/Globalstyles';
+import { DefaultTheme, ThemeProvider } from 'styled-components';
+
+const theme: DefaultTheme = {
+    maxwidth: 520,
+};
 
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
@@ -47,7 +53,10 @@ function MyApp({ Component, pageProps }: AppProps) {
             <RecoilRoot>
                 <QueryClientProvider client={queryClient}>
                     <Hydrate state={pageProps.dehydratedState}>
-                        <Component {...pageProps} />
+                        <ThemeProvider theme={theme}>
+                            <GlobalStyle />
+                            <Component {...pageProps} />
+                        </ThemeProvider>
                     </Hydrate>
                     <ReactQueryDevtools
                         initialIsOpen={false}

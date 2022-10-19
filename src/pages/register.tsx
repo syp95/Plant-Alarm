@@ -4,33 +4,16 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import Seo from '../components/SharedComponents/Seo/Seo';
-import Button from '../components/SharedComponents/Button';
-import Line from '../components/SharedComponents/Line';
-import ErrorMessage from '../components/SharedComponents/ErrorMessage';
-import PlantAnimation from '../components/LoginComponents/PlantAnimation';
+import Seo from '../components/0.SharedComponents/Seo/Seo';
+import Button from '../components/0.SharedComponents/Button';
+import Line from '../components/0.SharedComponents/Line';
+import ErrorMessage from '../components/0.SharedComponents/ErrorMessage';
+import PlantAnimation from '../components/RegisterComponents/PlantAnimation';
 import { postRegisterData } from 'src/apis/auth';
-
-const Container = styled.div`
-    h5 {
-        margin-bottom: 10px;
-    }
-`;
-
-const PlantContainer = styled.div`
-    position: absolute;
-    opacity: 0.5;
-    width: 150px;
-    height: 150px;
-    left: 50%;
-    transform: translate(-50%, 30%);
-
-    @media (max-width: 450px) {
-        width: 90px;
-        height: 90px;
-        transform: translate(-50%, 0%);
-    }
-`;
+import {
+    PlantAnimationContainer,
+    RegisterContainer,
+} from 'styles/registerstyles';
 
 interface IRegisterForm {
     regId: string;
@@ -73,7 +56,7 @@ const Register: NextPage = () => {
 
     return (
         <>
-            <Container>
+            <RegisterContainer>
                 <Seo title='회원가입' />
                 <h2>회원가입</h2>
                 <form onSubmit={handleSubmit((data) => onRegisterValid(data))}>
@@ -152,10 +135,10 @@ const Register: NextPage = () => {
                     name='로그인 페이지로'
                     width='100%'
                 />
-                <PlantContainer>
+                <PlantAnimationContainer>
                     <PlantAnimation />
-                </PlantContainer>
-            </Container>
+                </PlantAnimationContainer>
+            </RegisterContainer>
         </>
     );
 };

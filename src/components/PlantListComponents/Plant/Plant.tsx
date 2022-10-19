@@ -6,9 +6,9 @@ import { numberPickerState, pickNumberState } from '../../../atoms/atoms';
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import NumberPicker from '../../SharedComponents/NumberPicker/NumberPicker';
+import NumberPicker from '../../0.SharedComponents/NumberPicker/NumberPicker';
 import plantDefault from 'public/plant-default-image.jpg';
-import CircleButton from '../../SharedComponents/CircleButton';
+import CircleButton from '../../0.SharedComponents/CircleButton';
 import {
     deletePlantData,
     IPlantDataProps,
