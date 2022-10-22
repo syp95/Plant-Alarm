@@ -4,19 +4,18 @@ import NavBar from '../components/Shared/NavBar/NavBar';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { RecoilRoot } from 'recoil';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
 
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import axios from 'axios';
 import GlobalStyle from 'styles/Globalstyles';
 import { DefaultTheme, ThemeProvider } from 'styled-components';
+import { DefaultSeo } from 'next-seo';
+import SEO from '../../seo.config';
 
 const theme: DefaultTheme = {
     maxwidth: 520,
 };
-
 function MyApp({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const { pathname } = router;
@@ -30,24 +29,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${access}`;
     }, []);
 
-    useEffect(() => {
-        const start = () => {
-            NProgress.start();
-        };
-        const end = () => {
-            NProgress.done();
-        };
-        router.events.on('routeChangeStart', start);
-        router.events.on('routeChangeComplete', end);
-        router.events.on('routeChangeError', end);
-
-        return () => {
-            router.events.off('routeChangeStart', start);
-            router.events.off('routeChangeComplete', end);
-            router.events.off('routeChangeError', end);
-        };
-    }, []);
-
     return (
         <>
             <RecoilRoot>
@@ -55,6 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     <Hydrate state={pageProps.dehydratedState}>
                         <ThemeProvider theme={theme}>
                             <GlobalStyle />
+                            <DefaultSeo {...SEO} />
                             <Component {...pageProps} />
                         </ThemeProvider>
                     </Hydrate>

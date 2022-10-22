@@ -11,7 +11,7 @@ import Seo from '../components/Shared/Seo/Seo';
 import ErrorMessage from '../components/Shared/ErrorMessage';
 import LeafAnimation from '../components/Login/LeafAnimation';
 
-import Logo from 'public/Logo.png';
+import Logo from 'public/icons/Logo.png';
 import { ILoginUserData, postLoginData } from 'src/apis/auth';
 import { LeafContainer, LoginContainer } from 'styles/loginstyles';
 

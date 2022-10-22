@@ -1,0 +1,73 @@
+{
+    "name": "plantalarm",
+    "short_name": "plantalarm",
+    "description": "Progressive Web App Plant Alarm",
+    "display": "standalone",
+    "orientation": "portrait",
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
+    "start_url": "/",
+    "icons": [
+        {
+            "src": "/icons/192logo.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/512logo.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/180logo.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/152logo.png",
+            "sizes": "152x152",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/144logo.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/120logo.png",
+            "sizes": "120x120",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/114logo.png",
+            "sizes": "114x114",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/76logo.png",
+            "sizes": "76x76",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/72logo.png",
+            "sizes": "72x72",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/60logo.png",
+            "sizes": "60x60",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/57logo.png",
+            "sizes": "57x57",
+            "type": "image/png"
+        },
+        {
+            "src": "/icons/64logo.png",
+            "sizes": "64x64",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
