@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import Seo from '../components/0.SharedComponents/Seo/Seo';
-import Button from '../components/0.SharedComponents/Button';
-import Line from '../components/0.SharedComponents/Line';
-import ErrorMessage from '../components/0.SharedComponents/ErrorMessage';
-import PlantAnimation from '../components/RegisterComponents/PlantAnimation';
+import Seo from '../components/Shared/Seo/Seo';
+import Button from '../components/Shared/Button';
+import Line from '../components/Shared/Line';
+import ErrorMessage from '../components/Shared/ErrorMessage';
+import PlantAnimation from '../components/Register/PlantAnimation';
 import { postRegisterData } from 'src/apis/auth';
 import {
     PlantAnimationContainer,

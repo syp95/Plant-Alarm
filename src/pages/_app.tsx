@@ -1,6 +1,6 @@
 import 'styles/globals.css';
 import type { AppProps } from 'next/app';
-import NavBar from '../components/0.SharedComponents/NavBar/NavBar';
+import NavBar from '../components/Shared/NavBar/NavBar';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { RecoilRoot } from 'recoil';

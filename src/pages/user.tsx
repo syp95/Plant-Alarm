@@ -2,8 +2,8 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
 import { parseNameLength } from '../../utils/parseNameLength';
-import Button from '../components/0.SharedComponents/Button';
-import Seo from '../components/0.SharedComponents/Seo/Seo';
+import Button from '../components/Shared/Button';
+import Seo from '../components/Shared/Seo/Seo';
 import { getPlantData, IPlantData } from 'src/apis/plant';
 import { useQuery } from 'react-query';
 import { getUserData, IUserObj, postLogoutData } from 'src/apis/auth';

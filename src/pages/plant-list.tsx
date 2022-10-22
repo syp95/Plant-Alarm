@@ -2,8 +2,8 @@ import type { NextPage } from 'next';
 
 import styled from 'styled-components';
 
-import Plant from '../components/PlantListComponents/Plant/Plant';
-import Seo from '../components/0.SharedComponents/Seo/Seo';
+import Plant from '../components/PlantList/Plant/Plant';
+import Seo from '../components/Shared/Seo/Seo';
 import { useQuery } from 'react-query';
 import { getPlantData, IPlantData } from 'src/apis/plant';
 import { NoPlantContainer } from 'styles/plantliststyles';

@@ -8,7 +8,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import plantDefault from 'public/plant-default-image.jpg';
-import CircleButton from '../../0.SharedComponents/CircleButton';
+import CircleButton from '../../Shared/CircleButton';
 import { IPlantDataProps, usePutPlantMutation } from 'src/apis/plant';
 
 const Img = styled.div`

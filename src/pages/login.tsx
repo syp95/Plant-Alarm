@@ -5,11 +5,11 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
-import Button from '../components/0.SharedComponents/Button';
-import Line from '../components/0.SharedComponents/Line';
-import Seo from '../components/0.SharedComponents/Seo/Seo';
-import ErrorMessage from '../components/0.SharedComponents/ErrorMessage';
-import LeafAnimation from '../components/LoginComponents/LeafAnimation';
+import Button from '../components/Shared/Button';
+import Line from '../components/Shared/Line';
+import Seo from '../components/Shared/Seo/Seo';
+import ErrorMessage from '../components/Shared/ErrorMessage';
+import LeafAnimation from '../components/Login/LeafAnimation';
 
 import Logo from 'public/Logo.png';
 import { ILoginUserData, postLoginData } from 'src/apis/auth';

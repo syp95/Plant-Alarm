@@ -7,10 +7,10 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import Seo from '../components/0.SharedComponents/Seo/Seo';
-import Button from '../components/0.SharedComponents/Button';
-import CircleButton from '../components/0.SharedComponents/CircleButton';
-import NumberPicker from '../components/0.SharedComponents/NumberPicker/NumberPicker';
+import Seo from '../components/Shared/Seo/Seo';
+import Button from '../components/Shared/Button';
+import CircleButton from '../components/Shared/CircleButton';
+import NumberPicker from '../components/Shared/NumberPicker/NumberPicker';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { useAddPlantMutation } from 'src/apis/plant';

@@ -3,10 +3,10 @@ import type { GetServerSideProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, QueryClient, useQuery } from 'react-query';
 
-import PlantSlider from '../components/HomeComponents/PlantSlider/PlantSlider';
-import CircleButton from '../components/0.SharedComponents/CircleButton';
-import Seo from '../components/0.SharedComponents/Seo/Seo';
-import Weather from '../components/HomeComponents/WeatherComponents/Weather';
+import PlantSlider from '../components/Home/PlantSlider/PlantSlider';
+import CircleButton from '../components/Shared/CircleButton';
+import Seo from '../components/Shared/Seo/Seo';
+import Weather from '../components/Home/WeatherComponents/Weather';
 
 import { parseNameLength } from '../../utils/parseNameLength';
 
