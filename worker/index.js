@@ -1,17 +1,24 @@
 'use strict';
 
+function wait(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
 self.addEventListener('push', function (event) {
     const data = JSON.parse(event.data.text());
     console.log('start');
-    setTimeout(() => {
-        console.log(`${data.time / 1000}second`);
-        event.waitUntil(
+
+    event.waitUntil(
+        wait(data.time).then(() => {
+            console.log(`${data.time / 1000}second`);
             registration.showNotification(data.title, {
                 body: data.message,
                 icon: '/icons/192logo.png',
-            }),
-        );
-    }, data.time);
+            });
+        }),
+    );
 });
 
 self.addEventListener('notificationclick', function (event) {
