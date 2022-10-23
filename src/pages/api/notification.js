@@ -8,15 +8,20 @@ webPush.setVapidDetails(
 
 const Notification = (req, res) => {
     if (req.method == 'POST') {
-        const { subscription } = req.body;
-
+        const { subscription, text, userId, time } = req.body;
+        //userId 확인 작업
         webPush
             .sendNotification(
                 subscription,
                 JSON.stringify({
-                    title: 'Hello Web Push',
-                    message: 'Your web push notification is here!',
+                    title: '식물 알람',
+                    message: text,
+                    link: 'http://localhost:3000',
+                    time,
                 }),
+                {
+                    TTL: 3600 * 12,
+                },
             )
             .then((response) => {
                 res.writeHead(response.statusCode, response.headers).end(

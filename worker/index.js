@@ -2,12 +2,16 @@
 
 self.addEventListener('push', function (event) {
     const data = JSON.parse(event.data.text());
-    event.waitUntil(
-        registration.showNotification(data.title, {
-            body: data.message,
-            icon: '/icons/android-chrome-192x192.png',
-        }),
-    );
+    console.log('start');
+    setTimeout(() => {
+        console.log(`${data.time / 1000}second`);
+        event.waitUntil(
+            registration.showNotification(data.title, {
+                body: data.message,
+                icon: '/icons/192logo.png',
+            }),
+        );
+    }, data.time);
 });
 
 self.addEventListener('notificationclick', function (event) {

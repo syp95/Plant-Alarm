@@ -100,6 +100,9 @@ const Notification: NextPage = () => {
             },
             body: JSON.stringify({
                 subscription,
+                text: 'hi',
+                userId: localStorage.getItem('userId'),
+                time: 10000,
             }),
         });
     };
