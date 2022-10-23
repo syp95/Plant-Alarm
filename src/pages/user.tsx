@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import { parseNameLength } from '../../utils/parseNameLength';
+import { parseNameLength } from '../utils/parseNameLength';
 import Button from '../components/Shared/Button';
 import Seo from '../components/Shared/Seo/Seo';
 import { getPlantData, IPlantData } from 'src/apis/plant';

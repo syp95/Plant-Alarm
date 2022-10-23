@@ -8,7 +8,7 @@ import CircleButton from '../components/Shared/CircleButton';
 import Seo from '../components/Shared/Seo/Seo';
 import Weather from '../components/Home/WeatherComponents/Weather';
 
-import { parseNameLength } from '../../utils/parseNameLength';
+import { parseNameLength } from '../utils/parseNameLength';
 
 import { getWeather, IWeather } from '../apis/getWeatherData';
 import { getPlantData, IPlantData } from 'src/apis/plant';
