@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { NextPage } from 'next';
+import axios from 'axios';
 
 const base64ToUint8Array = (base64: any) => {
     const padding = '='.repeat((4 - (base64.length % 4)) % 4);
@@ -57,19 +58,23 @@ const Notification: NextPage = () => {
             alert('subscribe - service worker is not registered');
             return;
         }
-        console.log(process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY);
+
+        const vapidkey = await axios.get('/plantapi/api/notification/vapid');
 
         const sub = await registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: base64ToUint8Array(
-                process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY,
-            ),
+            applicationServerKey: base64ToUint8Array(String(vapidkey)),
         });
-        // TODO: you should call your API to save subscription data on server in order to send web push notification from server
-        setSubscription(sub);
-        setIsSubscribed(true);
-        console.log('web push subscribed!');
-        console.log(sub);
+
+        if (sub) {
+            await axios.post('/plantapi/api/notification/subscription', {
+                userid: localStorage.getItem('userId'),
+                subscription: sub,
+            });
+            setSubscription(sub);
+            setIsSubscribed(true);
+            console.log('web push subscribed!');
+        }
     };
 
     const unsubscribeButtonOnClick = async (event: any) => {
@@ -79,8 +84,10 @@ const Notification: NextPage = () => {
             return;
         }
 
+        const userId = localStorage.getItem('userId');
+
         await subscription.unsubscribe();
-        // TODO: you should call your API to delete or invalidate subscription data on server
+        await axios.delete(`/plantapi/api/notification/subscription/${userId}`);
         setSubscription(null);
         setIsSubscribed(false);
         console.log('web push unsubscribed!');
@@ -93,16 +100,15 @@ const Notification: NextPage = () => {
             return;
         }
 
-        await fetch('/api/notification', {
+        await fetch('/plantapi/api/notification/send-push-notification', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
             },
             body: JSON.stringify({
-                subscription,
-                text: 'hi',
-                userId: localStorage.getItem('userId'),
-                time: 10000,
+                message: 'hi',
+                targetId: localStorage.getItem('userId'),
+                date: '22/11/01',
             }),
         });
     };
