@@ -4,7 +4,8 @@
 ### NEXT JS / React Query / Recoil / styled-components
 ### react-toastify / react-slick / react-hook-form / react-circular-progressbar
 ## Back
-### Firebase
+### v1.0.0 Firebase
+### v2.0.0 (진행중) Express / Sequelize
 
 ## 구현된 기능
 
