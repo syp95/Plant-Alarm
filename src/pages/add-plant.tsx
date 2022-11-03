@@ -3,18 +3,18 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { numberPickerState, pickNumberState } from '../atoms/atoms';
-import styled from 'styled-components';
+
 import { useForm } from 'react-hook-form';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 import Seo from '../components/Shared/Seo/Seo';
 import Button from '../components/Shared/Button';
 import CircleButton from '../components/Shared/CircleButton';
 import NumberPicker from '../components/Shared/NumberPicker/NumberPicker';
 import axios from 'axios';
-import { useQuery } from 'react-query';
+
 import { useAddPlantMutation } from 'src/apis/plant';
-import { getUserData, IUserObj } from 'src/apis/auth';
+
 import {
     AddPlantContainer,
     BackBtnContainer,
@@ -31,10 +31,6 @@ interface ISubmitData {
 
 const AddPlant: NextPage = () => {
     const router = useRouter();
-    const { data: userObj } = useQuery<IUserObj>(
-        ['plantUser', 'userData'],
-        getUserData,
-    );
 
     const { mutate } = useAddPlantMutation();
 

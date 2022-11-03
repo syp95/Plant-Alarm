@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import plantDefault from 'public/plant-default-image.jpg';
 import CircleButton from '../../Shared/CircleButton';
 import { IPlantDataProps, usePutPlantMutation } from 'src/apis/plant';
+import { getDateNow } from 'src/utils/getDateNow';
 
 const Img = styled.div`
     width: 200px;
@@ -82,16 +83,6 @@ const PlantSlider = ({ plantData }: IPlantDataProps) => {
 
     const [waterRestOneDay, setWaterRestOneDay] = useState(false);
     const [waterRestNow, setWaterRestNow] = useState(false);
-
-    const getDateNow = () => {
-        let today = new Date();
-        let year = today.getFullYear();
-        let month = String(today.getMonth() + 1).padStart(2, '0');
-        let day = String(today.getDate()).padStart(2, '0');
-
-        let dateNow = `${year}-${month}-${day}`;
-        return dateNow;
-    };
 
     const onWateringClick = async () => {
         let dateNow = getDateNow();

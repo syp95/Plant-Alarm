@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { NextPage } from 'next';
 import axios from 'axios';
+import { getDateNow } from 'src/utils/getDateNow';
 
 const base64ToUint8Array = (base64: any) => {
     const padding = '='.repeat((4 - (base64.length % 4)) % 4);
@@ -33,7 +34,6 @@ const Notification: NextPage = () => {
             'serviceWorker' in navigator &&
             window.workbox !== undefined
         ) {
-            // run only in browser
             navigator.serviceWorker.ready.then((reg: any) => {
                 reg.pushManager.getSubscription().then((sub: any) => {
                     if (
@@ -104,6 +104,9 @@ const Notification: NextPage = () => {
             console.error('web push not subscribed');
             return;
         }
+        let testTime = `${new Date().getHours()}-${new Date().getMinutes()}-${
+            Number(new Date().getSeconds()) + 3
+        }`;
 
         await fetch('/plantapi/api/notification/send-push-notification', {
             method: 'POST',
@@ -111,9 +114,9 @@ const Notification: NextPage = () => {
                 'Content-type': 'application/json',
             },
             body: JSON.stringify({
-                message: 'hi2',
+                message: '테스트 알람입니다.',
                 targetId: localStorage.getItem('userId'),
-                date: '22/11/03',
+                date: `${getDateNow()}-${testTime}`,
             }),
         });
     };
@@ -121,20 +124,20 @@ const Notification: NextPage = () => {
     return (
         <>
             <Head>
-                <title>next-pwa example</title>
+                <title>알람 설정</title>
             </Head>
-            <h1>Next.js + PWA = AWESOME!</h1>
+            <h1>식물알람 설정</h1>
             <button onClick={subscribeButtonOnClick} disabled={isSubscribed}>
-                Subscribe
+                알람 켜기
             </button>
             <button onClick={unsubscribeButtonOnClick} disabled={!isSubscribed}>
-                Unsubscribe
+                알람 끄기
             </button>
             <button
                 onClick={sendNotificationButtonOnClick}
                 disabled={!isSubscribed}
             >
-                Send Notification
+                테스트 알람 보내보기
             </button>
         </>
     );
