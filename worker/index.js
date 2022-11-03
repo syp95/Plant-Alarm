@@ -1,22 +1,13 @@
 'use strict';
 
-function wait(ms) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, ms);
-    });
-}
-
 self.addEventListener('push', function (event) {
     const data = JSON.parse(event.data.text());
     console.log('start');
 
     event.waitUntil(
-        wait(data.time).then(() => {
-            console.log(`${data.time / 1000}second`);
-            registration.showNotification(data.title, {
-                body: data.message,
-                icon: '/icons/192logo.png',
-            });
+        registration.showNotification(data.title, {
+            body: data.message,
+            icon: '/icons/192logo.png',
         }),
     );
 });
@@ -36,7 +27,7 @@ self.addEventListener('notificationclick', function (event) {
                     }
                     return client.focus();
                 }
-                return clients.openWindow('/');
+                return clients.openWindow(event.notification.data.link);
             }),
     );
 });

@@ -63,7 +63,7 @@ const Notification: NextPage = () => {
 
         const sub = await registration.pushManager.subscribe({
             userVisibleOnly: true,
-            applicationServerKey: base64ToUint8Array(String(vapidkey)),
+            applicationServerKey: base64ToUint8Array(vapidkey.data),
         });
 
         if (sub) {
@@ -87,9 +87,14 @@ const Notification: NextPage = () => {
         const userId = localStorage.getItem('userId');
 
         await subscription.unsubscribe();
-        await axios.delete(`/plantapi/api/notification/subscription/${userId}`);
-        setSubscription(null);
-        setIsSubscribed(false);
+        await axios
+            .delete(`/plantapi/api/notification/subscription/${userId}`)
+            .then((res) => {
+                console.log(res);
+                setSubscription(null);
+                setIsSubscribed(false);
+            });
+
         console.log('web push unsubscribed!');
     };
 
@@ -106,9 +111,9 @@ const Notification: NextPage = () => {
                 'Content-type': 'application/json',
             },
             body: JSON.stringify({
-                message: 'hi',
+                message: 'hi2',
                 targetId: localStorage.getItem('userId'),
-                date: '22/11/01',
+                date: '22/11/03',
             }),
         });
     };
