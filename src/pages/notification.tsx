@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { NextPage } from 'next';
 import axios from 'axios';
-import { getDateNow } from 'src/utils/getDateNow';
 
 const base64ToUint8Array = (base64: any) => {
     const padding = '='.repeat((4 - (base64.length % 4)) % 4);
@@ -104,9 +103,6 @@ const Notification: NextPage = () => {
             console.error('web push not subscribed');
             return;
         }
-        let testTime = `${new Date().getHours()}-${new Date().getMinutes()}-${
-            Number(new Date().getSeconds()) + 3
-        }`;
 
         await fetch('/plantapi/api/notification/send-push-notification', {
             method: 'POST',
@@ -116,7 +112,6 @@ const Notification: NextPage = () => {
             body: JSON.stringify({
                 message: '테스트 알람입니다.',
                 targetId: localStorage.getItem('userId'),
-                date: `${getDateNow()}-${testTime}`,
             }),
         });
     };
